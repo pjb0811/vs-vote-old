@@ -1,22 +1,26 @@
 import * as React from 'react';
-import './App.css';
-
-const logo = require('./logo.svg');
+import { Route } from 'react-router-dom';
+import { Home, Test, Counter } from './pages';
+import Menu from './components/Menu';
+import { hot } from 'react-hot-loader';
+import { Helmet } from 'react-helmet';
 
 class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
+        <Helmet>
+          <title>React App Starter</title>
+        </Helmet>
+        <div>
+          <Menu/>
+          <Route exact={true} path="/" component={Home}/>
+          <Route path="/test" component={Test}/>
+          <Route path="/counter" component={Counter}/>
+        </div>
       </div>
     );
   }
 }
 
-export default App;
+export default hot(module)(App);
