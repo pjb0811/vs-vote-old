@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 const Logout = (props: any) => {
   const { className } = props;
   return (
-    <div>
+    <div className="right menu">
       <NavLink to="/logout" className={className} activeClassName="active">Logout</NavLink>
     </div>
   );

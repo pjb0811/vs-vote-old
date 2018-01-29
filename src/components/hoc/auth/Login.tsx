@@ -8,7 +8,7 @@ interface Props {
 const Login = (props: Props) => {
   const { className } = props;
   return (
-    <div>
+    <div className="right menu">
       <NavLink to="/login" className={className} activeClassName="active">Login</NavLink>
       <NavLink to="/signup" className={className} activeClassName="active">Sign Up</NavLink>
     </div>
