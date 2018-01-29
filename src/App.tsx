@@ -1,11 +1,23 @@
 import * as React from 'react';
 import { Route } from 'react-router-dom';
-import { Home, Test, Counter } from './pages';
+import { Home, About, Counter } from './components/pages';
 import Menu from './components/Menu';
-import { hot } from 'react-hot-loader';
 import { Helmet } from 'react-helmet';
 
-class App extends React.Component {
+interface Props {}
+
+interface State {
+  test: string;
+}
+
+class App extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      test: 'test'
+    };
+  }
+
   render() {
     return (
       <div className="App">
@@ -15,7 +27,7 @@ class App extends React.Component {
         <div>
           <Menu/>
           <Route exact={true} path="/" component={Home}/>
-          <Route path="/test" component={Test}/>
+          <Route path="/about" component={About}/>
           <Route path="/counter" component={Counter}/>
         </div>
       </div>
@@ -23,4 +35,4 @@ class App extends React.Component {
   }
 }
 
-export default hot(module)(App);
+export default App;

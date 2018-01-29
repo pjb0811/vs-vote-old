@@ -16,6 +16,7 @@ const staticFiles = [
   '/manifest.json',
   '/service-worker.js',
   '/favicon.ico',
+  '/assets/*',
 ];
 
 staticFiles.forEach(file => {

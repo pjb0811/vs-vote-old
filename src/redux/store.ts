@@ -7,7 +7,7 @@ import promiseMiddleware from 'redux-promise-middleware';
 
 const logger = createLogger();
 const customizedPromiseMiddleware = promiseMiddleware({
-  promiseTypeSuffixes: ['LOADING', 'SUCCESS', 'FAILURE']
+  promiseTypeSuffixes: ['PENDING', 'SUCCESS', 'FAILURE']
 });
 
 const store = createStore(
