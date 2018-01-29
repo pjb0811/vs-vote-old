@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Route } from 'react-router-dom';
-import { Home, About, Counter } from './components/pages';
+import { Home, About, Counter, Login } from './components/pages';
 import Menu from './components/Menu';
 import { Helmet } from 'react-helmet';
 
@@ -29,6 +29,7 @@ class App extends React.Component<Props, State> {
           <Route exact={true} path="/" component={Home}/>
           <Route path="/about" component={About}/>
           <Route path="/counter" component={Counter}/>
+          <Route path="/login" component={Login}/>
         </div>
       </div>
     );
