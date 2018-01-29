@@ -1,4 +1,4 @@
-import  * as React from 'react';
+import * as React from 'react';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 import firebase from '../../firebase';
@@ -30,15 +30,10 @@ interface Actions {
   props: any;
 }
 
-class Login extends React.Component<Props> {
+class SignUp extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
-  }
-
-  signInWithGoogle() {
-    // var provider = new firebase.auth.GoogleAuthProvider();
-    // provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-    // firebase.auth().signInWithRedirect(provider);
+    this.state = {};
   }
 
   render() {
@@ -54,9 +49,9 @@ class Login extends React.Component<Props> {
 
     return (
       <div className="ui container">
-        <h2 className="ui teal center aligned header">로그인</h2>
+        <h2 className="ui teal center aligned header">회원 가입</h2>
         <form
-          className="ui large form error segments"
+          className="ui large form error"
           onSubmit={handleSubmit}
         >
           <div className="ui segment">
@@ -103,19 +98,7 @@ class Login extends React.Component<Props> {
               className="ui fluid large teal submit button"
               disabled={isSubmitting}
             >
-              로그인하기
-            </button>
-          </div>
-          <div className="ui center aligned segment">
-            <button
-              type="button"
-              className="ui google plus button"
-              onClick={() => {
-                this.signInWithGoogle();
-              }}
-            >
-              <i className="google plus icon"/>
-              Google Plus로 로그인
+              가입하기
             </button>
           </div>
         </form>
@@ -124,7 +107,7 @@ class Login extends React.Component<Props> {
   }
 }
 
-const withLogin = withFormik({
+const withSignUp = withFormik({
   mapPropsToValues: (props) => ({
     email: '',
     password: '',
@@ -138,7 +121,7 @@ const withLogin = withFormik({
   handleSubmit: (values: Values, actions: Actions) => {
     const { email, password } = values;
 
-    firebase.auth().signInWithEmailAndPassword(email, password)
+    firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(
         (user) => {
           const { history } = actions.props;
@@ -154,7 +137,7 @@ const withLogin = withFormik({
     actions.setSubmitting(false);
   },
 
-  displayName: 'Login',
-})(Login);
+  displayName: 'SignUp',
+})(SignUp);
 
-export default withLogin;
+export default withSignUp;
