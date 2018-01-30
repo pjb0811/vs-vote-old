@@ -1,12 +1,25 @@
 {
   "compilerOptions": {
     "outDir": "build-server",
-    "module": "commonjs",
     "target": "es6",
-    "noImplicitAny": true,
-    "sourceMap": true,
-    "jsx": "react",
     "moduleResolution": "node",
-    "baseUrl": "src"
-  }
+    "isolatedModules": false,
+    "jsx": "react",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "declaration": false,
+    "noImplicitAny": false,
+    "noImplicitUseStrict": false,
+    "removeComments": true,
+    "noLib": false,
+    "preserveConstEnums": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "module": "commonjs",
+    "sourceMap": true
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "compileOnSave": false,
+  "buildOnSave": false
 }
