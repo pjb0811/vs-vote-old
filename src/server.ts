@@ -4,7 +4,7 @@ import * as path from 'path';
 import * as express from 'express';
 import * as serialize from 'serialize-javascript';
 
-import App from '../src/server/render';
+import App from './server/render';
 
 const app = express();
 
@@ -21,13 +21,13 @@ const staticFiles = [
 
 staticFiles.forEach(file => {
   app.get(file, (req, res) => {
-    const filePath = path.join(__dirname, '../../build', req.url);
+    const filePath = path.join(__dirname, '../build', req.url);
     res.sendFile(filePath);
   });
 });
 
 app.get('*', async (req, res) => {
-  const template = path.join(__dirname, '../../build/index.html');
+  const template = path.join(__dirname, '../build/index.html');
   const htmlData = fs.readFileSync(template).toString();
   const rendered = App(req.url);
   const { html, helmet, state } = await rendered;

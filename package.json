@@ -12,7 +12,7 @@
     "build": "cross-env NODE_PATH=src react-scripts-ts build && tsc -p tsconfig.server.json",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
-    "serve": "yarn build && node build-server/src/server.js",
+    "serve": "yarn build && node build-server/server.js",
     "deploy": "yarn build && firebase deploy"
   },
   "devDependencies": {
