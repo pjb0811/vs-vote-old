@@ -4,3 +4,6 @@ export { default as Counter } from './Counter';
 export { default as Login } from './Login';
 export { default as Logout } from './Logout';
 export { default as SignUp } from './SignUp';
+export { default as Mypage } from './Mypage';
+export { default as List } from './List';
+export { default as Edit } from './Edit';

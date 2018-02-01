@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as counterActions from '../../redux/modules/counter';
 import * as postActions from '../../redux/modules/post';
+import loading from '../hoc/loading';
 
 interface Props {
   PostActions: typeof postActions;
@@ -48,26 +49,26 @@ class Counter extends React.Component<Props> {
     }
   }
 
+  viewPost = (res: Post) => {
+    return (
+      <div>
+        <h1>{res.data.title}</h1>
+        <p>{res.data.body}</p>
+      </div>
+    );
+  }
+
   render() {
     const { post, counter, CounterActions } = this.props;
-    const result = post.toJS();
+    const res = post.toJS();
+    const Loading = loading(this.viewPost);
 
     return (
       <div>
       <h1>{counter}</h1>
       <button onClick={CounterActions.increment}>+</button>
       <button onClick={CounterActions.decrement}>-</button>
-      {
-        result.pending ?
-          <h2>Loading...</h2> :
-          result.error ?
-            <h1>Error!</h1> : (
-              <div>
-                  <h1>{result.data.title}</h1>
-                  <p>{result.data.body}</p>
-              </div>
-          )
-      }
+      <Loading {...res}/>
       </div>
     );
   }
