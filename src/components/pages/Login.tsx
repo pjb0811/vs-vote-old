@@ -37,9 +37,22 @@ class Login extends React.Component<Props> {
     super(props);
   }
 
-  signInWithGoogle() {
-    const provider = new Firebase.auth.GoogleAuthProvider();
-    provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+  signInWithAuth(type: string) {
+    let provider: any;
+
+    if (type === 'google') {
+      provider = new Firebase.auth.GoogleAuthProvider();
+      provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+    }
+    if (type === 'facebook') {
+      provider = new Firebase.auth.FacebookAuthProvider();
+      provider.addScope('user_birthday');
+    }
+    if (type === 'github') {
+      provider = new Firebase.auth.GithubAuthProvider();
+      provider.addScope('repo');
+    }
+
     firebase.auth().signInWithPopup(provider).then((result) => {
       const { history } = this.props;
       const location = {
@@ -115,17 +128,39 @@ class Login extends React.Component<Props> {
               로그인하기
             </button>
           </div>
-          <div className="ui center aligned segment">
-            <button
-              type="button"
-              className="ui google plus button"
-              onClick={() => {
-                this.signInWithGoogle();
-              }}
-            >
-              <i className="google plus icon"/>
-              Google Plus로 로그인
-            </button>
+          <div className="ui center aligned segments">
+            <div className="three ui buttons">
+              <button
+                type="button"
+                className="ui google plus button"
+                onClick={() => {
+                  this.signInWithAuth('google');
+                }}
+              >
+                <i className="google plus icon"/>
+                Google Plus로 로그인
+              </button>
+              <button
+                type="button"
+                className="ui facebook button"
+                onClick={() => {
+                  this.signInWithAuth('facebook');
+                }}
+              >
+                <i className="facebook icon"/>
+                Facebook으로 로그인
+              </button>
+              <button
+                type="button"
+                className="ui github button"
+                onClick={() => {
+                  this.signInWithAuth('github');
+                }}
+              >
+                <i className="github icon"/>
+                Github으로 로그인
+              </button>
+            </div>
           </div>
         </form>
       </div>
