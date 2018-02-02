@@ -2,6 +2,7 @@ import  * as React from 'react';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 import firebase from '../../firebase';
+import * as Firebase from 'firebase';
 
 interface Props {
   values: Values;
@@ -17,6 +18,7 @@ interface Props {
   handleChange: any;
   handleBlur: any;
   handleSubmit: any;
+  history: any;
 }
 
 interface Values {
@@ -36,9 +38,16 @@ class Login extends React.Component<Props> {
   }
 
   signInWithGoogle() {
-    // var provider = new firebase.auth.GoogleAuthProvider();
-    // provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-    // firebase.auth().signInWithRedirect(provider);
+    const provider = new Firebase.auth.GoogleAuthProvider();
+    provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+    firebase.auth().signInWithPopup(provider).then((result) => {
+      const { history } = this.props;
+      const location = {
+        pathname: '/',
+        state: {}
+      };
+      history.push(location);
+    });
   }
 
   render() {
