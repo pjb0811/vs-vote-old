@@ -9,10 +9,8 @@ class Menu extends React.Component {
   render() {
     return (
       <div className="ui menu">
-        <NavLink exact={true} to="/" className="item" activeClassName="active">Versus Vote</NavLink>
-        {/* <NavLink exact={true} to="/list" className="item" activeClassName="active">List</NavLink>
-        <NavLink exact={true} to="/edit" className="item" activeClassName="active">Edit</NavLink> */}
-        <AuthButtonGroup className="item"/>
+        <NavLink exact={true} to="/" className="item" activeClassName="active">VS 투표하기</NavLink>
+        <AuthButtonGroup className="ui item"/>
       </div>
     );
   }

@@ -3,7 +3,6 @@ import * as React from 'react';
 const Home = () => {
   return (
     <div className="ui component">
-      home
       {/* <header className="App-header">
         <img src={'assets/logo.svg'} className="App-logo" alt="logo" />
         <h1 className="App-title">Welcome to React</h1>
