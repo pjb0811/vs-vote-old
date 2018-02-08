@@ -1,11 +1,6 @@
 import * as React from 'react';
-// import firebase from '../../firebase';
 
 class Edit extends React.Component {
-  /* componentWillMount() {
-    const storage = firebase.storage();
-    console.log(storage);
-  } */
 
   render() {
     return (
