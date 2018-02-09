@@ -156,7 +156,7 @@ const withSignUp = withFormik({
           const location = {
             pathname: '/'
           };
-          firebase.database().ref('users/' + userId).set({
+          firebase.database().ref('users/' + email.replace('.', '_')).set({
             userId,
             email,
           });

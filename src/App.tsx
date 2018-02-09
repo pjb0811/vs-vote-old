@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Route } from 'react-router-dom';
-import { 
-  Home, Login, Logout, SignUp, Mypage, List, Edit, Counter 
+import {
+  Home, Login, Logout, SignUp, MyPage, List, Edit, Counter
 } from './components/pages';
 import Menu from './components/Menu';
 import { Helmet } from 'react-helmet';
@@ -27,7 +27,7 @@ class App extends React.Component<Props, State> {
           <Route path="/login" component={Login}/>
           <Route path="/logout" component={Logout}/>
           <Route path="/signup" component={SignUp}/>
-          <Route path="/mypage" component={Mypage}/>
+          <Route path="/myPage" component={MyPage}/>
           <Route path="/list" component={List}/>
           <Route path="/edit" component={Edit}/>
           <Route path="/counter" component={Counter}/>

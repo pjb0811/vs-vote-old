@@ -1,0 +1,22 @@
+import * as React from 'react';
+import * as Loadable from 'react-loadable';
+import Loading from './Loading';
+
+const loadableComponent = (component: string) => {
+  return Loadable({
+    loader: () => import(`${component}`),
+    loading() {
+      return <Loading/>;
+    }
+  });
+};
+
+export const Home = loadableComponent('./Home');
+export const About = loadableComponent('./About');
+export const Counter = loadableComponent('./Counter');
+export const Login = loadableComponent('./Login');
+export const Logout = loadableComponent('./Logout');
+export const SignUp = loadableComponent('./SignUp');
+export const MyPage = loadableComponent('./MyPage');
+export const List = loadableComponent('./List');
+export const Edit = loadableComponent('./Edit');
