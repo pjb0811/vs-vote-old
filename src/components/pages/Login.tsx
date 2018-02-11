@@ -136,7 +136,6 @@ const withLogin = withFormik({
           const { history } = actions.props;
           const location = {
             pathname: '/',
-            state: {}
           };
           history.push(location);
         },

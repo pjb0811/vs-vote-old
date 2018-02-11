@@ -43,11 +43,15 @@ class AuthLogin extends React.Component<Props> {
     }
 
     firebase.auth().signInWithPopup(provider).then((result) => {
+      const { user } = result;
       const { history } = this.props;
       const location = {
-        pathname: '/',
-        state: {}
+        pathname: '/'
       };
+      firebase.database().ref('users/' + user.uid).update({
+        email: user.email,
+        displayName: user.displayName,
+      });
       history.push(location);
     });
   }
