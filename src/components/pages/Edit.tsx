@@ -58,7 +58,7 @@ class Edit extends React.Component<Props> {
             <div className="fields">
               <div className={`eight wide ${errors.file1 && touched.file1 ? 'field error' : 'field'}`}>
                 <label>이미지 1</label>
-                <input 
+                <input
                   type="file"
                   name="file1"
                   placeholder="Image1"
@@ -76,8 +76,8 @@ class Edit extends React.Component<Props> {
               </div>
               <div className={`eight wide ${errors.file2 && touched.file2 ? 'field error' : 'field'}`}>
                 <label>이미지 2</label>
-                <input 
-                  type="file" 
+                <input
+                  type="file"
                   name="file2"
                   placeholder="Image2"
                   onChange={(e: any) => {
@@ -123,7 +123,9 @@ const withEdit = withFormik({
     file2: Yup.mixed().required('파일을 등록해주세요.'),
   }),
   handleSubmit: (values: Values, actions: Actions) => {
+    let file1Name, file2Name;
     if (values.file1) {
+      file1Name = values.file1.name;
       if (!values.file1.name.match(/\.(gif|jpg|jpeg|tiff|png)$/i)) {
         actions.setErrors({ file1: '이미지 파일을 등록해주세요.' });
         return;
@@ -131,20 +133,33 @@ const withEdit = withFormik({
     }
 
     if (values.file2) {
+      file2Name = values.file2.name;
       if (!values.file2.name.match(/\.(gif|jpg|jpeg|tiff|png)$/i)) {
         actions.setErrors({ file2: '이미지 파일을 등록해주세요.' });
         return;
       }
     }
 
-    // const key = firebase.database().ref().child('list').push().key;
+    const key = firebase.database().ref().child('list').push().key;
     const user = firebase.auth().currentUser;
-    console.log(user);
-    
-    /* firebase.database().ref('list/' + key).set({
-      ...values,
-    });  */
-   
+
+    if (user) {
+      const { uid } = user;
+      const storage = firebase.storage();
+      const storageRef = storage.ref();
+      const file1Ref = storageRef.child(`images/${key}/${file1Name}`);
+      const file2Ref = storageRef.child(`images/${key}/${file2Name}`);
+
+      console.log(uid, file1Ref.fullPath, file2Ref.fullPath);
+
+      /*
+      firebase.database().ref('list/' + key).set({
+        uid,
+        ...values,
+      });
+      */
+    }
+
     actions.setSubmitting(false);
   },
 
