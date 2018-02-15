@@ -7,10 +7,14 @@ import Error from '../atoms/form/Error';
 interface Props {
   values: Values;
   touched: {
+    title1: boolean;
+    title2: boolean;
     file1: boolean;
     file2: boolean;
   };
   errors: {
+    title1: boolean;
+    title2: boolean;
     file1: boolean;
     file2: boolean;
   };
@@ -22,7 +26,8 @@ interface Props {
 }
 
 interface Values {
-  title: string;
+  title1: string;
+  title2: string;
   file1?: File;
   file2?: File;
   detail: string;
@@ -57,15 +62,32 @@ class Edit extends React.Component<Props> {
           className="ui large form error"
         >
           <div className="ui segment">
-            <div className="field">
-              <label>제목</label>
-              <input 
-                type="text"
-                name="title"
-                placeholder="title"
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
+            <div className="fields">
+              <div className={`seven wide ${errors.title1 && touched.title1 ? 'field error' : 'field'}`}>
+                <label>제목 1</label>
+                <input
+                  type="text"
+                  name="title1"
+                  placeholder="제목 1"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                <Error errors={errors} touched={touched} field="title1"/>
+              </div>
+              <div className="two wide field">
+                <strong>VS</strong>
+              </div>
+              <div className={`seven wide ${errors.title2 && touched.title2 ? 'field error' : 'field'}`}>
+                <label>제목 2</label>
+                <input
+                  type="text"
+                  name="title2"
+                  placeholder="제목 2"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                <Error errors={errors} touched={touched} field="title2"/>
+              </div>
             </div>
             <div className="fields">
               <div className={`eight wide ${errors.file1 && touched.file1 ? 'field error' : 'field'}`}>
@@ -116,31 +138,37 @@ class Edit extends React.Component<Props> {
 
 const withEdit = withFormik({
   mapPropsToValues: (props) => ({
-    title: '',
+    title1: '',
+    title2: '',
     file1: undefined,
     file2: undefined,
     detail: '',
   }),
   validationSchema: Yup.object().shape({
-    title: Yup.string()
-      .required('제목을 입력해주세요.')
+    title1: Yup.string()
+      .required('제목1을 입력해주세요.')
+      .max(20, '20자 이하로 작성해 주세요.'),
+    title2: Yup.string()
+      .required('제목2을 입력해주세요.')
       .max(20, '20자 이하로 작성해 주세요.'),
     file1: Yup.mixed().required('파일을 등록해주세요.'),
     file2: Yup.mixed().required('파일을 등록해주세요.'),
   }),
   handleSubmit: (values: Values, actions: Actions) => {
+    const { title1, title2, file1, file2, detail } = values;
     let file1Name, file2Name;
-    if (values.file1) {
-      file1Name = values.file1.name;
-      if (!values.file1.name.match(/\.(gif|jpg|jpeg|tiff|png)$/i)) {
+    
+    if (file1) {
+      file1Name = file1.name;
+      if (!file1.name.match(/\.(gif|jpg|jpeg|tiff|png)$/i)) {
         actions.setErrors({ file1: '이미지 파일을 등록해주세요.' });
         return;
       }
     }
 
-    if (values.file2) {
-      file2Name = values.file2.name;
-      if (!values.file2.name.match(/\.(gif|jpg|jpeg|tiff|png)$/i)) {
+    if (file2) {
+      file2Name = file2.name;
+      if (!file2.name.match(/\.(gif|jpg|jpeg|tiff|png)$/i)) {
         actions.setErrors({ file2: '이미지 파일을 등록해주세요.' });
         return;
       }
@@ -156,16 +184,15 @@ const withEdit = withFormik({
       const file1Ref = storageRef.child(`images/${key}/${file1Name}`);
       const file2Ref = storageRef.child(`images/${key}/${file2Name}`);
 
-      console.log(uid, file1Ref.fullPath, file2Ref.fullPath);
-
-      /*
       firebase.database().ref('list/' + key).set({
         uid,
-        ...values,
+        file1: file1Ref.fullPath,
+        file2: file2Ref.fullPath,
+        title1,
+        title2,
+        detail,
       });
-      */
     }
-
     actions.setSubmitting(false);
   },
 
