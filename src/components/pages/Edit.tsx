@@ -2,6 +2,7 @@ import * as React from 'react';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 import firebase from '../../firebase';
+import Error from '../atoms/form/Error';
 
 interface Props {
   values: Values;
@@ -21,6 +22,7 @@ interface Props {
 }
 
 interface Values {
+  title: string;
   file1?: File;
   file2?: File;
   detail: string;
@@ -55,6 +57,16 @@ class Edit extends React.Component<Props> {
           className="ui large form error"
         >
           <div className="ui segment">
+            <div className="field">
+              <label>제목</label>
+              <input 
+                type="text"
+                name="title"
+                placeholder="title"
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </div>
             <div className="fields">
               <div className={`eight wide ${errors.file1 && touched.file1 ? 'field error' : 'field'}`}>
                 <label>이미지 1</label>
@@ -67,12 +79,7 @@ class Edit extends React.Component<Props> {
                   }}
                   onBlur={handleBlur}
                 />
-                {
-                  errors.file1 && touched.file1 &&
-                  <div className="ui error message">
-                    <p>{errors.file1}</p>
-                  </div>
-                }
+                <Error errors={errors} touched={touched} field="file1"/>
               </div>
               <div className={`eight wide ${errors.file2 && touched.file2 ? 'field error' : 'field'}`}>
                 <label>이미지 2</label>
@@ -85,12 +92,7 @@ class Edit extends React.Component<Props> {
                   }}
                   onBlur={handleBlur}
                 />
-                {
-                  errors.file2 && touched.file2 &&
-                  <div className="ui error message">
-                    <p>{errors.file2}</p>
-                  </div>
-                }
+                <Error errors={errors} touched={touched} field="file2"/>
               </div>
             </div>
             <div className="field">
@@ -114,11 +116,15 @@ class Edit extends React.Component<Props> {
 
 const withEdit = withFormik({
   mapPropsToValues: (props) => ({
+    title: '',
     file1: undefined,
     file2: undefined,
     detail: '',
   }),
   validationSchema: Yup.object().shape({
+    title: Yup.string()
+      .required('제목을 입력해주세요.')
+      .max(20, '20자 이하로 작성해 주세요.'),
     file1: Yup.mixed().required('파일을 등록해주세요.'),
     file2: Yup.mixed().required('파일을 등록해주세요.'),
   }),

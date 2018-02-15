@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom';
 import {
   Home, Login, Logout, SignUp, MyPage, List, Edit, Counter
 } from './components/pages';
-import Menu from './components/Menu';
+import TopMenu from './components/menus/TopMenu';
 import { Helmet } from 'react-helmet';
 
 interface Props {}
@@ -22,7 +22,7 @@ class App extends React.Component<Props, State> {
           <title>Versus Vote</title>
         </Helmet>
         <div>
-          <Menu/>
+          <TopMenu/>
           <Route exact={true} path="/" component={Home}/>
           <Route path="/login" component={Login}/>
           <Route path="/logout" component={Logout}/>
