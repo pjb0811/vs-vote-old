@@ -1,8 +1,8 @@
 
 import * as React from 'react';
 import firebase from '../../../firebase';
-import Logout from './Logout';
-import Login from './Login';
+import Logon from './Logon';
+import Logoff from './Logoff';
 
 interface State {
   authenticated: boolean;
@@ -20,7 +20,7 @@ export default class extends React.Component<Props, State> {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     firebase.auth().onAuthStateChanged((user) => {
       this.setState((prevState, props) => {
         return {
@@ -32,8 +32,8 @@ export default class extends React.Component<Props, State> {
 
   render() {
     if (this.state.authenticated) {
-      return <Logout {...this.props}/>;
+      return <Logon {...this.props}/>;
     }
-    return <Login {...this.props}/>;
+    return <Logoff {...this.props}/>;
   }
 }

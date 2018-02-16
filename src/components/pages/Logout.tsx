@@ -13,7 +13,7 @@ class Logout extends React.Component<Props> {
     this.state = {};
   }
 
-  componentDidMount() {
+  componentWillMount() {
     firebase.auth().signOut().then(() => {
       const { history } = this.props;
       const location = {

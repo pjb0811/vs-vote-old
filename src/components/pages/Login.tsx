@@ -3,6 +3,7 @@ import { withFormik } from 'formik';
 import * as Yup from 'yup';
 import firebase from '../../firebase';
 import AuthLogin from '../atoms/buttons/AuthLogin';
+import Error from '../atoms/form/Error';
 
 interface Props {
   values: Values;
@@ -70,12 +71,7 @@ class Login extends React.Component<Props> {
                 />
               </div>
             </div>
-            {
-              errors.email && touched.email &&
-              <div className="ui error message">
-                <p>{errors.email}</p>
-              </div>
-            }
+            <Error errors={errors} touched={touched} field="email"/>
             <div className={errors.password && touched.password ? 'field error' : 'field'}>
               <div className="ui left icon input">
                 <i className="lock icon"/>
@@ -89,12 +85,7 @@ class Login extends React.Component<Props> {
                 />
               </div>
             </div>
-            {
-              errors.password && touched.password &&
-              <div className="ui error message">
-                <p>{errors.password}</p>
-              </div>
-            }
+            <Error errors={errors} touched={touched} field="password"/>
             <button
               type="submit"
               className="ui fluid large teal submit button"
@@ -138,11 +129,12 @@ const withLogin = withFormik({
             pathname: '/',
           };
           history.push(location);
+          actions.setSubmitting(false);
         },
         (error) => {
           actions.setErrors({ email: 'Error: ' + error.message });
+          actions.setSubmitting(false);
         });
-    actions.setSubmitting(false);
   },
 
   displayName: 'Login',

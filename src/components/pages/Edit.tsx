@@ -23,6 +23,7 @@ interface Props {
   handleBlur: any;
   handleSubmit: any;
   setFieldValue: any;
+  isValid: boolean;
 }
 
 interface Values {
@@ -39,9 +40,24 @@ interface Actions {
   props: any;
 }
 
-class Edit extends React.Component<Props> {
+type State = {
+  isOpen: boolean;
+};
+
+class Edit extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
+    this.state = {
+      isOpen: false
+    };
+  }
+
+  showModal(isOpen: boolean) {
+    this.setState((prevState, props) => {
+      return {
+        isOpen,
+      };
+    });
   }
 
   render() {
@@ -64,7 +80,6 @@ class Edit extends React.Component<Props> {
           <div className="ui segment">
             <div className="fields">
               <div className={`seven wide ${errors.title1 && touched.title1 ? 'field error' : 'field'}`}>
-                <label>제목 1</label>
                 <input
                   type="text"
                   name="title1"
@@ -78,7 +93,6 @@ class Edit extends React.Component<Props> {
                 <strong>VS</strong>
               </div>
               <div className={`seven wide ${errors.title2 && touched.title2 ? 'field error' : 'field'}`}>
-                <label>제목 2</label>
                 <input
                   type="text"
                   name="title2"
@@ -90,8 +104,7 @@ class Edit extends React.Component<Props> {
               </div>
             </div>
             <div className="fields">
-              <div className={`eight wide ${errors.file1 && touched.file1 ? 'field error' : 'field'}`}>
-                <label>이미지 1</label>
+              <div className={`seven wide ${errors.file1 && touched.file1 ? 'field error' : 'field'}`}>
                 <input
                   type="file"
                   name="file1"
@@ -103,8 +116,10 @@ class Edit extends React.Component<Props> {
                 />
                 <Error errors={errors} touched={touched} field="file1"/>
               </div>
-              <div className={`eight wide ${errors.file2 && touched.file2 ? 'field error' : 'field'}`}>
-                <label>이미지 2</label>
+              <div className="two wide field">
+                <strong>VS</strong>
+              </div>
+              <div className={`seven wide ${errors.file2 && touched.file2 ? 'field error' : 'field'}`}>
                 <input
                   type="file"
                   name="file2"
@@ -118,8 +133,11 @@ class Edit extends React.Component<Props> {
               </div>
             </div>
             <div className="field">
-              <label>세부 내용</label>
-              <textarea name="detail" onChange={handleChange}/>
+              <textarea 
+                name="detail"
+                placeholder="상세 내용"
+                onChange={handleChange}
+              />
             </div>
             <button
               type="button"
@@ -174,26 +192,44 @@ const withEdit = withFormik({
       }
     }
 
-    const key = firebase.database().ref().child('list').push().key;
     const user = firebase.auth().currentUser;
 
     if (user) {
-      const { uid } = user;
+      const key = firebase.database().ref().child('list').push().key;
       const storage = firebase.storage();
       const storageRef = storage.ref();
+      const { uid } = user;
       const file1Ref = storageRef.child(`images/${key}/${file1Name}`);
       const file2Ref = storageRef.child(`images/${key}/${file2Name}`);
 
       firebase.database().ref('list/' + key).set({
+        key,
         uid,
-        file1: file1Ref.fullPath,
-        file2: file2Ref.fullPath,
-        title1,
-        title2,
+        first: {
+          title: title1,
+          file: file1Ref.fullPath,
+          count: 0,
+        },
+        second: {
+          title: title2,
+          file: file2Ref.fullPath,
+          count: 0,
+        },
         detail,
+        date: new Date().getTime(),
       });
+      
+      file1Ref.put(file1).then(() => {
+        file2Ref.put(file2).then(() => {
+          const { history } = actions.props;
+          const location = {
+            pathname: '/',
+          };
+          history.push(location); 
+          actions.setSubmitting(false);
+        });
+      }); 
     }
-    actions.setSubmitting(false);
   },
 
   displayName: 'Edit',

@@ -5,7 +5,7 @@ interface Props {
   className: string;
 }
 
-const Login = (props: Props) => {
+const Logoff = (props: Props) => {
   const { className } = props;
   return (
     <div className="right menu">
@@ -15,4 +15,4 @@ const Login = (props: Props) => {
   );
 };
 
-export default Login;
+export default Logoff;
