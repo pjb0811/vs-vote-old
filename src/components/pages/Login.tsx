@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import firebase from '../../firebase';
 import AuthLogin from '../atoms/buttons/AuthLogin';
 import Error from '../atoms/form/Error';
+import { NavLink } from 'react-router-dom';
 
 interface Props {
   values: Values;
@@ -86,22 +87,27 @@ class Login extends React.Component<Props> {
               </div>
             </div>
             <Error errors={errors} touched={touched} field="password"/>
-            <button
-              type="submit"
-              className="ui fluid large teal submit button"
-              disabled={isSubmitting}
-            >
-              로그인하기
-            </button>
-          </div>
-          <div className="ui center aligned segments">
-            <div className="three ui buttons">
-              <AuthLogin history={...history} type="google"/>
-              <AuthLogin history={...history} type="facebook"/>
-              <AuthLogin history={...history} type="github"/>
+            <div className="ui field">
+              <button
+                type="submit"
+                className="ui fluid teal submit button"
+                disabled={isSubmitting}
+              >
+                로그인하기
+              </button>
+            </div>
+            <div className="ui field">
+              <div className="three ui buttons">
+                <AuthLogin history={...history} type="google"/>
+                <AuthLogin history={...history} type="facebook"/>
+                <AuthLogin history={...history} type="github"/>
+              </div>
             </div>
           </div>
         </form>
+        <div className="ui clearing message">
+          비밀번호를 잊어버리신 경우 <NavLink to="/resetPassword" className="ui floated right button">비밀번호 재설정 하기</NavLink>
+        </div>
       </div>
     );
   }

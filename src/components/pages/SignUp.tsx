@@ -58,7 +58,8 @@ class SignUp extends React.Component<Props> {
           onSubmit={handleSubmit}
         >
           <div className="ui segment">
-            {/* <div className={errors.userId && touched.userId ? 'field error' : 'field'}>
+            {/* 
+            <div className={errors.userId && touched.userId ? 'field error' : 'field'}>
               <div className="ui left icon input">
                 <i className="id badge icon"/>
                 <input
@@ -71,7 +72,8 @@ class SignUp extends React.Component<Props> {
                 />
               </div>
             </div>
-            <Error errors={errors} touched={touched} field="userId"/> */}
+            <Error errors={errors} touched={touched} field="userId"/>  
+            */}
             <div className={errors.email && touched.email ? 'field error' : 'field'}>
               <div className="ui left icon input">
                 <i className="mail icon"/>
@@ -122,11 +124,11 @@ const withSignUp = withFormik({
   }),
 
   validationSchema: Yup.object().shape({
-    userId: Yup.string()
+    /* userId: Yup.string()
       .matches(/\w/, '특수문자는 입력할 수 없습니다.')
       .min(4, '4자리 이상 입력해주세요.')
       .max(12, '12자리 이하로 입력해주세요.')
-      .required('ID를 입력해주세요.'),
+      .required('ID를 입력해주세요.'), */
     email: Yup.string().email('이메일 형식이 아닙니다.').required('이메일 주소를 입력해주세요.'),
     password: Yup.string().min(6, '6자리 이상 입력해주세요.').required('비밀번호를 입력해주세요.'),
   }),

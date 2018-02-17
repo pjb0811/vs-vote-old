@@ -29,7 +29,7 @@ class List extends React.Component<Props> {
             return (
               <div className="ui item" key={item.key}>
                 <div className="ui container">
-                  <div className="ui segment">
+                  <div className="ui center aligned segment">
                     <div className="ui grid">
                       <div className="seven wide column">
                         <h3>{item.first.title}</h3>

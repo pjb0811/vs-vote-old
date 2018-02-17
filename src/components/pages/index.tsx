@@ -5,6 +5,8 @@ import Loading from './Loading';
 const loadableComponent = (component: string) => {
   return Loadable({
     loader: () => import(`${component}`),
+    modules: [component],
+    webpack: () => [(require as any).resolveWeak(`${component}`)],
     loading() {
       return <Loading/>;
     }
@@ -20,3 +22,4 @@ export const SignUp = loadableComponent('./SignUp');
 export const MyPage = loadableComponent('./MyPage');
 export const List = loadableComponent('./List');
 export const Edit = loadableComponent('./Edit');
+export const ResetPassword = loadableComponent('./ResetPassword');

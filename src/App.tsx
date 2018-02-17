@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import {
-  Home, Login, Logout, SignUp, MyPage, List, Edit, Counter
+  Home, Login, Logout, SignUp, MyPage, List, Edit, Counter,
+  ResetPassword,
 } from './components/pages';
 import TopMenu from './components/menus/TopMenu';
 import { Helmet } from 'react-helmet';
@@ -21,17 +22,19 @@ class App extends React.Component<Props, State> {
         <Helmet>
           <title>Versus Vote</title>
         </Helmet>
-        <div>
-          <TopMenu/>
-          <Route exact={true} path="/" component={Home}/>
-          <Route path="/login" component={Login}/>
-          <Route path="/logout" component={Logout}/>
-          <Route path="/signup" component={SignUp}/>
-          <Route path="/myPage" component={MyPage}/>
-          <Route path="/list" component={List}/>
-          <Route path="/edit" component={Edit}/>
-          <Route path="/counter" component={Counter}/>
-        </div>
+        <TopMenu/>
+        <Route exact={true} path="/" component={Home}/>
+        <Route path="/login" component={Login}/>
+        <Route path="/logout" component={Logout}/>
+        <Route path="/signup" component={SignUp}/>
+        <Route path="/myPage" component={MyPage}/>
+        <Route path="/list" component={List}/>
+        <Route path="/edit" component={Edit}/>
+        <Switch>
+          <Route path="/resetPassword/:result" component={ResetPassword}/>
+          <Route path="/resetPassword" component={ResetPassword}/>
+        </Switch>
+        <Route path="/counter" component={Counter}/>
       </div>
     );
   }
