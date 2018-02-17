@@ -7,6 +7,10 @@ type Props = {
     first: {
       file: string;
       title: string;
+    },
+    second: {
+      file: string;
+      title: string;
     }
   }>
 };
@@ -15,41 +19,42 @@ class List extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
   }
+  
   render() {
     const { list } = this.props;
     return (
-      <div className="ui list">       
+      <div className="ui divided items">       
         {
           list.map((item) => {
             return (
-              <div className="item" key={item.key}>
-                {''}
+              <div className="ui item" key={item.key}>
+                <div className="ui container">
+                  <div className="ui segment">
+                    <div className="ui grid">
+                      <div className="seven wide column">
+                        <h3>{item.first.title}</h3>
+                        <img className="ui fluid image" src={item.first.file}/>
+                      </div>
+                      <div className="two wide column">
+                        <strong>VS</strong>
+                      </div>
+                      <div className="seven wide column">
+                        <h3>{item.second.title}</h3>
+                        <img className="ui fluid image" src={item.second.file}/>
+                      </div>
+                      {
+                        item.detail && 
+                        <div className="sixteen wide column">
+                          {item.detail}
+                        </div>
+                      }
+                    </div>
+                  </div>
+                </div>
               </div>
             );
           })
         }
-        {/* 
-        <div class="ui massive horizontal divided list">
-          <div class="item">
-            <img class="ui avatar image" src="/images/avatar/small/helen.jpg">
-            <div class="content">
-              <div class="header">Helen</div>
-            </div>
-          </div>
-          <div class="item">
-            <img class="ui avatar image" src="/images/avatar/small/christian.jpg">
-            <div class="content">
-              <div class="header">Christian</div>
-            </div>
-          </div>
-          <div class="item">
-            <img class="ui avatar image" src="/images/avatar/small/daniel.jpg">
-            <div class="content">
-              <div class="header">Daniel</div>
-            </div>
-          </div>
-        </div> 
-        */}
       </div>
     );
   } 

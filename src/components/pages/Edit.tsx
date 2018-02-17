@@ -173,7 +173,7 @@ const withEdit = withFormik({
     file2: Yup.mixed().required('파일을 등록해주세요.'),
   }),
   handleSubmit: (values: Values, actions: Actions) => {
-    const { title1, title2, file1, file2, detail } = values;
+    const { file1, file2 } = values;
     let file1Name, file2Name;
     
     if (file1) {
@@ -193,42 +193,50 @@ const withEdit = withFormik({
     }
 
     const user = firebase.auth().currentUser;
+    const key = firebase.database().ref().child('list').push().key;
+    const storage = firebase.storage();
+    const storageRef = storage.ref();
+    const file1Ref = storageRef.child(`images/${key}/${file1Name}`);
+    const file2Ref = storageRef.child(`images/${key}/${file2Name}`);
 
     if (user) {
-      const key = firebase.database().ref().child('list').push().key;
-      const storage = firebase.storage();
-      const storageRef = storage.ref();
       const { uid } = user;
-      const file1Ref = storageRef.child(`images/${key}/${file1Name}`);
-      const file2Ref = storageRef.child(`images/${key}/${file2Name}`);
+      setVote(uid);
+    }
 
-      firebase.database().ref('list/' + key).set({
+    async function setVote(uid: string) {
+      const { history } = actions.props;
+      const { title1, title2, detail } = values;
+      const location = {
+        pathname: '/',
+      };
+      await file1Ref.put(file1);
+      const url1 = await file1Ref.getDownloadURL().then((url: string) => {
+        return url;
+      });
+      await file2Ref.put(file2);
+      const url2 = await file2Ref.getDownloadURL().then((url: string) => {
+        return url;
+      });
+      await firebase.database().ref('list/' + key).set({
         key,
         uid,
         first: {
           title: title1,
-          file: file1Ref.fullPath,
+          file: url1,
           count: 0,
         },
         second: {
           title: title2,
-          file: file2Ref.fullPath,
+          file: url2,
           count: 0,
         },
         detail,
-        date: new Date().getTime(),
+        date: new Date().getTime() * -1,
       });
       
-      file1Ref.put(file1).then(() => {
-        file2Ref.put(file2).then(() => {
-          const { history } = actions.props;
-          const location = {
-            pathname: '/',
-          };
-          history.push(location); 
-          actions.setSubmitting(false);
-        });
-      }); 
+      await actions.setSubmitting(false);
+      await history.push(location); 
     }
   },
 

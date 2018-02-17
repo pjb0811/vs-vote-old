@@ -10,6 +10,10 @@ type State = {
     first: {
       file: string;
       title: string;
+    },
+    second: {
+      file: string;
+      title: string;
     }
   }>
 };
@@ -40,7 +44,7 @@ class Home extends React.Component<Props, State> {
   render() {
     const { list } = this.state;
     return (
-      <div className="ui component">
+      <div className="ui container">
         <div className="ui segment">
           <List list={list}/>
         </div>
