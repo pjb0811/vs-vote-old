@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import {
   Home, Login, Logout, SignUp, MyPage, List, Edit, Counter,
   ResetPassword,
@@ -30,10 +30,7 @@ class App extends React.Component<Props, State> {
         <Route path="/myPage" component={MyPage}/>
         <Route path="/list" component={List}/>
         <Route path="/edit" component={Edit}/>
-        <Switch>
-          <Route path="/resetPassword/:result" component={ResetPassword}/>
-          <Route path="/resetPassword" component={ResetPassword}/>
-        </Switch>
+        <Route path="/resetPassword" component={ResetPassword}/>
         <Route path="/counter" component={Counter}/>
       </div>
     );

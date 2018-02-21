@@ -130,16 +130,16 @@ const withLogin = withFormik({
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(
         (user) => {
+          actions.setSubmitting(false);
           const { history } = actions.props;
           const location = {
             pathname: '/',
           };
           history.push(location);
-          actions.setSubmitting(false);
         },
         (error) => {
-          actions.setErrors({ email: 'Error: ' + error.message });
           actions.setSubmitting(false);
+          actions.setErrors({ email: 'Error: ' + error.message });
         });
   },
 

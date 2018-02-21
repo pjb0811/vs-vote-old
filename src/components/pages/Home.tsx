@@ -41,6 +41,14 @@ class Home extends React.Component<Props, State> {
     });
   }
 
+  componentWillUnmount() {
+    this.setState((prevState, props) => {
+      return {
+        list: []
+      };
+    });
+  }
+
   render() {
     const { list } = this.state;
     return (

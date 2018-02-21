@@ -14,6 +14,7 @@ interface Props {
     email: boolean;
   };
   status?: {
+    message: string;
     success: boolean;
   };
   isSubmitting: any;
@@ -83,7 +84,17 @@ class ResetPassword extends React.Component<Props> {
             </div>
           </div>
         </form>
-        <Confirm message="test" open={status ? status.success : false} close={() => { return; }}/>
+        <Confirm 
+          message={status ? status.message : ''} 
+          open={status ? status.success : false} 
+          approve={() => { 
+            const { history } = this.props;
+            const location = {
+              pathname: '/login',
+            };
+            history.push(location); 
+          }}
+        />
       </div>
     );
   }
@@ -103,14 +114,8 @@ const withResetPassword = withFormik({
     const { email } = values;
     
     auth.sendPasswordResetEmail(email).then(() => {
-      /* 
-      const { history } = actions.props;
-      const location = {
-        pathname: '/resetPassword/success',
-      };
-      history.push(location); 
-      */
       actions.setStatus({
+        message: '비밀번호 재설정 이메일이 발송되었습니다. 확인 후 비밀번호를 재설정해주세요.',
         success: true,
       });
       actions.setSubmitting(false);

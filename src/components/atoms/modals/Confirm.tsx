@@ -4,7 +4,7 @@ import { Modal } from 'semantic-ui-react';
 type Props = {
   message: string;
   open: boolean;
-  close: Function;
+  approve: Function;
 };
 
 class Confirm extends React.Component<Props> {
@@ -13,12 +13,20 @@ class Confirm extends React.Component<Props> {
   }
   
   render() {
-    const { open, message, close } = this.props;
+    const { open, message, approve } = this.props;
     return (
-      <Modal size={'mini'} open={open} onClose={() => { close(); }}>
+      <Modal size={'mini'} open={open}>
         <div className="ui active modal">
           <div className="content">
             <p>{message}</p>
+          </div>
+          <div className="actions">
+            <div 
+              className="ui approve button"
+              onClick={() => { approve(); }}
+            >
+              확인
+            </div>
           </div>
         </div>
       </Modal> 
