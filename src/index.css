@@ -1,3 +1,7 @@
 .App > .ui.container {
   padding-top: 60px;
 }
+
+.App .form .two.wide.field {
+  text-align: center;
+}

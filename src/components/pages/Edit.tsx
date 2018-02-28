@@ -37,6 +37,7 @@ interface Values {
 interface Actions {
   setErrors: Function;
   setSubmitting: Function;
+  setStatus: Function;
   props: any;
 }
 
@@ -78,6 +79,7 @@ class Edit extends React.Component<Props, State> {
           className="ui large form error"
         >
           <div className="ui segment">
+            <h4 className="ui dividing header">제목</h4>
             <div className="fields">
               <div className={`seven wide ${errors.title1 && touched.title1 ? 'field error' : 'field'}`}>
                 <input
@@ -103,6 +105,7 @@ class Edit extends React.Component<Props, State> {
                 <Error errors={errors} touched={touched} field="title2"/>
               </div>
             </div>
+            <h4 className="ui dividing header">이미지</h4>
             <div className="fields">
               <div className={`seven wide ${errors.file1 && touched.file1 ? 'field error' : 'field'}`}>
                 <input
@@ -132,8 +135,9 @@ class Edit extends React.Component<Props, State> {
                 <Error errors={errors} touched={touched} field="file2"/>
               </div>
             </div>
+            <h4 className="ui dividing header">상세 내용</h4>
             <div className="field">
-              <textarea 
+              <textarea
                 name="detail"
                 placeholder="상세 내용"
                 onChange={handleChange}
@@ -175,7 +179,7 @@ const withEdit = withFormik({
   handleSubmit: (values: Values, actions: Actions) => {
     const { file1, file2 } = values;
     let file1Name, file2Name;
-    
+
     if (file1) {
       file1Name = file1.name;
       if (!file1.name.match(/\.(gif|jpg|jpeg|tiff|png)$/i)) {
@@ -205,11 +209,8 @@ const withEdit = withFormik({
     }
 
     async function setVote(uid: string) {
-      const { history } = actions.props;
       const { title1, title2, detail } = values;
-      const location = {
-        pathname: '/',
-      };
+
       await file1Ref.put(file1);
       const url1 = await file1Ref.getDownloadURL().then((url: string) => {
         return url;
@@ -234,9 +235,18 @@ const withEdit = withFormik({
         detail,
         date: new Date().getTime() * -1,
       });
-      
+
       await actions.setSubmitting(false);
-      await history.push(location); 
+      await actions.setStatus({
+        message: '비밀번호 재설정 이메일이 발송되었습니다. 확인 후 비밀번호를 재설정해주세요.',
+        success: true,
+      });
+
+      const { history } = actions.props;
+      const location = {
+        pathname: '/',
+      };
+      await history.push(location);
     }
   },
 
