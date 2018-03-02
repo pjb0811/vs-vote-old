@@ -7,19 +7,24 @@
     "sourceMap": true,
     "target": "es6",
 
-    "allowJs": true,
-    "jsx": "react",
     "moduleResolution": "node",
-    "rootDir": "../src",
-    "forceConsistentCasingInFileNames": true,
-    "noImplicitThis": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
+    "jsx": "react",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "declaration": false,
+    "noImplicitAny": false,
+    "noImplicitUseStrict": false,
+    "removeComments": true,
+    "noLib": false,
+    "preserveConstEnums": true,
     "suppressImplicitAnyIndexErrors": true,
-    "noUnusedLocals": true
   },
-  "compileOnSave": true,
+  "compileOnSave": false,
+  "buildOnSave": false,
   "include": [
     "../src"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }
