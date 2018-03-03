@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { Progress } from 'semantic-ui-react';
+import LazyLoad from 'react-lazyload';
+import { Transition } from 'semantic-ui-react';
 
 type Props = {
   item: {
@@ -33,14 +35,20 @@ class Item extends React.Component<Props> {
               <div className="row">
                 <div className="seven wide column">
                   <h3>{item.first.title}</h3>
-                  <img className="ui centered medium image" src={item.first.file}/>
+                  <LazyLoad height={'100%'} placeholder={<div>loading...</div>}>
+                    <Transition visible={false} animation="scale" duration={1000}>
+                      <img className="ui fluid image" src={item.first.file}/>
+                    </Transition>
+                  </LazyLoad>
                 </div>
                 <div className="two wide column">
                   <strong>VS</strong>
                 </div>
                 <div className="seven wide column">
                   <h3>{item.second.title}</h3>
-                  <img className="ui centered medium image" src={item.second.file}/>
+                  <LazyLoad height={'100%'}>
+                  <img className="ui fluid image" src={item.second.file}/>
+                  </LazyLoad>
                 </div>
               </div>
               {/* {

@@ -1,7 +1,5 @@
 import * as React from 'react';
 import Item from './Item';
-// import { Progress } from 'semantic-ui-react';
-import LazyLoad from 'react-lazyload';
 
 type Props = {
   data: Array<{
@@ -32,9 +30,7 @@ class List extends React.Component<Props> {
         {
           data.map((item) => {
             return (
-              <LazyLoad throttle={1000} height={355} key={item.key}>
-                <Item item={item}/>
-              </LazyLoad>
+              <Item item={item} key={item.key}/>
             );
           })
         }
