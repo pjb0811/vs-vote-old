@@ -33,7 +33,7 @@ class List extends React.Component<Props> {
         {
           data.map((item) => {
             return (
-              <LazyLoad key={item.key}>
+              <LazyLoad height={300} key={item.key}>
                 <div className="ui item" key={item.key}>
                   <div className="ui container">
                     <div className="ui center aligned segment">
