@@ -237,7 +237,7 @@ const withEdit = withFormik({
       const url2 = await file2Ref.getDownloadURL().then((url: string) => {
         return url;
       });
-      await firebase.database().ref('list/' + key).set({
+      firebase.database().ref('list/' + key).set({
         key,
         uid,
         first: {
@@ -255,8 +255,8 @@ const withEdit = withFormik({
         date: new Date().getTime() * -1,
       });
 
-      await actions.setSubmitting(false);
-      await actions.setStatus({
+      actions.setSubmitting(false);
+      actions.setStatus({
         message: '등록되었습니다.',
         success: true,
       });
