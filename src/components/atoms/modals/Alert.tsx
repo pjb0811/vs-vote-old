@@ -17,7 +17,7 @@ class Alert extends React.Component<Props> {
     return (
       <Modal size={'mini'} dimmer={'inverted'} open={open}>
         <div className="ui success message">
-          <i className="close icon" onClick={() => { close(false); }}/>
+          <i className="close icon" onClick={() => { close(); }}/>
           <div className="header">
            {message}
           </div>

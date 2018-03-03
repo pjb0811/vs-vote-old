@@ -3,6 +3,7 @@ import { withFormik } from 'formik';
 import * as Yup from 'yup';
 import firebase from '../../firebase';
 import Error from '../atoms/form/Error';
+import Alert from '../atoms/modals/Alert';
 
 interface Props {
   values: Values;
@@ -18,12 +19,17 @@ interface Props {
     file1: boolean;
     file2: boolean;
   };
+  status?: {
+    message: string;
+    success: boolean;
+  };
   isSubmitting: any;
   handleChange: any;
   handleBlur: any;
   handleSubmit: any;
   setFieldValue: any;
   isValid: boolean;
+  history: any;
 }
 
 interface Values {
@@ -70,6 +76,7 @@ class Edit extends React.Component<Props, State> {
       handleSubmit,
       handleChange,
       setFieldValue,
+      status
     } = this.props;
 
     return (
@@ -153,6 +160,17 @@ class Edit extends React.Component<Props, State> {
             </button>
           </div>
         </form>
+        <Alert
+          message={status ? status.message : ''}
+          open={status ? status.success : false}
+          close={() => {
+            const { history } = this.props;
+            const location = {
+              pathname: '/',
+            };
+            history.push(location);
+          }}
+        />
       </div>
     );
   }
@@ -233,20 +251,15 @@ const withEdit = withFormik({
           count: 0,
         },
         detail,
+        voters: {},
         date: new Date().getTime() * -1,
       });
 
       await actions.setSubmitting(false);
       await actions.setStatus({
-        message: '비밀번호 재설정 이메일이 발송되었습니다. 확인 후 비밀번호를 재설정해주세요.',
+        message: '등록되었습니다.',
         success: true,
       });
-
-      const { history } = actions.props;
-      const location = {
-        pathname: '/',
-      };
-      await history.push(location);
     }
   },
 

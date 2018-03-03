@@ -84,15 +84,15 @@ class ResetPassword extends React.Component<Props> {
             </div>
           </div>
         </form>
-        <Confirm 
-          message={status ? status.message : ''} 
-          open={status ? status.success : false} 
-          approve={() => { 
+        <Confirm
+          message={status ? status.message : ''}
+          open={status ? status.success : false}
+          approve={() => {
             const { history } = this.props;
             const location = {
               pathname: '/login',
             };
-            history.push(location); 
+            history.push(location);
           }}
         />
       </div>
@@ -112,7 +112,7 @@ const withResetPassword = withFormik({
   handleSubmit: (values: Values, actions: Actions) => {
     const auth = firebase.auth();
     const { email } = values;
-    
+
     auth.sendPasswordResetEmail(email).then(() => {
       actions.setStatus({
         message: '비밀번호 재설정 이메일이 발송되었습니다. 확인 후 비밀번호를 재설정해주세요.',
@@ -122,7 +122,7 @@ const withResetPassword = withFormik({
     }).catch((error) => {
       actions.setErrors({ email: 'Error: ' + error.message });
       actions.setSubmitting(false);
-    }); 
+    });
   },
 
   displayName: 'resetPassword',

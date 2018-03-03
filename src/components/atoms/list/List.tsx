@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Progress } from 'semantic-ui-react';
 
 type Props = {
   list: Array<{
@@ -7,10 +8,12 @@ type Props = {
     first: {
       file: string;
       title: string;
+      count: number;
     },
     second: {
       file: string;
       title: string;
+      count: number;
     }
   }>
 };
@@ -20,11 +23,11 @@ class List extends React.Component<Props> {
     super(props);
     this.state = {};
   }
-  
+
   render() {
     const { list } = this.props;
     return (
-      <div className="ui divided items">       
+      <div className="ui divided items">
         {
           list.map((item) => {
             return (
@@ -44,11 +47,18 @@ class List extends React.Component<Props> {
                         <img className="ui fluid image" src={item.second.file}/>
                       </div>
                       {
-                        item.detail && 
+                        item.detail &&
                         <div className="sixteen wide column">
                           {item.detail}
                         </div>
                       }
+                      <div className="seven wide column">
+                        <Progress percent={item.first.count} progress={true} color="teal"/>
+                      </div>
+                      <div className="two wide column">{''}</div>
+                      <div className="seven wide column">
+                        <Progress percent={item.first.count} progress={true} color="teal"/>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -58,7 +68,7 @@ class List extends React.Component<Props> {
         }
       </div>
     );
-  } 
+  }
 }
 
 export default List;

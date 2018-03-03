@@ -10,10 +10,12 @@ type State = {
     first: {
       file: string;
       title: string;
+      count: number;
     },
     second: {
       file: string;
       title: string;
+      count: number;
     }
   }>
 };
@@ -25,7 +27,7 @@ class Home extends React.Component<Props, State> {
       list: [],
     };
   }
-  
+
   componentWillMount() {
     const listRef = firebase.database().ref('list').orderByChild('date');
     listRef.once('value', (snapshot: any) => {
