@@ -2,7 +2,7 @@ import * as React from 'react';
 
 const Pending = () => {
   return (
-    <h2>Loading...</h2>
+    <div className="ui active loader">{''}</div>
   );
 };
 

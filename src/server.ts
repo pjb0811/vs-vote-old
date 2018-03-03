@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as express from 'express';
 import * as serialize from 'serialize-javascript';
+import * as Loadable from 'react-loadable';
 
 import App from './server/render';
 
@@ -43,6 +44,10 @@ app.get('*', async (req, res) => {
   res.status(200).send(renderedHtml);
 });
 
-server.listen(3000);
+Loadable.preloadAll().then(() => {
+  server.listen(3000, () => {
+    console.log('Running on http://localhost:3000/');
+  });
+});
 
 export default app;

@@ -243,12 +243,12 @@ const withEdit = withFormik({
         first: {
           title: title1,
           file: url1,
-          count: 0,
+          count: 1,
         },
         second: {
           title: title2,
           file: url2,
-          count: 0,
+          count: 1,
         },
         detail,
         voters: {},

@@ -29,7 +29,7 @@ class App extends React.Component<Props, State> {
         <Route path="/signup" component={SignUp}/>
         <Route path="/myPage" component={MyPage}/>
         <Route path="/list" component={List}/>
-        <Route path="/edit" component={Edit}/>
+        <Route path="/post" component={Edit}/>
         <Route path="/resetPassword" component={ResetPassword}/>
         <Route path="/counter" component={Counter}/>
       </div>

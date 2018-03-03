@@ -1,66 +1,74 @@
 import * as React from 'react';
-import firebase from '../../firebase';
 import List from '../atoms/list';
+import { connect } from 'react-redux';
+import * as listActions from '../../redux/modules/list';
+import { bindActionCreators } from 'redux';
+import loading from '../hoc/loading';
 
-type Props = {};
-type State = {
-  list: Array<{
+interface Props {
+  ListActions: typeof listActions;
+  list: ListData;
+}
+
+interface State {
+  list: ListData;
+}
+
+interface ListData {
+  pending: {};
+  error: boolean;
+  data: [{
     key: string;
     detail: string;
     first: {
       file: string;
       title: string;
       count: number;
-    },
+    };
     second: {
       file: string;
       title: string;
       count: number;
-    }
-  }>
-};
+    };
+  }];
+  toJS: Function;
+}
 
-class Home extends React.Component<Props, State> {
+class Home extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
-    this.state = {
-      list: [],
-    };
   }
-
   componentWillMount() {
-    const listRef = firebase.database().ref('list').orderByChild('date');
-    listRef.once('value', (snapshot: any) => {
-      snapshot.forEach((childSnapshot: any) => {
-        const childData = childSnapshot.val();
-        this.setState((prevState: State, props: Props) => {
-          prevState.list.push(childData);
-          return {
-            list: prevState.list,
-          };
-        });
-      });
-    });
+    this.getList();
   }
+  getList = async () => {
+    const { ListActions } = this.props;
 
-  componentWillUnmount() {
-    this.setState((prevState, props) => {
-      return {
-        list: []
-      };
-    });
+    try {
+      await ListActions.getList();
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   render() {
-    const { list } = this.state;
+    const list = this.props.list.toJS();
+    const Loading = loading(List);
     return (
       <div className="ui container">
         <div className="ui segment">
-          <List list={list}/>
+          <Loading {...list}/>
         </div>
       </div>
     );
   }
 }
 
-export default Home;
+export default connect(
+  (state: State) => ({
+    list: state.list
+  }),
+  (dispatch) => ({
+    ListActions: bindActionCreators(listActions, dispatch)
+  })
+)(Home);

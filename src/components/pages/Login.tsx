@@ -106,7 +106,7 @@ class Login extends React.Component<Props> {
           </div>
         </form>
         <div className="ui clearing message">
-          비밀번호를 잊어버리신 경우 <NavLink to="/resetPassword" className="ui floated right button">비밀번호 재설정 하기</NavLink>
+          비밀번호를 잊어버리신 경우 <NavLink to="/resetPassword">비밀번호를 재설정</NavLink>해주세요.
         </div>
       </div>
     );
