@@ -23,13 +23,15 @@ interface Props {
     message: string;
     success: boolean;
   };
-  isSubmitting: any;
-  handleChange: any;
-  handleBlur: any;
-  handleSubmit: any;
-  setFieldValue: any;
+  isSubmitting: boolean;
+  handleChange: (e: React.ChangeEvent<any>) => void;
+  handleBlur: (e: any) => void;
+  handleSubmit: (e: React.FormEvent<any>) => void;
+  setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
   isValid: boolean;
-  history: any;
+  history: {
+    push: Function;
+  };
 }
 
 interface Values {

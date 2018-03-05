@@ -7,15 +7,7 @@ import {
 import TopMenu from './components/menus/TopMenu';
 import { Helmet } from 'react-helmet';
 
-interface Props {}
-
-interface State {}
-
-class App extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-  }
-
+class App extends React.Component {
   render() {
     return (
       <div className="App">

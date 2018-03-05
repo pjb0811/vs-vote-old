@@ -23,10 +23,21 @@ type Props = {
 class Item extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
+    this.state = {
+      image: {
+        visible: false
+      }
+    };
   }
 
   render() {
     const { item } = this.props;
+    const loading = (
+      <div>
+        <div className="ui active loader">{''}</div>
+      </div>
+    );
+
     return (
       <div className="ui item" key={item.key}>
         <div className="ui container">
@@ -35,9 +46,9 @@ class Item extends React.Component<Props> {
               <div className="row">
                 <div className="seven wide column">
                   <h3>{item.first.title}</h3>
-                  <LazyLoad height={'100%'} placeholder={<div>loading...</div>}>
-                    <Transition visible={false} animation="scale" duration={1000}>
-                      <img className="ui fluid image" src={item.first.file}/>
+                  <LazyLoad throttle={1000} height={'100%'} placeholder={loading}>
+                    <Transition transitionOnMount={true} animation="scale" duration={1000}>
+                      <img className="ui fluid image middle aligned" src={item.first.file}/>
                     </Transition>
                   </LazyLoad>
                 </div>
@@ -46,8 +57,10 @@ class Item extends React.Component<Props> {
                 </div>
                 <div className="seven wide column">
                   <h3>{item.second.title}</h3>
-                  <LazyLoad height={'100%'}>
-                  <img className="ui fluid image" src={item.second.file}/>
+                  <LazyLoad throttle={1000} height={'100%'} placeholder={loading}>
+                    <Transition transitionOnMount={true} animation="scale" duration={1000}>
+                      <img className="ui fluid image middle aligned" src={item.second.file}/>
+                    </Transition>
                   </LazyLoad>
                 </div>
               </div>
