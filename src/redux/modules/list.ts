@@ -3,12 +3,14 @@ import { Map, List } from 'immutable';
 import firebase from '../../firebase';
 
 async function getListRef(uid: string) {
-  let listRef = firebase.database().ref('list').orderByChild('date');
+  let listRef: any = firebase.database().ref('list');
   let list: object[] = [];
-  console.log(uid);
-  /* if (uid) {
-    listRef = listRef.equalTo('uid', uid);
-  } */
+
+  if (uid) {
+    listRef = listRef.orderByChild('uid').equalTo(uid);
+  } else {
+    listRef = listRef.orderByChild('date');
+  }
 
   await listRef.once('value', (snapshot: any) => {
     snapshot.forEach((childSnapshot: any) => {

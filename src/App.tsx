@@ -12,7 +12,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <Helmet>
-          <title>Versus Vote</title>
+          <title>VS Vote</title>
         </Helmet>
         <TopMenu/>
         <div className="ui container">
