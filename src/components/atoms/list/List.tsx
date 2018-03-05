@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Item from './Item';
+import LazyLoad from 'react-lazyload';
 
 type Props = {
   data: Array<{
@@ -30,7 +31,9 @@ class List extends React.Component<Props> {
         {
           data.map((item) => {
             return (
-              <Item item={item} key={item.key}/>
+              <LazyLoad throttle={500} height={300} key={item.key}>
+                <Item item={item}/>
+              </LazyLoad>
             );
           })
         }

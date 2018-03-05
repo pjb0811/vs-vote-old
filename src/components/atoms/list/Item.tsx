@@ -39,16 +39,16 @@ class Item extends React.Component<Props> {
     );
 
     return (
-      <div className="ui item" key={item.key}>
+      <div className="ui item">
         <div className="ui container">
           <div className="ui center aligned segment">
             <div className="ui grid">
               <div className="row">
                 <div className="seven wide column">
                   <h3>{item.first.title}</h3>
-                  <LazyLoad throttle={1000} height={'100%'} placeholder={loading}>
-                    <Transition transitionOnMount={true} animation="scale" duration={1000}>
-                      <img className="ui fluid image middle aligned" src={item.first.file}/>
+                  <LazyLoad height={'100%'} placeholder={loading}>
+                    <Transition transitionOnMount={true} animation="scale" duration={2000}>
+                    <img className="ui fluid image middle aligned" src={item.first.file}/>
                     </Transition>
                   </LazyLoad>
                 </div>
@@ -57,8 +57,8 @@ class Item extends React.Component<Props> {
                 </div>
                 <div className="seven wide column">
                   <h3>{item.second.title}</h3>
-                  <LazyLoad throttle={1000} height={'100%'} placeholder={loading}>
-                    <Transition transitionOnMount={true} animation="scale" duration={1000}>
+                  <LazyLoad height={'100%'} placeholder={loading}>
+                    <Transition transitionOnMount={true} animation="scale" duration={2000}>
                       <img className="ui fluid image middle aligned" src={item.second.file}/>
                     </Transition>
                   </LazyLoad>

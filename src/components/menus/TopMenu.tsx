@@ -6,7 +6,7 @@ class TopMenu extends React.Component {
   render() {
     return (
       <div className="ui top fixed menu">
-        <NavLink exact={true} to="/" className="item" activeClassName="active">VS 투표하기</NavLink>
+        <NavLink exact={true} to="/" className="item" activeClassName="active">Home</NavLink>
         <LinkGroup className="ui item"/>
       </div>
     );
