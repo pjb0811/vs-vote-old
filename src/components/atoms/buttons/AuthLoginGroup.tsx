@@ -27,7 +27,7 @@ class AuthLoginGroup extends React.Component<Props, State> {
   }
 
   signInWithAuth(type: string) {
-    let provider: any;
+    let provider: Firebase.auth.GoogleAuthProvider | undefined;
 
     if (type === 'google') {
       provider = new Firebase.auth.GoogleAuthProvider();
@@ -42,29 +42,31 @@ class AuthLoginGroup extends React.Component<Props, State> {
       provider.addScope('repo');
     }
 
-    firebase.auth().signInWithPopup(provider).then(
-      (result) => {
-        const { user } = result;
-        const { history } = this.props;
-        const location = {
-          pathname: '/'
-        };
-        firebase.database().ref('users/' + user.uid).update({
-          email: user.email,
-          displayName: user.displayName,
-        });
-        history.push(location);
-      },
-      (error) => {
-        this.setState((prevState, props) => {
-          return {
-            message: error.message,
-            open: true,
-            type: 'error',
+    if (provider) {
+      firebase.auth().signInWithPopup(provider).then(
+        (result) => {
+          const { user } = result;
+          const { history } = this.props;
+          const location = {
+            pathname: '/'
           };
-        });
-      }
-    );
+          firebase.database().ref('users/' + user.uid).update({
+            email: user.email,
+            displayName: user.displayName,
+          });
+          history.push(location);
+        },
+        (error) => {
+          this.setState((prevState, props) => {
+            return {
+              message: error.message,
+              open: true,
+              type: 'error',
+            };
+          });
+        }
+      );
+    }
   }
 
   render() {

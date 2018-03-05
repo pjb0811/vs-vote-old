@@ -16,10 +16,10 @@ interface Props {
     email: boolean;
     password: boolean;
   };
-  isSubmitting: any;
-  handleChange: any;
-  handleBlur: any;
-  handleSubmit: any;
+  isSubmitting: boolean;
+  handleChange: (e: React.ChangeEvent<any>) => void;
+  handleBlur: (e: any) => void;
+  handleSubmit: (e: React.FormEvent<any>) => void;
 }
 
 interface Values {
@@ -58,7 +58,7 @@ class SignUp extends React.Component<Props> {
           onSubmit={handleSubmit}
         >
           <div className="ui segment">
-            {/* 
+            {/*
             <div className={errors.userId && touched.userId ? 'field error' : 'field'}>
               <div className="ui left icon input">
                 <i className="id badge icon"/>
@@ -72,7 +72,7 @@ class SignUp extends React.Component<Props> {
                 />
               </div>
             </div>
-            <Error errors={errors} touched={touched} field="userId"/>  
+            <Error errors={errors} touched={touched} field="userId"/>
             */}
             <div className={errors.email && touched.email ? 'field error' : 'field'}>
               <div className="ui left icon input">

@@ -17,11 +17,13 @@ interface Props {
     message: string;
     success: boolean;
   };
-  isSubmitting: any;
-  handleChange: any;
-  handleBlur: any;
-  handleSubmit: any;
-  history: any;
+  isSubmitting: boolean;
+  handleChange: (e: React.ChangeEvent<any>) => void;
+  handleBlur: (e: any) => void;
+  handleSubmit: (e: React.FormEvent<any>) => void;
+  history: {
+    push: Function;
+  };
 }
 
 interface Values {

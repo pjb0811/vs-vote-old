@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import {
-  Home, Login, Logout, SignUp, MyPage, List, Edit, Counter,
+  Home, Login, Logout, SignUp, List, Edit, Counter,
   ResetPassword,
 } from './components/pages';
 import TopMenu from './components/menus/TopMenu';
@@ -19,10 +19,12 @@ class App extends React.Component {
         <Route path="/login" component={Login}/>
         <Route path="/logout" component={Logout}/>
         <Route path="/signup" component={SignUp}/>
-        <Route path="/myPage" component={MyPage}/>
-        <Route path="/list" component={List}/>
-        <Route path="/post" component={Edit}/>
         <Route path="/resetPassword" component={ResetPassword}/>
+        <Switch>
+          <Route path="/list/:uid" component={List}/>
+          <Route path="/list" component={List}/>
+        </Switch>
+        <Route path="/post" component={Edit}/>
         <Route path="/counter" component={Counter}/>
       </div>
     );

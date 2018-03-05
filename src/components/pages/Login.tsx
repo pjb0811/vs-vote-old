@@ -17,10 +17,10 @@ interface Props {
     email: boolean;
     password: boolean;
   };
-  isSubmitting: any;
-  handleChange: any;
-  handleBlur: any;
-  handleSubmit: any;
+  isSubmitting: boolean;
+  handleChange: (e: React.ChangeEvent<any>) => void;
+  handleBlur: (e: any) => void;
+  handleSubmit: (e: React.FormEvent<any>) => void;
   history: any;
 }
 

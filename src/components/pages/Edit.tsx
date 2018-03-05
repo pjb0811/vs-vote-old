@@ -122,7 +122,7 @@ class Edit extends React.Component<Props, State> {
                   type="file"
                   name="file1"
                   placeholder="Image1"
-                  onChange={(e: any) => {
+                  onChange={(e: React.ChangeEvent<any>) => {
                     setFieldValue('file1', e.currentTarget.files[0]);
                   }}
                   onBlur={handleBlur}
@@ -137,7 +137,7 @@ class Edit extends React.Component<Props, State> {
                   type="file"
                   name="file2"
                   placeholder="Image2"
-                  onChange={(e: any) => {
+                  onChange={(e: React.ChangeEvent<any>) => {
                     setFieldValue('file2', e.currentTarget.files[0]);
                   }}
                   onBlur={handleBlur}
