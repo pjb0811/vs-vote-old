@@ -23,11 +23,6 @@ type Props = {
 class Item extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
-    this.state = {
-      image: {
-        visible: false
-      }
-    };
   }
 
   render() {

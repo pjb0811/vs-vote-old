@@ -22,6 +22,7 @@ interface Props {
   status?: {
     message: string;
     success: boolean;
+    type: string;
   };
   isSubmitting: boolean;
   handleChange: (e: React.ChangeEvent<any>) => void;
@@ -165,6 +166,7 @@ class Edit extends React.Component<Props, State> {
         <Alert
           message={status ? status.message : ''}
           open={status ? status.success : false}
+          type={status ? status.type : ''}
           close={() => {
             const { history } = this.props;
             const location = {
@@ -261,6 +263,7 @@ const withEdit = withFormik({
       actions.setStatus({
         message: '등록되었습니다.',
         success: true,
+        type: 'success'
       });
     }
   },

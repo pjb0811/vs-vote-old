@@ -10,7 +10,6 @@ interface Props {
 class Logout extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
-    this.state = {};
   }
 
   componentWillMount() {
@@ -18,7 +17,6 @@ class Logout extends React.Component<Props> {
       const { history } = this.props;
       const location = {
         pathname: '/',
-        state: {}
       };
       history.push(location);
     }).catch((error) => {

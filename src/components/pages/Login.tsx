@@ -2,6 +2,7 @@ import  * as React from 'react';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 import firebase from '../../firebase';
+import AuthLoginGroup from '../atoms/buttons/AuthLoginGroup';
 import AuthLogin from '../atoms/buttons/AuthLogin';
 import Error from '../atoms/form/Error';
 import { NavLink } from 'react-router-dom';
@@ -97,11 +98,11 @@ class Login extends React.Component<Props> {
               </button>
             </div>
             <div className="ui field">
-              <div className="three ui buttons">
-                <AuthLogin history={...history} type="google"/>
-                <AuthLogin history={...history} type="facebook"/>
-                <AuthLogin history={...history} type="github"/>
-              </div>
+              <AuthLoginGroup history={...history} className="three ui buttons">
+                <AuthLogin type="google"/>
+                <AuthLogin type="facebook" />
+                <AuthLogin type="github"/>
+              </AuthLoginGroup>
             </div>
           </div>
         </form>

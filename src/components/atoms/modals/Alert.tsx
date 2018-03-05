@@ -4,6 +4,7 @@ import { Modal } from 'semantic-ui-react';
 type Props = {
   message: string;
   open: boolean;
+  type: string;
   close: Function;
 };
 
@@ -13,14 +14,13 @@ class Alert extends React.Component<Props> {
   }
 
   render() {
-    const { message, open, close } = this.props;
+    const { message, open, type, close } = this.props;
     return (
       <Modal size={'mini'} dimmer={'inverted'} open={open}>
-        <div className="ui success message">
+        <div className={`ui ${type} message`}>
           <i className="close icon" onClick={() => { close(); }}/>
-          <div className="header">
-           {message}
-          </div>
+          <div className="header">{''}</div>
+          <p>{message}</p>
         </div>
       </Modal>
     );
