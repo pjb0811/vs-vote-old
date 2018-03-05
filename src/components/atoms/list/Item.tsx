@@ -42,7 +42,7 @@ class Item extends React.Component<Props> {
                 <div className="seven wide column">
                   <h3>{item.first.title}</h3>
                   <LazyLoad height={'100%'} placeholder={loading}>
-                    <Transition transitionOnMount={true} animation="scale" duration={2000}>
+                    <Transition transitionOnMount={true} animation="scale" duration={1000}>
                     <img className="ui fluid image middle aligned" src={item.first.file}/>
                     </Transition>
                   </LazyLoad>
@@ -53,7 +53,7 @@ class Item extends React.Component<Props> {
                 <div className="seven wide column">
                   <h3>{item.second.title}</h3>
                   <LazyLoad height={'100%'} placeholder={loading}>
-                    <Transition transitionOnMount={true} animation="scale" duration={2000}>
+                    <Transition transitionOnMount={true} animation="scale" duration={1000}>
                       <img className="ui fluid image middle aligned" src={item.second.file}/>
                     </Transition>
                   </LazyLoad>

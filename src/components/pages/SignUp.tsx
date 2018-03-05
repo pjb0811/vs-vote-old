@@ -51,7 +51,7 @@ class SignUp extends React.Component<Props> {
     } = this.props;
 
     return (
-      <div className="ui container">
+      <div>
         <h2 className="ui teal center aligned header">회원 가입</h2>
         <form
           className="ui large form error"

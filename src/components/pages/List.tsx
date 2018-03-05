@@ -8,6 +8,11 @@ import loading from '../hoc/loading';
 interface Props {
   ListActions: typeof listActions;
   list: ListData;
+  match?: {
+    params: {
+      uid: string;
+    };
+  };
 }
 
 interface State {
@@ -38,14 +43,17 @@ class List extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
   }
+
   componentWillMount() {
     this.getList();
   }
+
   getList = async () => {
-    const { ListActions } = this.props;
+    const { ListActions, match } = this.props;
+    const uid = match ? match.params.uid : '';
 
     try {
-      await ListActions.getList();
+      await ListActions.getList(uid);
     } catch (e) {
       console.log(e);
     }
@@ -55,7 +63,9 @@ class List extends React.Component<Props> {
     const list = this.props.list.toJS();
     const Loading = loading(versusList);
     return (
-      <Loading {...list}/>
+      <div className="ui segment">
+        <Loading {...list}/>
+      </div>
     );
   }
 }

@@ -83,7 +83,7 @@ class Edit extends React.Component<Props, State> {
     } = this.props;
 
     return (
-      <div className="ui container">
+      <div>
         <h2 className="ui teal center aligned header">VS 등록하기</h2>
         <form
           className="ui large form error"

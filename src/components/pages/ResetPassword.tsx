@@ -54,7 +54,7 @@ class ResetPassword extends React.Component<Props> {
     } = this.props;
 
     return (
-      <div className="ui container">
+      <div>
         <h2 className="ui teal center aligned header">비밀번호 재설정</h2>
         <form
           className="ui large form error segments"

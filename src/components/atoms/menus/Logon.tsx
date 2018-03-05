@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
+import firebase from '../../../firebase';
 // import { Dropdown } from 'semantic-ui-react';
 
 interface Props {
@@ -8,9 +9,16 @@ interface Props {
 
 const Logon = (props: Props) => {
   const { className } = props;
+  const user = firebase.auth().currentUser;
+  let uid: string | undefined;
+
+  if (user) {
+    uid = user.uid;
+  }
+
   return (
     <div className="right menu">
-      <NavLink to="/list" className={className} activeClassName="active">나의 VS 목록</NavLink>
+      <NavLink to={`/list${uid ? `/${uid}` : ''}`} className={className} activeClassName="active">나의 VS 목록</NavLink>
       <NavLink to="/post" className={className} activeClassName="active">VS 등록하기</NavLink>
       <NavLink to="/logout" className={className} activeClassName="active">로그아웃</NavLink>
       {/*

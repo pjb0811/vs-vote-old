@@ -15,17 +15,19 @@ class App extends React.Component {
           <title>Versus Vote</title>
         </Helmet>
         <TopMenu/>
-        <Route exact={true} path="/" component={Home}/>
-        <Route path="/login" component={Login}/>
-        <Route path="/logout" component={Logout}/>
-        <Route path="/signup" component={SignUp}/>
-        <Route path="/resetPassword" component={ResetPassword}/>
-        <Switch>
-          <Route path="/list/:uid" component={List}/>
-          <Route path="/list" component={List}/>
-        </Switch>
-        <Route path="/post" component={Edit}/>
-        <Route path="/counter" component={Counter}/>
+        <div className="ui container">
+          <Route exact={true} path="/" component={Home}/>
+          <Route path="/login" component={Login}/>
+          <Route path="/logout" component={Logout}/>
+          <Route path="/signup" component={SignUp}/>
+          <Route path="/resetPassword" component={ResetPassword}/>
+          <Switch>
+            <Route path="/list/:uid" component={List}/>
+            <Route path="/list" component={List}/>
+          </Switch>
+          <Route path="/post" component={Edit}/>
+          <Route path="/counter" component={Counter}/>
+        </div>
       </div>
     );
   }

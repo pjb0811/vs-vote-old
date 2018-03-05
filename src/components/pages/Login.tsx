@@ -53,7 +53,7 @@ class Login extends React.Component<Props> {
     } = this.props;
 
     return (
-      <div className="ui container">
+      <div>
         <h2 className="ui teal center aligned header">로그인</h2>
         <form
           className="ui large form error segments"
