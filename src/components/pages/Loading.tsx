@@ -1,9 +1,8 @@
 import * as React from 'react';
+import Loader from '../atoms/loader';
 
 const Loading = () => {
-  return (
-    <div className="ui active loader">{''}</div>
-  );
+  return <Loader/>;
 };
 
 export default Loading;

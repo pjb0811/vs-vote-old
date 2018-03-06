@@ -2,6 +2,7 @@ import * as React from 'react';
 import firebase from '../../../firebase';
 import * as Firebase from 'firebase';
 import Alert from '../modals/Alert';
+import Loader from '../loader';
 
 interface Props {
   history: {
@@ -11,23 +12,36 @@ interface Props {
 }
 
 interface State {
-  message: string;
-  open: boolean;
-  type: string;
+  loader: boolean;
+  alert: {
+    message: string;
+    open: boolean;
+    type: string;
+  };
 }
 
 class AuthLoginGroup extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      message: '',
-      open: false,
-      type: '',
+      loader: false,
+      alert: {
+        message: '',
+        open: false,
+        type: '',
+      },
     };
   }
 
   signInWithAuth(type: string) {
     let provider: Firebase.auth.GoogleAuthProvider | undefined;
+
+    this.setState((prevState, props) => {
+      return {
+        ...prevState,
+        loader: true
+      };
+    });
 
     if (type === 'google') {
       provider = new Firebase.auth.GoogleAuthProvider();
@@ -59,9 +73,12 @@ class AuthLoginGroup extends React.Component<Props, State> {
         (error) => {
           this.setState((prevState, props) => {
             return {
-              message: error.message,
-              open: true,
-              type: 'error',
+              loader: false,
+              alert: {
+                message: error.message,
+                open: true,
+                type: 'error',
+              }
             };
           });
         }
@@ -71,7 +88,7 @@ class AuthLoginGroup extends React.Component<Props, State> {
 
   render() {
     const { className, children } = this.props;
-    const { message, open, type } = this.state;
+    const { alert, loader } = this.state;
     const childrenWithProps = React.Children.map(children, (child: React.ReactElement<any>) => {
       return React.cloneElement(child, {
         ...child.props,
@@ -80,20 +97,29 @@ class AuthLoginGroup extends React.Component<Props, State> {
     });
 
     return (
-      <div className={className}>
-        {childrenWithProps}
-        <Alert
-          message={message}
-          open={open}
-          type={type}
-          close={() => {
-            this.setState((prevState, props) => {
-              return {
-                open: false,
-              };
-            });
-          }}
-        />
+      <div>
+        {
+          loader && <Loader/>
+        }
+        <div className={className}>
+          {childrenWithProps}
+          <Alert
+            message={alert.message}
+            open={alert.open}
+            type={alert.type}
+            close={() => {
+              this.setState((prevState, props) => {
+                return {
+                  ...prevState,
+                  alert: {
+                    ...prevState.alert,
+                    open: false,
+                  }
+                };
+              });
+            }}
+          />
+        </div>
       </div>
     );
   }

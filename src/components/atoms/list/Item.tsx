@@ -22,10 +22,10 @@ type Props = {
 
 interface State {
   image1: {
-    loaded: false;
+    loaded: boolean;
   };
   image2: {
-    loaded: false;
+    loaded: boolean;
   };
   duration: number;
 }
@@ -61,7 +61,7 @@ class Item extends React.Component<Props, State> {
   render() {
     const { item } = this.props;
     const { image1, image2, duration } = this.state;
-    const loading = (
+    const loader = (
       <div>
         <div className="ui active loader">{''}</div>
       </div>
@@ -85,7 +85,7 @@ class Item extends React.Component<Props, State> {
                       });
                     }}
                   />
-                  <LazyLoad height={'100%'} placeholder={loading}>
+                  <LazyLoad height={'100%'} placeholder={loader}>
                     <Transition
                       visible={image1.loaded}
                       transitionOnMount={true}
@@ -114,7 +114,7 @@ class Item extends React.Component<Props, State> {
                       });
                     }}
                   />
-                  <LazyLoad height={'100%'} placeholder={loading}>
+                  <LazyLoad height={'100%'} placeholder={loader}>
                     <Transition
                       visible={image2.loaded}
                       transitionOnMount={true}
@@ -129,14 +129,14 @@ class Item extends React.Component<Props, State> {
                   </LazyLoad>
                 </div>
               </div>
-              {/* {
+              {
                 item.detail &&
                 <div className="row">
                   <div className="sixteen wide column">
                     {item.detail}
                   </div>
                 </div>
-              } */}
+              }
               <div className="row">
                 <div className="seven wide column">
                   <Progress

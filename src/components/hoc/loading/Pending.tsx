@@ -1,11 +1,8 @@
 import * as React from 'react';
+import Loader from '../../atoms/loader';
 
 const Pending = () => {
-  return (
-    <div>
-      <div className="ui active loader">{''}</div>
-    </div>
-  );
+  return <Loader/>;
 };
 
 export default Pending;
