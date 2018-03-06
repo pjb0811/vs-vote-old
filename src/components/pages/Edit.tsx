@@ -241,7 +241,7 @@ const withEdit = withFormik({
       const url2 = await file2Ref.getDownloadURL().then((url: string) => {
         return url;
       });
-      firebase.database().ref('list/' + key).set({
+      firebase.database().ref(`list/${uid}/${key}`).set({
         key,
         uid,
         first: {

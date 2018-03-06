@@ -62,6 +62,7 @@ class List extends React.Component<Props> {
   render() {
     const list = this.props.list.toJS();
     const Loading = loading(versusList);
+
     return (
       <div className="ui segment">
         <Loading {...list}/>

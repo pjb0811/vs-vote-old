@@ -7,7 +7,7 @@ async function getListRef(uid: string) {
   let list: object[] = [];
 
   if (uid) {
-    listRef = listRef.orderByChild('uid').equalTo(uid);
+    listRef = listRef.child(uid).orderByChild('date');
   } else {
     listRef = listRef.orderByChild('date');
   }
@@ -15,7 +15,13 @@ async function getListRef(uid: string) {
   await listRef.once('value', (snapshot: any) => {
     snapshot.forEach((childSnapshot: any) => {
       const childData = childSnapshot.val();
-      list.push(childData);
+      if (uid) {
+        list.push(childData);
+      } else {
+        Object.keys(childData).map((key: string) => {
+          list.push(childData[key]);
+        });
+      }
     });
   });
   return {
