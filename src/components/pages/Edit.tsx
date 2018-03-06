@@ -200,10 +200,20 @@ const withEdit = withFormik({
   }),
   handleSubmit: (values: Values, actions: Actions) => {
     const { file1, file2 } = values;
-    let file1Name, file2Name;
+    const user = firebase.auth().currentUser;
+    const storageRef = firebase.storage().ref();
+    let uid: string = '';
+    let key: string | null = '';
+    let file1Ref: any;
+    let file2Ref: any;
+
+    if (user) {
+      uid = user.uid;
+      key = firebase.database().ref('list').child(uid).push().key;
+    }
 
     if (file1) {
-      file1Name = file1.name;
+      file1Ref = storageRef.child(`images/${key}/${file1.name}`);
       if (!file1.name.match(/\.(gif|jpg|jpeg|tiff|png)$/i)) {
         actions.setErrors({ file1: '이미지 파일을 등록해주세요.' });
         return;
@@ -211,26 +221,16 @@ const withEdit = withFormik({
     }
 
     if (file2) {
-      file2Name = file2.name;
+      file2Ref = storageRef.child(`images/${key}/${file2.name}`);
       if (!file2.name.match(/\.(gif|jpg|jpeg|tiff|png)$/i)) {
         actions.setErrors({ file2: '이미지 파일을 등록해주세요.' });
         return;
       }
     }
 
-    const user = firebase.auth().currentUser;
-    const key = firebase.database().ref().child('list').push().key;
-    const storage = firebase.storage();
-    const storageRef = storage.ref();
-    const file1Ref = storageRef.child(`images/${key}/${file1Name}`);
-    const file2Ref = storageRef.child(`images/${key}/${file2Name}`);
+    setVote();
 
-    if (user) {
-      const { uid } = user;
-      setVote(uid);
-    }
-
-    async function setVote(uid: string) {
+    async function setVote() {
       const { title1, title2, detail } = values;
 
       await file1Ref.put(file1);

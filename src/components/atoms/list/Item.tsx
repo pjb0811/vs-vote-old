@@ -20,13 +20,47 @@ type Props = {
   }
 };
 
-class Item extends React.Component<Props> {
+interface State {
+  image1: {
+    loaded: false;
+  };
+  image2: {
+    loaded: false;
+  };
+  duration: number;
+}
+
+class Item extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
+    this.state = {
+      image1: {
+        loaded: false,
+      },
+      image2: {
+        loaded: false,
+      },
+      duration: 1000
+    };
+  }
+
+  setImage(params: { name: string, loaded: boolean }) {
+    const { name, loaded } = params;
+    this.setState(
+      (prevState, props) => {
+        return {
+          ...prevState,
+          [name]: {
+            loaded
+          },
+        };
+      }
+    );
   }
 
   render() {
     const { item } = this.props;
+    const { image1, image2, duration } = this.state;
     const loading = (
       <div>
         <div className="ui active loader">{''}</div>
@@ -41,9 +75,27 @@ class Item extends React.Component<Props> {
               <div className="row">
                 <div className="seven wide column">
                   <h3>{item.first.title}</h3>
+                  <img
+                    className="ui image hidden"
+                    src={item.first.file}
+                    onLoad={() => {
+                      this.setImage({
+                        name: 'image1',
+                        loaded: true,
+                      });
+                    }}
+                  />
                   <LazyLoad height={'100%'} placeholder={loading}>
-                    <Transition transitionOnMount={true} animation="scale" duration={1000}>
-                    <img className="ui fluid image middle aligned" src={item.first.file}/>
+                    <Transition
+                      visible={image1.loaded}
+                      transitionOnMount={true}
+                      animation="scale"
+                      duration={duration}
+                    >
+                      <img
+                        className="ui fluid image middle aligned"
+                        src={item.first.file}
+                      />
                     </Transition>
                   </LazyLoad>
                 </div>
@@ -52,9 +104,27 @@ class Item extends React.Component<Props> {
                 </div>
                 <div className="seven wide column">
                   <h3>{item.second.title}</h3>
+                  <img
+                    className="ui image hidden"
+                    src={item.second.file}
+                    onLoad={() => {
+                      this.setImage({
+                        name: 'image2',
+                        loaded: true,
+                      });
+                    }}
+                  />
                   <LazyLoad height={'100%'} placeholder={loading}>
-                    <Transition transitionOnMount={true} animation="scale" duration={1000}>
-                      <img className="ui fluid image middle aligned" src={item.second.file}/>
+                    <Transition
+                      visible={image2.loaded}
+                      transitionOnMount={true}
+                      animation="scale"
+                      duration={duration}
+                    >
+                      <img
+                        className="ui fluid image middle aligned"
+                        src={item.second.file}
+                      />
                     </Transition>
                   </LazyLoad>
                 </div>
