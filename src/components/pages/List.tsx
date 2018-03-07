@@ -65,7 +65,6 @@ class List extends React.Component<Props> {
 
     return (
       <div className="ui segment">
-        <h2 className="ui teal center aligned header">나의 VS 목록</h2>
         <Loading {...list}/>
       </div>
     );

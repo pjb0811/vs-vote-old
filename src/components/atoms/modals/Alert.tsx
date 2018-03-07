@@ -5,7 +5,7 @@ type Props = {
   message: string;
   open: boolean;
   type: string;
-  close: Function;
+  onClose: Function;
 };
 
 class Alert extends React.Component<Props> {
@@ -14,11 +14,11 @@ class Alert extends React.Component<Props> {
   }
 
   render() {
-    const { message, open, type, close } = this.props;
+    const { message, open, type, onClose } = this.props;
     return (
       <Modal size={'mini'} dimmer={'inverted'} open={open}>
         <div className={`ui ${type} message`}>
-          <i className="close icon" onClick={() => { close(); }}/>
+          <i className="close icon" onClick={() => { onClose(); }}/>
           <div className="header">{''}</div>
           <p>{message}</p>
         </div>

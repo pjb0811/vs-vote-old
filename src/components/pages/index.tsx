@@ -21,5 +21,5 @@ export const Logout = loadableComponent('./Logout');
 export const SignUp = loadableComponent('./SignUp');
 export const MyPage = loadableComponent('./MyPage');
 export const List = loadableComponent('./List');
-export const Edit = loadableComponent('./Edit');
+export const Post = loadableComponent('./Post');
 export const ResetPassword = loadableComponent('./ResetPassword');

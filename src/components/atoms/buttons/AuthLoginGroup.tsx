@@ -107,7 +107,7 @@ class AuthLoginGroup extends React.Component<Props, State> {
             message={alert.message}
             open={alert.open}
             type={alert.type}
-            close={() => {
+            onClose={() => {
               this.setState((prevState, props) => {
                 return {
                   ...prevState,

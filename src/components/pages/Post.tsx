@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import firebase from '../../firebase';
 import Error from '../atoms/form/Error';
 import Alert from '../atoms/modals/Alert';
+import withAuth from '../hoc/auth';
 
 interface Props {
   values: Values;
@@ -51,21 +52,21 @@ interface Actions {
 }
 
 type State = {
-  isOpen: boolean;
+  open: boolean;
 };
 
-class Edit extends React.Component<Props, State> {
+class Post extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      isOpen: false
+      open: false
     };
   }
 
-  showModal(isOpen: boolean) {
+  showModal(open: boolean) {
     this.setState((prevState, props) => {
       return {
-        isOpen,
+        open,
       };
     });
   }
@@ -167,7 +168,7 @@ class Edit extends React.Component<Props, State> {
           message={status ? status.message : ''}
           open={status ? status.success : false}
           type={status ? status.type : ''}
-          close={() => {
+          onClose={() => {
             const { history } = this.props;
             const location = {
               pathname: '/',
@@ -180,7 +181,7 @@ class Edit extends React.Component<Props, State> {
   }
 }
 
-const withEdit = withFormik({
+const withPost = withFormik({
   mapPropsToValues: (props) => ({
     title1: '',
     title2: '',
@@ -268,7 +269,7 @@ const withEdit = withFormik({
     }
   },
 
-  displayName: 'Edit',
-})(Edit);
+  displayName: 'Post',
+})(withAuth(Post));
 
-export default withEdit;
+export default withPost;
