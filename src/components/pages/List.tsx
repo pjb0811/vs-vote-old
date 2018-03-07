@@ -1,5 +1,5 @@
 import * as React from 'react';
-import versusList from '../atoms/list';
+import vsList from '../atoms/list';
 import { connect } from 'react-redux';
 import * as listActions from '../../redux/modules/list';
 import { bindActionCreators } from 'redux';
@@ -61,10 +61,11 @@ class List extends React.Component<Props> {
 
   render() {
     const list = this.props.list.toJS();
-    const Loading = loading(versusList);
+    const Loading = loading(vsList);
 
     return (
       <div className="ui segment">
+        <h2 className="ui teal center aligned header">나의 VS 목록</h2>
         <Loading {...list}/>
       </div>
     );

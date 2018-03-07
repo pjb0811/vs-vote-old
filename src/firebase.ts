@@ -1,12 +1,12 @@
 import * as firebase from 'firebase';
 
 const config = {
-  apiKey: 'AIzaSyCeq1vCAwhiO9Bpj7op3KPpQqRyc1pcaZM',
-  authDomain: 'versus-vote.firebaseapp.com',
-  databaseURL: 'https://versus-vote.firebaseio.com',
-  projectId: 'versus-vote',
-  storageBucket: 'versus-vote.appspot.com',
-  messagingSenderId: '283112969857'
+  apiKey: 'AIzaSyAy874uE0fPqGkGbwXOhdBedX-ikghp954',
+  authDomain: 'vs-vote.firebaseapp.com',
+  databaseURL: 'https://vs-vote.firebaseio.com',
+  projectId: 'vs-vote',
+  storageBucket: 'vs-vote.appspot.com',
+  messagingSenderId: '748019287867'
 };
 
 const app = firebase.initializeApp(config);

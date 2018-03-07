@@ -1,1 +1,1 @@
-# versus-vote
+# vs-vote
