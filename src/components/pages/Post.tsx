@@ -203,6 +203,7 @@ const withPost = withFormik({
     const { file1, file2 } = values;
     const user = firebase.auth().currentUser;
     const storageRef = firebase.storage().ref();
+    const database = firebase.database();
     let uid: string = '';
     let key: string | null = '';
     let file1Ref: any;
@@ -210,7 +211,7 @@ const withPost = withFormik({
 
     if (user) {
       uid = user.uid;
-      key = firebase.database().ref('list').child(uid).push().key;
+      key = database.ref('list').child(uid).push().key;
     }
 
     if (file1) {
@@ -261,8 +262,8 @@ const withPost = withFormik({
         date: new Date().getTime() * -1,
       };
 
-      firebase.database().ref(`list/${uid}/${key}`).set(params);
-      firebase.database().ref(`users/${uid}/list/${key}`).set(params);
+      database.ref(`list/${uid}/${key}`).set(params);
+      database.ref(`users/${uid}/list/${key}`).set(params);
 
       actions.setSubmitting(false);
       actions.setStatus({
