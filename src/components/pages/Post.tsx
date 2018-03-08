@@ -242,7 +242,8 @@ const withPost = withFormik({
       const url2 = await file2Ref.getDownloadURL().then((url: string) => {
         return url;
       });
-      firebase.database().ref(`list/${uid}/${key}`).set({
+
+      const params = {
         key,
         uid,
         first: {
@@ -258,7 +259,10 @@ const withPost = withFormik({
         detail,
         voters: {},
         date: new Date().getTime() * -1,
-      });
+      };
+
+      firebase.database().ref(`list/${uid}/${key}`).set(params);
+      firebase.database().ref(`users/${uid}/list/${key}`).set(params);
 
       actions.setSubmitting(false);
       actions.setStatus({

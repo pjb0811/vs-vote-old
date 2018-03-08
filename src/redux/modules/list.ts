@@ -3,25 +3,20 @@ import { Map, List } from 'immutable';
 import firebase from '../../firebase';
 
 async function getListRef(uid: string) {
-  let listRef: any = firebase.database().ref('list');
+  let database: any = firebase.database();
+  let listRef: any;
   let list: object[] = [];
 
   if (uid) {
-    listRef = listRef.child(uid).orderByChild('date');
+    listRef = database.ref('users').child(`${uid}/list`).orderByChild('date');
   } else {
-    listRef = listRef.orderByChild('date');
+    listRef = database.ref('list').orderByChild('date');
   }
 
-  await listRef.once('value', (snapshot: any) => {
-    snapshot.forEach((childSnapshot: any) => {
-      const childData = childSnapshot.val();
-      if (uid) {
-        list.push(childData);
-      } else {
-        Object.keys(childData).map((key: string) => {
-          list.push(childData[key]);
-        });
-      }
+  await listRef.once('value', (data: any) => {
+    data.forEach((item: any) => {
+      const val = item.val();
+      list.push(val);
     });
   });
   return {
