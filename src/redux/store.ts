@@ -1,18 +1,20 @@
-
 import { createStore, applyMiddleware } from 'redux';
-import modules from './modules';
+import createSagaMiddleware from 'redux-saga';
 import { createLogger } from 'redux-logger';
-import ReduxThunk from 'redux-thunk';
-import promiseMiddleware from 'redux-promise-middleware';
+import reducers from './reducers';
+import rootSaga from './sagas';
 
-const logger = createLogger();
-const customizedPromiseMiddleware = promiseMiddleware({
-  promiseTypeSuffixes: ['PENDING', 'SUCCESS', 'FAILURE']
-});
-
-const store = createStore(
-  modules,
-  applyMiddleware(logger, ReduxThunk, customizedPromiseMiddleware)
-);
-
-export default store;
+export default function configureStore(initialState?: object) {
+  const sagaMiddleware = createSagaMiddleware();
+  const store = createStore(
+    reducers,
+    initialState,
+    applyMiddleware(
+      sagaMiddleware, createLogger()
+    )
+  );
+  // ssr testing
+  // store.runSaga = sagaMiddleware.run;
+  sagaMiddleware.run(rootSaga);
+  return store;
+}

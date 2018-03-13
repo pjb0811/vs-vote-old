@@ -1,12 +1,14 @@
 import * as React from 'react';
 import vsList from '../atoms/list';
 import { connect } from 'react-redux';
-import * as listActions from '../../redux/modules/list';
 import { bindActionCreators } from 'redux';
+import * as listActions from '../../redux/actions/list';
 import loading from '../hoc/loading';
 
 interface Props {
-  ListActions: typeof listActions;
+  ListActions: {
+    requestList: (uid: string) => {}
+  };
   list: ListData;
   match?: {
     params: {
@@ -48,15 +50,11 @@ class List extends React.Component<Props> {
     this.getList();
   }
 
-  getList = async () => {
+  getList() {
     const { ListActions, match } = this.props;
     const uid = match ? match.params.uid : '';
 
-    try {
-      await ListActions.getList(uid);
-    } catch (e) {
-      console.log(e);
-    }
+    ListActions.requestList(uid);
   }
 
   render() {
@@ -76,6 +74,6 @@ export default connect(
     list: state.list
   }),
   (dispatch) => ({
-    ListActions: bindActionCreators(listActions, dispatch)
+    ListActions: bindActionCreators(listActions as Props['ListActions'], dispatch)
   })
 )(List);

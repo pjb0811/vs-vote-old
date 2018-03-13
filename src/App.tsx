@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import {
-  Home, Login, Logout, SignUp, List, Post, Counter,
+  Home, Login, Logout, SignUp, List, Post,
   ResetPassword,
 } from './components/pages';
 import TopMenu from './components/menus/TopMenu';
@@ -26,7 +26,6 @@ class App extends React.Component {
             <Route path="/list" component={List}/>
           </Switch>
           <Route path="/post" component={Post}/>
-          <Route path="/counter" component={Counter}/>
         </div>
       </div>
     );

@@ -6,7 +6,7 @@ import store from '../redux/store';
 
 const Root = () => (
   <BrowserRouter>
-    <Provider store={store}>
+    <Provider store={store()}>
       <App/>
     </Provider>
   </BrowserRouter>

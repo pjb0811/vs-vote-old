@@ -14,8 +14,6 @@ const loadableComponent = (component: string) => {
 };
 
 export const Home = loadableComponent('./Home');
-export const About = loadableComponent('./About');
-export const Counter = loadableComponent('./Counter');
 export const Login = loadableComponent('./Login');
 export const Logout = loadableComponent('./Logout');
 export const SignUp = loadableComponent('./SignUp');
