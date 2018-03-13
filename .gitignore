@@ -12,6 +12,9 @@
 /build-server
 /functions/lib
 
+# firebase
+/src/firebase.ts
+
 # misc
 .DS_Store
 .env.local

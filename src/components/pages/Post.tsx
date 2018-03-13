@@ -85,22 +85,22 @@ class Post extends React.Component<Props, State> {
 
     return (
       <div>
-        <h2 className="ui teal center aligned header">VS 등록하기</h2>
+        <h2 className="ui teal center aligned header">Post VS</h2>
         <form
           className="ui large form error"
         >
           <div className="ui segment">
-            <h4 className="ui dividing header">제목</h4>
+            <h4 className="ui dividing header">Title</h4>
             <div className="fields">
               <div className={`seven wide ${errors.title1 && touched.title1 ? 'field error' : 'field'}`}>
                 <input
                   type="text"
                   name="title1"
-                  placeholder="제목 1"
+                  placeholder="First title"
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-                <Error errors={errors} touched={touched} field="title1"/>
+                <Error errors={errors} touched={touched} field="First title"/>
               </div>
               <div className="two wide field">
                 <strong>VS</strong>
@@ -109,20 +109,20 @@ class Post extends React.Component<Props, State> {
                 <input
                   type="text"
                   name="title2"
-                  placeholder="제목 2"
+                  placeholder="Second title"
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-                <Error errors={errors} touched={touched} field="title2"/>
+                <Error errors={errors} touched={touched} field="Second title"/>
               </div>
             </div>
-            <h4 className="ui dividing header">이미지</h4>
+            <h4 className="ui dividing header">Image</h4>
             <div className="fields">
               <div className={`seven wide ${errors.file1 && touched.file1 ? 'field error' : 'field'}`}>
                 <input
                   type="file"
                   name="file1"
-                  placeholder="Image1"
+                  placeholder="First image"
                   onChange={(e: React.ChangeEvent<any>) => {
                     setFieldValue('file1', e.currentTarget.files[0]);
                   }}
@@ -146,11 +146,11 @@ class Post extends React.Component<Props, State> {
                 <Error errors={errors} touched={touched} field="file2"/>
               </div>
             </div>
-            <h4 className="ui dividing header">상세 내용</h4>
+            <h4 className="ui dividing header">Detail</h4>
             <div className="field">
               <textarea
                 name="detail"
-                placeholder="상세 내용"
+                placeholder="Detail"
                 onChange={handleChange}
               />
             </div>
@@ -160,7 +160,7 @@ class Post extends React.Component<Props, State> {
               disabled={isSubmitting}
               onClick={handleSubmit}
             >
-              등록하기
+              Submit
             </button>
           </div>
         </form>
@@ -191,33 +191,32 @@ const withPost = withFormik({
   }),
   validationSchema: Yup.object().shape({
     title1: Yup.string()
-      .required('제목1을 입력해주세요.')
-      .max(20, '20자 이하로 작성해 주세요.'),
+      .required('Please enter the first title.')
+      .max(20, 'Please fill in 20 characters or less.'),
     title2: Yup.string()
-      .required('제목2을 입력해주세요.')
-      .max(20, '20자 이하로 작성해 주세요.'),
-    file1: Yup.mixed().required('파일을 등록해주세요.'),
-    file2: Yup.mixed().required('파일을 등록해주세요.'),
+      .required('Please enter a second title.')
+      .max(20, 'Please fill in 20 characters or less.'),
+    file1: Yup.mixed().required('Please upload the file.'),
+    file2: Yup.mixed().required('Please upload the file.'),
   }),
   handleSubmit: (values: Values, actions: Actions) => {
     const { file1, file2 } = values;
     const user = firebase.auth().currentUser;
     const storageRef = firebase.storage().ref();
     const database = firebase.database();
+    const key = database.ref('list').push().key;
     let uid: string = '';
-    let key: string | null = '';
     let file1Ref: any;
     let file2Ref: any;
 
     if (user) {
       uid = user.uid;
-      key = database.ref('list').child(uid).push().key;
     }
 
     if (file1) {
       file1Ref = storageRef.child(`images/${key}/${file1.name}`);
       if (!file1.name.match(/\.(gif|jpg|jpeg|tiff|png)$/i)) {
-        actions.setErrors({ file1: '이미지 파일을 등록해주세요.' });
+        actions.setErrors({ file1: 'Please upload an image file.' });
         return;
       }
     }
@@ -225,7 +224,7 @@ const withPost = withFormik({
     if (file2) {
       file2Ref = storageRef.child(`images/${key}/${file2.name}`);
       if (!file2.name.match(/\.(gif|jpg|jpeg|tiff|png)$/i)) {
-        actions.setErrors({ file2: '이미지 파일을 등록해주세요.' });
+        actions.setErrors({ file2: 'Please upload an image file.' });
         return;
       }
     }
@@ -262,7 +261,7 @@ const withPost = withFormik({
         date: new Date().getTime() * -1,
       };
 
-      database.ref(`list/${uid}/${key}`).set(params);
+      database.ref(`list/${key}`).set(params);
       database.ref(`users/${uid}/list/${key}`).set(params);
 
       actions.setSubmitting(false);

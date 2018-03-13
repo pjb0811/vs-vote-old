@@ -24,9 +24,9 @@ const Logon = (props: Props) => {
           <NavLink to="/post" className={className} activeClassName="active">VS 등록하기</NavLink>
         </Dropdown.Menu>
       </Dropdown> */}
-      <NavLink to={`/list/${uid}`} className={className} activeClassName="active">나의 VS 목록</NavLink>
-      <NavLink to="/post" className={className} activeClassName="active">VS 등록하기</NavLink>
-      <NavLink to="/logout" className={className} activeClassName="active">로그아웃</NavLink>
+      <NavLink to={`/list/${uid}`} className={className} activeClassName="active">My VS List</NavLink>
+      <NavLink to="/post" className={className} activeClassName="active">Post VS</NavLink>
+      <NavLink to="/logout" className={className} activeClassName="active">Logout</NavLink>
     </div>
   );
 };
