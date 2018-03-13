@@ -54,7 +54,7 @@ class Login extends React.Component<Props> {
 
     return (
       <div>
-        <h2 className="ui teal center aligned header">로그인</h2>
+        <h2 className="ui teal center aligned header">Login</h2>
         <form
           className="ui large form error segments"
           onSubmit={handleSubmit}
@@ -66,7 +66,7 @@ class Login extends React.Component<Props> {
                 <input
                   type="text"
                   name="email"
-                  placeholder="이메일"
+                  placeholder="e-mail"
                   value={values.email}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -80,7 +80,7 @@ class Login extends React.Component<Props> {
                 <input
                   type="password"
                   name="password"
-                  placeholder="비밀번호"
+                  placeholder="password"
                   value={values.password}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -94,7 +94,7 @@ class Login extends React.Component<Props> {
                 className="ui fluid teal submit button"
                 disabled={isSubmitting}
               >
-                로그인하기
+                Submit
               </button>
             </div>
             <div className="ui field">
@@ -107,7 +107,7 @@ class Login extends React.Component<Props> {
           </div>
         </form>
         <div className="ui clearing message">
-          비밀번호를 잊어버리신 경우 <NavLink to="/resetPassword">비밀번호를 재설정</NavLink>해주세요.
+          If you forget your password, please <NavLink to="/resetPassword">reset your password.</NavLink>
         </div>
       </div>
     );
@@ -121,8 +121,12 @@ const withLogin = withFormik({
   }),
 
   validationSchema: Yup.object().shape({
-    email: Yup.string().email('이메일 형식이 아닙니다.').required('이메일 주소를 입력해주세요.'),
-    password: Yup.string().min(6, '6자리 이상 입력해주세요.').required('비밀번호를 입력해주세요.'),
+    email: Yup.string()
+      .email('Invalid email address.')
+      .required('Please enter your email address.'),
+    password: Yup.string()
+      .min(6, 'Please enter at least 6 digits.')
+      .required('Please enter a password.'),
   }),
 
   handleSubmit: (values: Values, actions: Actions) => {

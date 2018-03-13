@@ -7,14 +7,14 @@ import Error from '../atoms/form/Error';
 interface Props {
   values: Values;
   touched: {
-    userId: boolean;
     email: boolean;
     password: boolean;
+    confirmPassword: boolean;
   };
   errors: {
-    userId: boolean;
     email: boolean;
     password: boolean;
+    confirmPassword: boolean;
   };
   isSubmitting: boolean;
   handleChange: (e: React.ChangeEvent<any>) => void;
@@ -23,9 +23,9 @@ interface Props {
 }
 
 interface Values {
-  userId: string;
   email: string;
   password: string;
+  confirmPassword: string;
 }
 
 interface Actions {
@@ -52,35 +52,19 @@ class SignUp extends React.Component<Props> {
 
     return (
       <div>
-        <h2 className="ui teal center aligned header">회원 가입</h2>
+        <h2 className="ui teal center aligned header">Sign Up</h2>
         <form
           className="ui large form error"
           onSubmit={handleSubmit}
         >
           <div className="ui segment">
-            {/*
-            <div className={errors.userId && touched.userId ? 'field error' : 'field'}>
-              <div className="ui left icon input">
-                <i className="id badge icon"/>
-                <input
-                  type="text"
-                  name="userId"
-                  placeholder="아이디"
-                  value={values.userId}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-              </div>
-            </div>
-            <Error errors={errors} touched={touched} field="userId"/>
-            */}
             <div className={errors.email && touched.email ? 'field error' : 'field'}>
               <div className="ui left icon input">
                 <i className="mail icon"/>
                 <input
                   type="text"
                   name="email"
-                  placeholder="이메일"
+                  placeholder="e-mail"
                   value={values.email}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -94,7 +78,7 @@ class SignUp extends React.Component<Props> {
                 <input
                   type="password"
                   name="password"
-                  placeholder="비밀번호"
+                  placeholder="password"
                   value={values.password}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -102,12 +86,26 @@ class SignUp extends React.Component<Props> {
               </div>
             </div>
             <Error errors={errors} touched={touched} field="password"/>
+            <div className={errors.confirmPassword && touched.confirmPassword ? 'field error' : 'field'}>
+              <div className="ui left icon input">
+                <i className="lock icon"/>
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  placeholder="confirm password"
+                  value={values.confirmPassword}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </div>
+            </div>
+            <Error errors={errors} touched={touched} field="confirmPassword"/>
             <button
               type="submit"
               className="ui fluid large teal submit button"
               disabled={isSubmitting}
             >
-              가입하기
+              Submit
             </button>
           </div>
         </form>
@@ -118,21 +116,20 @@ class SignUp extends React.Component<Props> {
 
 const withSignUp = withFormik({
   mapPropsToValues: (props) => ({
-    userId: '',
     email: '',
     password: '',
+    confirmPassword: '',
   }),
-
   validationSchema: Yup.object().shape({
-    /* userId: Yup.string()
-      .matches(/\w/, '특수문자는 입력할 수 없습니다.')
-      .min(4, '4자리 이상 입력해주세요.')
-      .max(12, '12자리 이하로 입력해주세요.')
-      .required('ID를 입력해주세요.'), */
-    email: Yup.string().email('이메일 형식이 아닙니다.').required('이메일 주소를 입력해주세요.'),
-    password: Yup.string().min(6, '6자리 이상 입력해주세요.').required('비밀번호를 입력해주세요.'),
+    email: Yup.string()
+      .email('Invalid email address.')
+      .required('Please enter your email address.'),
+    password: Yup.string()
+      .min(6, 'Please enter at least 6 digits.')
+      .required('Please enter a password.'),
+    confirmPassword: Yup.string()
+      .required('Please confirm your password.'),
   }),
-
   handleSubmit: (values: Values, actions: Actions) => {
     let { email, password } = values;
 
@@ -144,7 +141,6 @@ const withSignUp = withFormik({
             pathname: '/'
           };
           firebase.database().ref('users/' + user.uid).set({
-            // userId,
             email,
             password,
           });

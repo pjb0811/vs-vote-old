@@ -38,7 +38,7 @@ class AuthLogin extends React.Component<Props> {
         }}
       >
         <i className={`${classes} icon`}/>
-        {text}으로 로그인
+        {text}
       </button>
     );
   }
