@@ -196,15 +196,27 @@ const withPost = withFormik({
     title2: Yup.string()
       .required('Please enter a second title.')
       .max(20, 'Please fill in 20 characters or less.'),
+    file1: Yup.lazy((value) => {
+      console.log(value, typeof value);
+      if (typeof value === 'object') {
+        return Yup.object().shape({
+          name: Yup.string().matches(/\.(gif|jpg|jpeg|tiff|png)$/i, '${path} is not image file.'),
+        });
+      }
+      return Yup.string()
+        .required('Please upload the file.');
+    }),
+    /*
     file1: Yup.mixed()
       .required('Please upload the file.'),
     file2: Yup.mixed()
       .required('Please upload the file.'),
+    */
   }),
   handleSubmit: (values: Values, actions: Actions) => {
     const { file1, file2 } = values;
     const user = firebase.auth().currentUser;
-    const storageRef = firebase.storage().ref();
+    // const storageRef = firebase.storage().ref();
     const database = firebase.database();
     const key = database.ref('list').push().key;
     let uid: string = '';
@@ -215,7 +227,7 @@ const withPost = withFormik({
       uid = user.uid;
     }
 
-    if (file1) {
+    /* if (file1) {
       file1Ref = storageRef.child(`images/${key}/${file1.name}`);
       if (!file1.name.match(/\.(gif|jpg|jpeg|tiff|png)$/i)) {
         actions.setErrors({ file1: 'Please upload an image file.' });
@@ -229,7 +241,7 @@ const withPost = withFormik({
         actions.setErrors({ file2: 'Please upload an image file.' });
         return;
       }
-    }
+    } */
 
     setVote();
 
