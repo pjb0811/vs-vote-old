@@ -196,8 +196,10 @@ const withPost = withFormik({
     title2: Yup.string()
       .required('Please enter a second title.')
       .max(20, 'Please fill in 20 characters or less.'),
-    file1: Yup.mixed().required('Please upload the file.'),
-    file2: Yup.mixed().required('Please upload the file.'),
+    file1: Yup.mixed()
+      .required('Please upload the file.'),
+    file2: Yup.mixed()
+      .required('Please upload the file.'),
   }),
   handleSubmit: (values: Values, actions: Actions) => {
     const { file1, file2 } = values;
@@ -266,7 +268,7 @@ const withPost = withFormik({
 
       actions.setSubmitting(false);
       actions.setStatus({
-        message: '등록되었습니다.',
+        message: 'This post has been registered.',
         success: true,
         type: 'success'
       });

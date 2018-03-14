@@ -127,7 +127,8 @@ const withSignUp = withFormik({
     password: Yup.string()
       .min(6, 'Please enter at least 6 digits.')
       .required('Please enter a password.'),
-    confirmPassword: Yup.string()
+    confirmPassword: Yup.mixed()
+      .oneOf([Yup.ref('password')], 'Passwords do not match.')
       .required('Please confirm your password.'),
   }),
   handleSubmit: (values: Values, actions: Actions) => {
@@ -145,7 +146,6 @@ const withSignUp = withFormik({
             password,
           });
           history.push(location);
-          actions.setSubmitting(false);
         },
         (error) => {
           actions.setErrors({ email: 'Error: ' + error.message });

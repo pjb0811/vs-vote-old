@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import { createLogger } from 'redux-logger';
+// import { createLogger } from 'redux-logger';
 import reducers from './reducers';
 import rootSaga from './sagas';
 
@@ -10,7 +10,8 @@ export default function configureStore(initialState?: object) {
     reducers,
     initialState,
     applyMiddleware(
-      sagaMiddleware, createLogger()
+      sagaMiddleware,
+      // createLogger()
     )
   );
   // ssr testing

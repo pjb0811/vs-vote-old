@@ -5,7 +5,7 @@ import Logon from './Logon';
 import Logoff from './Logoff';
 
 interface State {
-  authenticated: boolean;
+  user: object | null;
 }
 
 interface Props {
@@ -16,7 +16,7 @@ export default class extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      authenticated: false,
+      user: {},
     };
   }
 
@@ -24,14 +24,14 @@ export default class extends React.Component<Props, State> {
     firebase.auth().onAuthStateChanged((user) => {
       this.setState((prevState, props) => {
         return {
-          authenticated: !!user,
+          user,
         };
       });
     });
   }
 
   render() {
-    if (this.state.authenticated) {
+    if (this.state.user) {
       return <Logon {...this.props}/>;
     }
     return <Logoff {...this.props}/>;

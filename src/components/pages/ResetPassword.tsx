@@ -55,7 +55,7 @@ class ResetPassword extends React.Component<Props> {
 
     return (
       <div>
-        <h2 className="ui teal center aligned header">비밀번호 재설정</h2>
+        <h2 className="ui teal center aligned header">Reset Password</h2>
         <form
           className="ui large form error segments"
           onSubmit={handleSubmit}
@@ -67,7 +67,7 @@ class ResetPassword extends React.Component<Props> {
                 <input
                   type="text"
                   name="email"
-                  placeholder="이메일"
+                  placeholder="email"
                   value={values.email}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -81,7 +81,7 @@ class ResetPassword extends React.Component<Props> {
                 className="ui fluid teal submit button"
                 disabled={isSubmitting}
               >
-                비밀번호 재설정
+                Submit
               </button>
             </div>
           </div>
@@ -108,7 +108,9 @@ const withResetPassword = withFormik({
   }),
 
   validationSchema: Yup.object().shape({
-    email: Yup.string().email('이메일 형식이 아닙니다.').required('이메일 주소를 입력해주세요.'),
+    email: Yup.string()
+      .email('Invalid email address.')
+      .required('Please enter your email address.'),
   }),
 
   handleSubmit: (values: Values, actions: Actions) => {
@@ -117,10 +119,9 @@ const withResetPassword = withFormik({
 
     auth.sendPasswordResetEmail(email).then(() => {
       actions.setStatus({
-        message: '비밀번호 재설정 이메일이 발송되었습니다. 확인 후 비밀번호를 재설정해주세요.',
+        message: 'A password reset email has been sent. Please confirm and reset your password.',
         success: true,
       });
-      actions.setSubmitting(false);
     }).catch((error) => {
       actions.setErrors({ email: 'Error: ' + error.message });
       actions.setSubmitting(false);
