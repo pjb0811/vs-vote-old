@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Progress } from 'semantic-ui-react';
 import LazyLoad from 'react-lazyload';
 import { Transition } from 'semantic-ui-react';
+import Vote from '../../atoms/buttons/Vote';
 
 type Props = {
   item: {
@@ -145,6 +146,7 @@ class Item extends React.Component<Props, State> {
                     progress="percent"
                     color="teal"
                   />
+                  <Vote count={item.first.count}/>
                 </div>
                 <div className="two wide column">{''}</div>
                 <div className="seven wide column">
@@ -154,6 +156,7 @@ class Item extends React.Component<Props, State> {
                     progress="percent"
                     color="teal"
                   />
+                  <Vote count={item.second.count}/>
                 </div>
               </div>
             </div>

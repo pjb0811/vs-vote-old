@@ -18,14 +18,16 @@ const Logon = (props: Props) => {
 
   return (
     <div className="right menu">
-      {/* <Dropdown className="item" text="메뉴">
+      {/*
+      <Dropdown className="item" text="메뉴">
         <Dropdown.Menu>
           <NavLink to={`/list/${uid}`} className={className} activeClassName="active">나의 VS 목록</NavLink>
           <NavLink to="/post" className={className} activeClassName="active">VS 등록하기</NavLink>
         </Dropdown.Menu>
-      </Dropdown> */}
-      <NavLink to={`/list/${uid}`} className={className} activeClassName="active">My VS List</NavLink>
-      <NavLink to="/post" className={className} activeClassName="active">Post VS</NavLink>
+      </Dropdown>
+      */}
+      <NavLink to={`/list/${uid}`} className={className} activeClassName="active">My List</NavLink>
+      <NavLink to="/post" className={className} activeClassName="active">Post</NavLink>
       <NavLink to="/logout" className={className} activeClassName="active">Logout</NavLink>
     </div>
   );

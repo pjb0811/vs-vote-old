@@ -85,7 +85,7 @@ class Post extends React.Component<Props, State> {
 
     return (
       <div>
-        <h2 className="ui teal center aligned header">Post VS</h2>
+        <h2 className="ui teal center aligned header">Post</h2>
         <form
           className="ui large form error"
         >
@@ -124,7 +124,7 @@ class Post extends React.Component<Props, State> {
                   name="file1"
                   placeholder="First image"
                   onChange={(e: React.ChangeEvent<any>) => {
-                    setFieldValue('file1', e.currentTarget.files[0].name);
+                    setFieldValue('file1', e.currentTarget.files[0]);
                   }}
                   onBlur={handleBlur}
                 />
@@ -139,7 +139,7 @@ class Post extends React.Component<Props, State> {
                   name="file2"
                   placeholder="Image2"
                   onChange={(e: React.ChangeEvent<any>) => {
-                    setFieldValue('file2', e.currentTarget.files[0].name);
+                    setFieldValue('file2', e.currentTarget.files[0]);
                   }}
                   onBlur={handleBlur}
                 />
@@ -197,11 +197,9 @@ const withPost = withFormik({
       .required('Please enter a second title.')
       .max(20, 'Please fill in 20 characters or less.'),
     file1: Yup.string()
-      .required('Please upload the file.')
-      .matches(/\.(gif|jpg|jpeg|tiff|png)$/i, 'Please upload an image file.'),
+      .required('Please upload the file.'),
     file2: Yup.string()
-      .required('Please upload the file.')
-      .matches(/\.(gif|jpg|jpeg|tiff|png)$/i, 'Please upload an image file.')
+      .required('Please upload the file.'),
   }),
   handleSubmit: (values: Values, actions: Actions) => {
     const { file1, file2 } = values;
@@ -219,10 +217,20 @@ const withPost = withFormik({
 
     if (file1) {
       file1Ref = storageRef.child(`images/${key}/${file1.name}`);
+      if (!file1.name.match(/\.(gif|jpg|jpeg|tiff|png)$/i)) {
+        actions.setSubmitting(false);
+        actions.setErrors({ file1: 'Please upload an image file.' });
+        return;
+      }
     }
 
     if (file2) {
       file2Ref = storageRef.child(`images/${key}/${file2.name}`);
+      if (!file2.name.match(/\.(gif|jpg|jpeg|tiff|png)$/i)) {
+        actions.setSubmitting(false);
+        actions.setErrors({ file2: 'Please upload an image file.' });
+        return;
+      }
     }
 
     setVote();
