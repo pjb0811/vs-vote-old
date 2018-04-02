@@ -18,6 +18,7 @@ type Props = {
       title: string;
       count: number;
     }
+    uid: string;
   }
 };
 
@@ -146,7 +147,7 @@ class Item extends React.Component<Props, State> {
                     progress="percent"
                     color="teal"
                   />
-                  <Vote count={item.first.count}/>
+                  <Vote item={item} target="first"/>
                 </div>
                 <div className="two wide column">{''}</div>
                 <div className="seven wide column">
@@ -156,7 +157,7 @@ class Item extends React.Component<Props, State> {
                     progress="percent"
                     color="teal"
                   />
-                  <Vote count={item.second.count}/>
+                  <Vote item={item} target="second"/>
                 </div>
               </div>
             </div>

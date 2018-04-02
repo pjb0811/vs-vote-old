@@ -15,7 +15,8 @@ type Props = {
       file: string;
       title: string;
       count: number;
-    }
+    },
+    uid: string;
   }>
 };
 
