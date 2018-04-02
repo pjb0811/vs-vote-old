@@ -1,5 +1,6 @@
 import * as React from 'react';
 import firebase from '../../../firebase';
+import { Map } from 'immutable';
 
 interface Props {
   item: {
@@ -25,12 +26,20 @@ class Vote extends React.Component<Props> {
     const { item, target } = this.props;
     const database = firebase.database();
     const itemRef = database.ref(`list/${item.key}`);
-    const params = {
+    /* const params = {
+      ...item,
       [target]: {
+        ...item[target],
         count: item[target].count + 1,
       }
-    };
-    itemRef.update(params);
+    }; */
+
+    const params = Map(item);
+    params.setIn(['first', 'count'], (count: number) => count + 1);
+
+    console.debug(target, itemRef);
+    console.log(params.toJS());
+    // itemRef.update(params);
   }
 
   render() {
