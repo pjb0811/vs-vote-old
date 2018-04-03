@@ -1,6 +1,6 @@
 import * as React from 'react';
-import firebase from '../../../firebase';
-import { Map } from 'immutable';
+// import firebase from '../../../firebase';
+import { fromJS } from 'immutable';
 
 interface Props {
   item: {
@@ -24,8 +24,8 @@ interface Props {
 class Vote extends React.Component<Props> {
   setVote() {
     const { item, target } = this.props;
-    const database = firebase.database();
-    const itemRef = database.ref(`list/${item.key}`);
+    // const database = firebase.database();
+    // const itemRef = database.ref(`list/${item.key}`);
     /* const params = {
       ...item,
       [target]: {
@@ -34,11 +34,15 @@ class Vote extends React.Component<Props> {
       }
     }; */
 
-    const params = Map(item);
-    params.setIn(['first', 'count'], (count: number) => count + 1);
-
-    console.debug(target, itemRef);
+    const params = fromJS(item).updateIn([target, 'count'], (count: number) => count + 1);
     console.log(params.toJS());
+    // params.setIn([`${target}`], (test: object) => {
+    //   console.log(test);
+    //   return test;
+    // });
+
+    // console.debug(target, itemRef);
+    // console.log(params.toJS());
     // itemRef.update(params);
   }
 
