@@ -142,8 +142,7 @@ class Item extends React.Component<Props, State> {
               <div className="row">
                 <div className="seven wide column">
                   <Progress
-                    value={item.first.count}
-                    total={item.first.count + item.second.count}
+                    percent={Math.floor(item.first.count / (item.first.count + item.second.count) * 100)}
                     progress="percent"
                     color="teal"
                   />
@@ -152,8 +151,7 @@ class Item extends React.Component<Props, State> {
                 <div className="two wide column">{''}</div>
                 <div className="seven wide column">
                   <Progress
-                    value={item.second.count}
-                    total={item.first.count + item.second.count}
+                    percent={Math.floor(item.second.count / (item.first.count + item.second.count) * 100)}
                     progress="percent"
                     color="teal"
                   />
