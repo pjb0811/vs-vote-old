@@ -67,20 +67,36 @@ class Item extends React.Component<Props, State> {
   }
 
   onVote(target: string) {
+    console.log('vote!');
     const { item } = this.state;
-    const listRef = database.ref(`list/${item.key}`);
-    const userListRef = database.ref(`users/${item.uid}/list/${item.key}`);
+    const itemRef = database.ref(`list/${item.key}`);
+    const userItemRef = database.ref(`users/${item.uid}/list/${item.key}`);
 
     const params = fromJS(item).updateIn([target, 'count'], (count: number) => count + 1);
-    listRef.update(params.toJS());
-    userListRef.update(params.toJS());
+    itemRef.update(params.toJS());
+    userItemRef.update(params.toJS());
 
+    itemRef.on('child_changed', async (data: any) => {
+      const value = await data.val();
+      console.log(value);
+      /* this.setState((prevState) => {
+        return {
+          ...prevState,
+          item: value
+        };
+      }); */
+    });
+
+    itemRef.off();
+    userItemRef.off();
+
+    /*
     this.setState((prevState) => {
       return {
         ...prevState,
         item: params.toJS()
       };
-    });
+    }); */
   }
 
   render() {
