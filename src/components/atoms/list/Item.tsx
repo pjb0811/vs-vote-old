@@ -19,7 +19,8 @@ type Props = {
       count: number;
     }
     uid: string;
-  }
+  };
+  onVote: Function;
 };
 
 interface State {
@@ -61,7 +62,7 @@ class Item extends React.Component<Props, State> {
   }
 
   render() {
-    const { item } = this.props;
+    const { item, onVote } = this.props;
     const { image1, image2, duration } = this.state;
     const loader = (
       <div>
@@ -146,7 +147,7 @@ class Item extends React.Component<Props, State> {
                     progress="percent"
                     color="teal"
                   />
-                  <Vote item={item} target="first"/>
+                  <Vote item={item} onVote={onVote} target="first"/>
                 </div>
                 <div className="two wide column">{''}</div>
                 <div className="seven wide column">
@@ -155,7 +156,7 @@ class Item extends React.Component<Props, State> {
                     progress="percent"
                     color="teal"
                   />
-                  <Vote item={item} target="second"/>
+                  <Vote item={item} onVote={onVote} target="second"/>
                 </div>
               </div>
             </div>

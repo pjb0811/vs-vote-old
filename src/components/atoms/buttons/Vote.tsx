@@ -2,6 +2,8 @@ import * as React from 'react';
 import firebase from '../../../firebase';
 import { fromJS } from 'immutable';
 
+const database = firebase.database();
+
 interface Props {
   item: {
     key: string;
@@ -19,26 +21,25 @@ interface Props {
     uid: string;
   };
   target: string;
+  onVote: Function;
 }
 
 class Vote extends React.Component<Props> {
-  state = {
-    ...this.props,
-  };
 
   setVote() {
-    const { item, target } = this.props;
-    const database = firebase.database();
+    const { item, onVote, target } = this.props;
     const listRef = database.ref(`list/${item.key}`);
     const userListRef = database.ref(`users/${item.uid}/list/${item.key}`);
 
     const params = fromJS(item).updateIn([target, 'count'], (count: number) => count + 1);
     listRef.update(params.toJS());
     userListRef.update(params.toJS());
+    onVote('once');
   }
 
   render() {
-    const { item, target } = this.state;
+    const { item, target } = this.props;
+
     return (
       <div
         className="ui animated fade button teal basic"

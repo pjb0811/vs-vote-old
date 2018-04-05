@@ -1,9 +1,10 @@
 import firebase from '../../firebase';
 
-async function getList(uid: string) {
+async function getList(params: {uid: string, type: string}) {
   let database: any = firebase.database();
   let listRef: any;
   let list: object[] = [];
+  const { uid, type } = params;
 
   if (uid) {
     listRef = database.ref('users').child(`${uid}/list`).orderByChild('date');
@@ -11,12 +12,13 @@ async function getList(uid: string) {
     listRef = database.ref('list').orderByChild('date');
   }
 
-  await listRef.once('value', (data: any) => {
+  await listRef[type]('value', (data: any) => {
     data.forEach((item: any) => {
       const val = item.val();
       list.push(val);
     });
   });
+
   return {
     data: list
   };

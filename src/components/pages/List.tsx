@@ -7,7 +7,7 @@ import loading from '../hoc/loading';
 
 interface Props {
   ListActions: {
-    requestList: (uid: string) => {}
+    requestList: (params: { uid: string, type: string }) => {}
   };
   list: ListData;
   match?: {
@@ -47,14 +47,14 @@ class List extends React.Component<Props> {
   }
 
   componentWillMount() {
-    this.getList();
+    this.getList('once');
   }
 
-  getList() {
+  getList(type: string) {
     const { ListActions, match } = this.props;
     const uid = match ? match.params.uid : '';
 
-    ListActions.requestList(uid);
+    ListActions.requestList({ uid, type });
   }
 
   render() {
@@ -63,7 +63,7 @@ class List extends React.Component<Props> {
 
     return (
       <div className="ui segment">
-        <Loading {...list}/>
+        <Loading {...list} onVote={(type: string) => this.getList(type)}/>
       </div>
     );
   }
