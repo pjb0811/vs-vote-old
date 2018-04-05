@@ -18,7 +18,6 @@ type Props = {
     },
     uid: string;
   }>;
-  onVote: Function;
 };
 
 class List extends React.Component<Props> {
@@ -27,14 +26,14 @@ class List extends React.Component<Props> {
   }
 
   render() {
-    const { data, onVote } = this.props;
+    const { data } = this.props;
     return (
       <div className="ui divided items">
         {
           data.map((item) => {
             return (
               <LazyLoad throttle={500} height={300} key={item.key}>
-                <Item item={item} onVote={onVote}/>
+                <Item item={item}/>
               </LazyLoad>
             );
           })

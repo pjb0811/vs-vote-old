@@ -63,7 +63,7 @@ class List extends React.Component<Props> {
 
     return (
       <div className="ui segment">
-        <Loading {...list} onVote={(type: string) => this.getList(type)}/>
+        <Loading {...list}/>
       </div>
     );
   }

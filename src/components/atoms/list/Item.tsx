@@ -3,6 +3,10 @@ import { Progress } from 'semantic-ui-react';
 import LazyLoad from 'react-lazyload';
 import { Transition } from 'semantic-ui-react';
 import Vote from '../../atoms/buttons/Vote';
+import firebase from '../../../firebase';
+import { fromJS } from 'immutable';
+
+const database = firebase.database();
 
 type Props = {
   item: {
@@ -20,10 +24,10 @@ type Props = {
     }
     uid: string;
   };
-  onVote: Function;
 };
 
 interface State {
+  item: Props['item'];
   image1: {
     loaded: boolean;
   };
@@ -37,6 +41,7 @@ class Item extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      item: props.item,
       image1: {
         loaded: false,
       },
@@ -61,9 +66,25 @@ class Item extends React.Component<Props, State> {
     );
   }
 
+  onVote(target: string) {
+    const { item } = this.state;
+    const listRef = database.ref(`list/${item.key}`);
+    const userListRef = database.ref(`users/${item.uid}/list/${item.key}`);
+
+    const params = fromJS(item).updateIn([target, 'count'], (count: number) => count + 1);
+    listRef.update(params.toJS());
+    userListRef.update(params.toJS());
+
+    this.setState((prevState) => {
+      return {
+        ...prevState,
+        item: params.toJS()
+      };
+    });
+  }
+
   render() {
-    const { item, onVote } = this.props;
-    const { image1, image2, duration } = this.state;
+    const { item, image1, image2, duration } = this.state;
     const loader = (
       <div>
         <div className="ui active loader">{''}</div>
@@ -143,20 +164,28 @@ class Item extends React.Component<Props, State> {
               <div className="row">
                 <div className="seven wide column">
                   <Progress
-                    percent={Math.floor(item.first.count / (item.first.count + item.second.count) * 100)}
+                    percent={(item.first.count / (item.first.count + item.second.count) * 100).toFixed(1)}
                     progress="percent"
                     color="teal"
                   />
-                  <Vote item={item} onVote={onVote} target="first"/>
+                  <Vote
+                    item={item}
+                    onVote={() => { this.onVote('first'); }}
+                    target="first"
+                  />
                 </div>
                 <div className="two wide column">{''}</div>
                 <div className="seven wide column">
                   <Progress
-                    percent={Math.floor(item.second.count / (item.first.count + item.second.count) * 100)}
+                    percent={(item.second.count / (item.first.count + item.second.count) * 100).toFixed(1)}
                     progress="percent"
                     color="teal"
                   />
-                  <Vote item={item} onVote={onVote} target="second"/>
+                  <Vote
+                    item={item}
+                    onVote={() => { this.onVote('second'); }}
+                    target="second"
+                  />
                 </div>
               </div>
             </div>
