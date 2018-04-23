@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { withFormik } from 'formik';
-import * as Yup from 'yup';
+import { withFormik, FormikErrors } from 'formik';
 import firebase from '../../firebase';
 import Error from '../atoms/form/Error';
 import Alert from '../atoms/modals/Alert';
@@ -189,18 +188,44 @@ const withPost = withFormik({
     file2: undefined,
     detail: '',
   }),
-  validationSchema: Yup.object().shape({
-    title1: Yup.string()
-      .required('Please enter the first title.')
-      .max(20, 'Please fill in 20 characters or less.'),
-    title2: Yup.string()
-      .required('Please enter a second title.')
-      .max(20, 'Please fill in 20 characters or less.'),
-    file1: Yup.string()
-      .required('Please upload the file.'),
-    file2: Yup.string()
-      .required('Please upload the file.'),
-  }),
+  validate: (values: Values, props) => {
+    const errors: FormikErrors<Values> = {};
+    const regex = /\.(gif|jpg|jpeg|tiff|png)$/i;
+
+    if (!values.title1) {
+      errors.title1 = 'Please enter the first title.';
+    } else {
+      if (values.title1.length < 20) {
+        errors.title1 = 'Please fill in 20 characters or less.';
+      }
+    }
+
+    if (!values.title2) {
+      errors.title2 = 'Please enter the first title.';
+    } else {
+      if (values.title2.length < 20) {
+        errors.title2 = 'Please fill in 20 characters or less.';
+      }
+    }
+
+    if (!values.file1) {
+      errors.file1 = 'Please upload the file.';
+    } else {
+      if (!values.file1.name.match(regex)) {
+        errors.file1 = 'Please upload an image file.';
+      }
+    }
+
+    if (!values.file2) {
+      errors.file2 = 'Please upload the file.';
+    } else {
+      if (!values.file2.name.match(regex)) {
+        errors.file2 = 'Please upload an image file.';
+      }
+    }
+
+    return errors;
+  },
   handleSubmit: (values: Values, actions: Actions) => {
     const { file1, file2 } = values;
     const user = firebase.auth().currentUser;
@@ -217,20 +242,10 @@ const withPost = withFormik({
 
     if (file1) {
       file1Ref = storageRef.child(`images/${key}/${file1.name}`);
-      if (!file1.name.match(/\.(gif|jpg|jpeg|tiff|png)$/i)) {
-        actions.setSubmitting(false);
-        actions.setErrors({ file1: 'Please upload an image file.' });
-        return;
-      }
     }
 
     if (file2) {
       file2Ref = storageRef.child(`images/${key}/${file2.name}`);
-      if (!file2.name.match(/\.(gif|jpg|jpeg|tiff|png)$/i)) {
-        actions.setSubmitting(false);
-        actions.setErrors({ file2: 'Please upload an image file.' });
-        return;
-      }
     }
 
     setVote();

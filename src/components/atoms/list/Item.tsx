@@ -71,21 +71,22 @@ class Item extends React.Component<Props, State> {
     const itemRef = database.ref(`list/${item.key}`);
     const userItemRef = database.ref(`users/${item.uid}/list/${item.key}`);
 
-    await itemRef.once('value', async (data: any) => {
-      const value = data.val();
-      const params = fromJS(value).updateIn([target, 'count'], (count: number) => count + 1);
-      console.log(params.toJS());
+    await itemRef.once(
+      'value',
+      async (data: any) => {
+        const value = data.val();
+        const params = fromJS(value).updateIn([target, 'count'], (count: number) => count + 1);
 
-      await itemRef.update(params.toJS());
-      await userItemRef.update(params.toJS());
-      this.setState((prevState) => {
-        return {
-          ...prevState,
-          item: params.toJS()
-        };
-      });
-
-    });
+        await itemRef.update(params.toJS());
+        await userItemRef.update(params.toJS());
+        this.setState((prevState) => {
+          return {
+            ...prevState,
+            item: params.toJS()
+          };
+        });
+      }
+    );
   }
 
   render() {
