@@ -195,7 +195,7 @@ const withPost = withFormik({
     if (!values.title1) {
       errors.title1 = 'Please enter the first title.';
     } else {
-      if (values.title1.length < 20) {
+      if (values.title1.length > 20) {
         errors.title1 = 'Please fill in 20 characters or less.';
       }
     }
@@ -203,7 +203,7 @@ const withPost = withFormik({
     if (!values.title2) {
       errors.title2 = 'Please enter the first title.';
     } else {
-      if (values.title2.length < 20) {
+      if (values.title2.length > 20) {
         errors.title2 = 'Please fill in 20 characters or less.';
       }
     }
@@ -226,8 +226,8 @@ const withPost = withFormik({
 
     return errors;
   },
-  handleSubmit: (values: Values, actions: Actions) => {
-    const { file1, file2 } = values;
+  handleSubmit: async (values: Values, actions: Actions) => {
+    const { file1, file2, title1, title2, detail } = values;
     const user = firebase.auth().currentUser;
     const storageRef = firebase.storage().ref();
     const database = firebase.database();
@@ -248,48 +248,42 @@ const withPost = withFormik({
       file2Ref = storageRef.child(`images/${key}/${file2.name}`);
     }
 
-    setVote();
+    await file1Ref.put(file1);
+    const url1 = await file1Ref.getDownloadURL().then((url: string) => {
+      return url;
+    });
+    await file2Ref.put(file2);
+    const url2 = await file2Ref.getDownloadURL().then((url: string) => {
+      return url;
+    });
 
-    async function setVote() {
-      const { title1, title2, detail } = values;
+    const params = {
+      key,
+      uid,
+      first: {
+        title: title1,
+        file: url1,
+        count: 1,
+      },
+      second: {
+        title: title2,
+        file: url2,
+        count: 1,
+      },
+      detail,
+      voters: {},
+      date: new Date().getTime() * -1,
+    };
 
-      await file1Ref.put(file1);
-      const url1 = await file1Ref.getDownloadURL().then((url: string) => {
-        return url;
-      });
-      await file2Ref.put(file2);
-      const url2 = await file2Ref.getDownloadURL().then((url: string) => {
-        return url;
-      });
+    database.ref(`list/${key}`).set(params);
+    database.ref(`users/${uid}/list/${key}`).set(params);
 
-      const params = {
-        key,
-        uid,
-        first: {
-          title: title1,
-          file: url1,
-          count: 1,
-        },
-        second: {
-          title: title2,
-          file: url2,
-          count: 1,
-        },
-        detail,
-        voters: {},
-        date: new Date().getTime() * -1,
-      };
-
-      database.ref(`list/${key}`).set(params);
-      database.ref(`users/${uid}/list/${key}`).set(params);
-
-      actions.setSubmitting(false);
-      actions.setStatus({
-        message: 'This post has been registered.',
-        success: true,
-        type: 'success'
-      });
-    }
+    actions.setSubmitting(false);
+    actions.setStatus({
+      message: 'This post has been registered.',
+      success: true,
+      type: 'success'
+    });
   },
 
   displayName: 'Post',
