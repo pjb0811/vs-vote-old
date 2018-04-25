@@ -14,7 +14,7 @@ const render = async (location: string) => {
   const html = await ReactDOMServer.renderToString(
     <StaticRouter location={location} context={context}>
       <Provider store={store}>
-        <App/>
+        <App />
       </Provider>
     </StaticRouter>
   );
@@ -22,7 +22,7 @@ const render = async (location: string) => {
   return {
     html,
     state: store.getState(),
-    helmet,
+    helmet
   };
 };
 

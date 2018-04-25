@@ -28,8 +28,8 @@ class AuthLoginGroup extends React.Component<Props, State> {
       alert: {
         message: '',
         open: false,
-        type: '',
-      },
+        type: ''
+      }
     };
   }
 
@@ -57,50 +57,57 @@ class AuthLoginGroup extends React.Component<Props, State> {
     }
 
     if (provider) {
-      firebase.auth().signInWithPopup(provider).then(
-        (result) => {
-          const { user } = result;
-          const { history } = this.props;
-          const location = {
-            pathname: '/'
-          };
-          firebase.database().ref('users/' + user.uid).update({
-            email: user.email,
-            displayName: user.displayName,
-          });
-          history.push(location);
-        },
-        (error) => {
-          this.setState((prevState, props) => {
-            return {
-              loader: false,
-              alert: {
-                message: error.message,
-                open: true,
-                type: 'error',
-              }
+      firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then(
+          result => {
+            const { user } = result;
+            const { history } = this.props;
+            const location = {
+              pathname: '/'
             };
-          });
-        }
-      );
+            firebase
+              .database()
+              .ref('users/' + user.uid)
+              .update({
+                email: user.email,
+                displayName: user.displayName
+              });
+            history.push(location);
+          },
+          error => {
+            this.setState((prevState, props) => {
+              return {
+                loader: false,
+                alert: {
+                  message: error.message,
+                  open: true,
+                  type: 'error'
+                }
+              };
+            });
+          }
+        );
     }
   }
 
   render() {
     const { className, children } = this.props;
     const { alert, loader } = this.state;
-    const childrenWithProps = React.Children.map(children, (child: React.ReactElement<any>) => {
-      return React.cloneElement(child, {
-        ...child.props,
-        signInWithAuth: this.signInWithAuth.bind(this),
-      });
-    });
+    const childrenWithProps = React.Children.map(
+      children,
+      (child: React.ReactElement<any>) => {
+        return React.cloneElement(child, {
+          ...child.props,
+          signInWithAuth: this.signInWithAuth.bind(this)
+        });
+      }
+    );
 
     return (
       <div>
-        {
-          loader && <Loader/>
-        }
+        {loader && <Loader />}
         <div className={className}>
           {childrenWithProps}
           <Alert
@@ -113,7 +120,7 @@ class AuthLoginGroup extends React.Component<Props, State> {
                   ...prevState,
                   alert: {
                     ...prevState.alert,
-                    open: false,
+                    open: false
                   }
                 };
               });

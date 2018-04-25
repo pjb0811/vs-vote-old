@@ -7,7 +7,7 @@ import loading from '../hoc/loading';
 
 interface Props {
   ListActions: {
-    requestList: (params: { uid: string, type: string }) => {}
+    requestList: (params: { uid: string }) => {};
   };
   list: ListData;
   match?: {
@@ -24,20 +24,22 @@ interface State {
 interface ListData {
   pending: {};
   error: boolean;
-  data: [{
-    key: string;
-    detail: string;
-    first: {
-      file: string;
-      title: string;
-      count: number;
-    };
-    second: {
-      file: string;
-      title: string;
-      count: number;
-    };
-  }];
+  data: [
+    {
+      key: string;
+      detail: string;
+      first: {
+        file: string;
+        title: string;
+        count: number;
+      };
+      second: {
+        file: string;
+        title: string;
+        count: number;
+      };
+    }
+  ];
   toJS: Function;
 }
 
@@ -47,14 +49,14 @@ class List extends React.Component<Props> {
   }
 
   componentWillMount() {
-    this.getList('once');
+    this.getList();
   }
 
-  getList(type: string) {
+  getList() {
     const { ListActions, match } = this.props;
     const uid = match ? match.params.uid : '';
 
-    ListActions.requestList({ uid, type });
+    ListActions.requestList({ uid });
   }
 
   render() {
@@ -63,7 +65,7 @@ class List extends React.Component<Props> {
 
     return (
       <div className="ui segment">
-        <Loading {...list}/>
+        <Loading {...list} />
       </div>
     );
   }
@@ -73,7 +75,10 @@ export default connect(
   (state: State) => ({
     list: state.list
   }),
-  (dispatch) => ({
-    ListActions: bindActionCreators(listActions as Props['ListActions'], dispatch)
+  dispatch => ({
+    ListActions: bindActionCreators(
+      listActions as Props['ListActions'],
+      dispatch
+    )
   })
 )(List);

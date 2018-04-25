@@ -17,7 +17,7 @@ const staticFiles = [
   '/manifest.json',
   '/service-worker.js',
   '/favicon.ico',
-  '/assets/*',
+  '/assets/*'
 ];
 
 staticFiles.forEach(file => {
@@ -35,7 +35,9 @@ app.get('*', async (req, res) => {
   const renderedHtml = htmlData
     .replace(
       '<div id="root"></div>',
-      `<div id="root">${html}</div><script>window.__PRELOADED_STATE__=${serialize(state)}</script>`
+      `<div id="root">${html}</div><script>window.__PRELOADED_STATE__=${serialize(
+        state
+      )}</script>`
     )
     .replace(
       '<meta helmet>',

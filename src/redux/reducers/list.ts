@@ -11,9 +11,7 @@ const initialState = Map({
 export default handleActions(
   {
     [REQUEST_LIST]: (state, action) => {
-      return state
-        .set('pending', true)
-        .set('error', false);
+      return state.set('pending', true).set('error', false);
     },
 
     [SUCCESS_LIST]: (state, action: any) => {
@@ -24,9 +22,7 @@ export default handleActions(
         .set('data', List(data));
     },
     [FAILURE_LIST]: (state, action) => {
-      return state
-        .set('pending', false)
-        .set('error', true);
+      return state.set('pending', false).set('error', true);
     }
   },
   initialState
