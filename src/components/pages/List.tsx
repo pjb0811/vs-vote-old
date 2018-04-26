@@ -3,40 +3,7 @@ import VsList from '../atoms/list';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as listActions from '../../redux/actions/list';
-
-interface Props {
-  ListActions: {
-    requestList: (params: { uid: string }) => {};
-  };
-  list: ListData;
-  match?: {
-    params: {
-      uid: string;
-    };
-  };
-}
-
-interface ListData {
-  pending: boolean;
-  error: boolean;
-  data: [
-    {
-      key: string;
-      detail: string;
-      first: {
-        file: string;
-        title: string;
-        count: number;
-      };
-      second: {
-        file: string;
-        title: string;
-        count: number;
-      };
-    }
-  ];
-  toJS: Function;
-}
+import { Props } from '../../interface/pages/List';
 
 class List extends React.Component<Props> {
   constructor(props: Props) {

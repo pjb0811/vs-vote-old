@@ -4,38 +4,7 @@ import * as Yup from 'yup';
 import Error from '../atoms/form/Error';
 import firebase from '../../firebase';
 import Confirm from '../atoms/modals/Confirm';
-
-interface Props {
-  values: Values;
-  touched: {
-    email: boolean;
-  };
-  errors: {
-    email: boolean;
-  };
-  status?: {
-    message: string;
-    success: boolean;
-  };
-  isSubmitting: boolean;
-  handleChange: (e: React.ChangeEvent<any>) => void;
-  handleBlur: (e: any) => void;
-  handleSubmit: (e: React.FormEvent<any>) => void;
-  history: {
-    push: Function;
-  };
-}
-
-interface Values {
-  email: string;
-}
-
-interface Actions {
-  setErrors: Function;
-  setSubmitting: Function;
-  setStatus: Function;
-  props: any;
-}
+import { Props, Values, Actions } from '../../interface/pages/ResetPassword';
 
 class ResetPassword extends React.Component<Props> {
   constructor(props: Props) {
@@ -50,20 +19,21 @@ class ResetPassword extends React.Component<Props> {
       isSubmitting,
       handleChange,
       handleBlur,
-      handleSubmit,
+      handleSubmit
     } = this.props;
 
     return (
       <div>
         <h2 className="ui teal center aligned header">Reset Password</h2>
-        <form
-          className="ui large form error segments"
-          onSubmit={handleSubmit}
-        >
+        <form className="ui large form error segments" onSubmit={handleSubmit}>
           <div className="ui segment">
-            <div className={errors.email && touched.email ? 'field error' : 'field'}>
+            <div
+              className={
+                errors.email && touched.email ? 'field error' : 'field'
+              }
+            >
               <div className="ui left icon input">
-                <i className="mail icon"/>
+                <i className="mail icon" />
                 <input
                   type="text"
                   name="email"
@@ -74,7 +44,7 @@ class ResetPassword extends React.Component<Props> {
                 />
               </div>
             </div>
-            <Error errors={errors} touched={touched} field="email"/>
+            <Error errors={errors} touched={touched} field="email" />
             <div className="ui field">
               <button
                 type="submit"
@@ -92,7 +62,7 @@ class ResetPassword extends React.Component<Props> {
           approve={() => {
             const { history } = this.props;
             const location = {
-              pathname: '/login',
+              pathname: '/login'
             };
             history.push(location);
           }}
@@ -103,32 +73,36 @@ class ResetPassword extends React.Component<Props> {
 }
 
 const withResetPassword = withFormik({
-  mapPropsToValues: (props) => ({
-    email: '',
+  mapPropsToValues: props => ({
+    email: ''
   }),
 
   validationSchema: Yup.object().shape({
     email: Yup.string()
       .email('Invalid email address.')
-      .required('Please enter your email address.'),
+      .required('Please enter your email address.')
   }),
 
   handleSubmit: (values: Values, actions: Actions) => {
     const auth = firebase.auth();
     const { email } = values;
 
-    auth.sendPasswordResetEmail(email).then(() => {
-      actions.setStatus({
-        message: 'A password reset email has been sent. Please confirm and reset your password.',
-        success: true,
+    auth
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        actions.setStatus({
+          message:
+            'A password reset email has been sent. Please confirm and reset your password.',
+          success: true
+        });
+      })
+      .catch(error => {
+        actions.setErrors({ email: 'Error: ' + error.message });
+        actions.setSubmitting(false);
       });
-    }).catch((error) => {
-      actions.setErrors({ email: 'Error: ' + error.message });
-      actions.setSubmitting(false);
-    });
   },
 
-  displayName: 'resetPassword',
+  displayName: 'resetPassword'
 })(ResetPassword);
 
 export default withResetPassword;

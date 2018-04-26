@@ -6,34 +6,10 @@ import AuthLoginGroup from '../atoms/buttons/AuthLoginGroup';
 import AuthLogin from '../atoms/buttons/AuthLogin';
 import Error from '../atoms/form/Error';
 import { NavLink } from 'react-router-dom';
-
-interface Props {
-  values: Values;
-  touched: {
-    email: boolean;
-    password: boolean;
-  };
-  errors: {
-    email: boolean;
-    password: boolean;
-  };
-  isSubmitting: boolean;
-  handleChange: (e: React.ChangeEvent<any>) => void;
-  handleBlur: (e: any) => void;
-  handleSubmit: (e: React.FormEvent<any>) => void;
-  history: any;
-}
-
-interface Values {
-  email: string;
-  password: string;
-}
-
-interface Actions {
-  setErrors: Function;
-  setSubmitting: Function;
-  props: any;
-}
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as signWithAuthActions from '../../redux/actions/signWithAuth';
+import { Props, Values, Actions } from '../../interface/pages/Login';
 
 class Login extends React.Component<Props> {
   constructor(props: Props) {
@@ -125,7 +101,6 @@ const withLogin = withFormik({
     email: '',
     password: ''
   }),
-
   validationSchema: Yup.object().shape({
     email: Yup.string()
       .email('Invalid email address.')
@@ -134,7 +109,6 @@ const withLogin = withFormik({
       .min(6, 'Please enter at least 6 digits.')
       .required('Please enter a password.')
   }),
-
   handleSubmit: (values: Values, actions: Actions) => {
     const { email, password } = values;
 
@@ -156,8 +130,17 @@ const withLogin = withFormik({
         }
       );
   },
-
   displayName: 'Login'
 })(Login);
 
-export default withLogin;
+export default connect(
+  (state: Props) => ({
+    signWithAuth: state.signWithAuth
+  }),
+  dispatch => ({
+    SignWithAuthActions: bindActionCreators(
+      signWithAuthActions as Props['SignWithAuthActions'],
+      dispatch
+    )
+  })
+)(withLogin);

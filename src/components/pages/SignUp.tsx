@@ -3,36 +3,7 @@ import { withFormik } from 'formik';
 import * as Yup from 'yup';
 import firebase from '../../firebase';
 import Error from '../atoms/form/Error';
-
-interface Props {
-  values: Values;
-  touched: {
-    email: boolean;
-    password: boolean;
-    confirmPassword: boolean;
-  };
-  errors: {
-    email: boolean;
-    password: boolean;
-    confirmPassword: boolean;
-  };
-  isSubmitting: boolean;
-  handleChange: (e: React.ChangeEvent<any>) => void;
-  handleBlur: (e: any) => void;
-  handleSubmit: (e: React.FormEvent<any>) => void;
-}
-
-interface Values {
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
-
-interface Actions {
-  setErrors: Function;
-  setSubmitting: Function;
-  props: any;
-}
+import { Props, Values, Actions } from '../../interface/pages/SignUp';
 
 class SignUp extends React.Component<Props> {
   constructor(props: Props) {
@@ -47,20 +18,21 @@ class SignUp extends React.Component<Props> {
       isSubmitting,
       handleChange,
       handleBlur,
-      handleSubmit,
+      handleSubmit
     } = this.props;
 
     return (
       <div>
         <h2 className="ui teal center aligned header">Sign Up</h2>
-        <form
-          className="ui large form error"
-          onSubmit={handleSubmit}
-        >
+        <form className="ui large form error" onSubmit={handleSubmit}>
           <div className="ui segment">
-            <div className={errors.email && touched.email ? 'field error' : 'field'}>
+            <div
+              className={
+                errors.email && touched.email ? 'field error' : 'field'
+              }
+            >
               <div className="ui left icon input">
-                <i className="mail icon"/>
+                <i className="mail icon" />
                 <input
                   type="text"
                   name="email"
@@ -71,10 +43,14 @@ class SignUp extends React.Component<Props> {
                 />
               </div>
             </div>
-            <Error errors={errors} touched={touched} field="email"/>
-            <div className={errors.password && touched.password ? 'field error' : 'field'}>
+            <Error errors={errors} touched={touched} field="email" />
+            <div
+              className={
+                errors.password && touched.password ? 'field error' : 'field'
+              }
+            >
               <div className="ui left icon input">
-                <i className="lock icon"/>
+                <i className="lock icon" />
                 <input
                   type="password"
                   name="password"
@@ -85,10 +61,16 @@ class SignUp extends React.Component<Props> {
                 />
               </div>
             </div>
-            <Error errors={errors} touched={touched} field="password"/>
-            <div className={errors.confirmPassword && touched.confirmPassword ? 'field error' : 'field'}>
+            <Error errors={errors} touched={touched} field="password" />
+            <div
+              className={
+                errors.confirmPassword && touched.confirmPassword
+                  ? 'field error'
+                  : 'field'
+              }
+            >
               <div className="ui left icon input">
-                <i className="lock icon"/>
+                <i className="lock icon" />
                 <input
                   type="password"
                   name="confirmPassword"
@@ -99,7 +81,7 @@ class SignUp extends React.Component<Props> {
                 />
               </div>
             </div>
-            <Error errors={errors} touched={touched} field="confirmPassword"/>
+            <Error errors={errors} touched={touched} field="confirmPassword" />
             <button
               type="submit"
               className="ui fluid large teal submit button"
@@ -115,10 +97,10 @@ class SignUp extends React.Component<Props> {
 }
 
 const withSignUp = withFormik({
-  mapPropsToValues: (props) => ({
+  mapPropsToValues: props => ({
     email: '',
     password: '',
-    confirmPassword: '',
+    confirmPassword: ''
   }),
   validationSchema: Yup.object().shape({
     email: Yup.string()
@@ -129,31 +111,37 @@ const withSignUp = withFormik({
       .required('Please enter a password.'),
     confirmPassword: Yup.mixed()
       .oneOf([Yup.ref('password')], 'Passwords do not match.')
-      .required('Please confirm your password.'),
+      .required('Please confirm your password.')
   }),
   handleSubmit: (values: Values, actions: Actions) => {
     let { email, password } = values;
 
-    firebase.auth().createUserWithEmailAndPassword(email, password)
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
       .then(
-        (user) => {
+        user => {
           const { history } = actions.props;
           const location = {
             pathname: '/'
           };
-          firebase.database().ref('users/' + user.uid).set({
-            email,
-            password,
-          });
+          firebase
+            .database()
+            .ref('users/' + user.uid)
+            .set({
+              email,
+              password
+            });
           history.push(location);
         },
-        (error) => {
+        error => {
           actions.setErrors({ email: 'Error: ' + error.message });
           actions.setSubmitting(false);
-        });
+        }
+      );
   },
 
-  displayName: 'SignUp',
+  displayName: 'SignUp'
 })(SignUp);
 
 export default withSignUp;

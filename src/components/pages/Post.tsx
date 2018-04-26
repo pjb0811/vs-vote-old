@@ -4,55 +4,7 @@ import firebase from '../../firebase';
 import Error from '../atoms/form/Error';
 import Alert from '../atoms/modals/Alert';
 import withAuth from '../hoc/auth';
-
-interface Props {
-  values: Values;
-  touched: {
-    title1: boolean;
-    title2: boolean;
-    file1: boolean;
-    file2: boolean;
-  };
-  errors: {
-    title1: boolean;
-    title2: boolean;
-    file1: boolean;
-    file2: boolean;
-  };
-  status?: {
-    message: string;
-    success: boolean;
-    type: string;
-  };
-  isSubmitting: boolean;
-  handleChange: (e: React.ChangeEvent<any>) => void;
-  handleBlur: (e: any) => void;
-  handleSubmit: (e: React.FormEvent<any>) => void;
-  setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
-  isValid: boolean;
-  history: {
-    push: Function;
-  };
-}
-
-interface Values {
-  title1: string;
-  title2: string;
-  file1?: File;
-  file2?: File;
-  detail: string;
-}
-
-interface Actions {
-  setErrors: Function;
-  setSubmitting: Function;
-  setStatus: Function;
-  props: any;
-}
-
-type State = {
-  open: boolean;
-};
+import { Props, State, Values, Actions } from '../../interface/pages/Post';
 
 class Post extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -65,7 +17,7 @@ class Post extends React.Component<Props, State> {
   showModal(open: boolean) {
     this.setState((prevState, props) => {
       return {
-        open,
+        open
       };
     });
   }
@@ -85,13 +37,15 @@ class Post extends React.Component<Props, State> {
     return (
       <div>
         <h2 className="ui teal center aligned header">Post</h2>
-        <form
-          className="ui large form error"
-        >
+        <form className="ui large form error">
           <div className="ui segment">
             <h4 className="ui dividing header">Title</h4>
             <div className="fields">
-              <div className={`seven wide ${errors.title1 && touched.title1 ? 'field error' : 'field'}`}>
+              <div
+                className={`seven wide ${
+                  errors.title1 && touched.title1 ? 'field error' : 'field'
+                }`}
+              >
                 <input
                   type="text"
                   name="title1"
@@ -99,12 +53,16 @@ class Post extends React.Component<Props, State> {
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-                <Error errors={errors} touched={touched} field="title1"/>
+                <Error errors={errors} touched={touched} field="title1" />
               </div>
               <div className="two wide field">
                 <strong>VS</strong>
               </div>
-              <div className={`seven wide ${errors.title2 && touched.title2 ? 'field error' : 'field'}`}>
+              <div
+                className={`seven wide ${
+                  errors.title2 && touched.title2 ? 'field error' : 'field'
+                }`}
+              >
                 <input
                   type="text"
                   name="title2"
@@ -112,12 +70,16 @@ class Post extends React.Component<Props, State> {
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-                <Error errors={errors} touched={touched} field="title2"/>
+                <Error errors={errors} touched={touched} field="title2" />
               </div>
             </div>
             <h4 className="ui dividing header">Image</h4>
             <div className="fields">
-              <div className={`seven wide ${errors.file1 && touched.file1 ? 'field error' : 'field'}`}>
+              <div
+                className={`seven wide ${
+                  errors.file1 && touched.file1 ? 'field error' : 'field'
+                }`}
+              >
                 <input
                   type="file"
                   name="file1"
@@ -127,12 +89,16 @@ class Post extends React.Component<Props, State> {
                   }}
                   onBlur={handleBlur}
                 />
-                <Error errors={errors} touched={touched} field="file1"/>
+                <Error errors={errors} touched={touched} field="file1" />
               </div>
               <div className="two wide field">
                 <strong>VS</strong>
               </div>
-              <div className={`seven wide ${errors.file2 && touched.file2 ? 'field error' : 'field'}`}>
+              <div
+                className={`seven wide ${
+                  errors.file2 && touched.file2 ? 'field error' : 'field'
+                }`}
+              >
                 <input
                   type="file"
                   name="file2"
@@ -142,7 +108,7 @@ class Post extends React.Component<Props, State> {
                   }}
                   onBlur={handleBlur}
                 />
-                <Error errors={errors} touched={touched} field="file2"/>
+                <Error errors={errors} touched={touched} field="file2" />
               </div>
             </div>
             <h4 className="ui dividing header">Detail</h4>
@@ -170,7 +136,7 @@ class Post extends React.Component<Props, State> {
           onClose={() => {
             const { history } = this.props;
             const location = {
-              pathname: '/',
+              pathname: '/'
             };
             history.push(location);
           }}
@@ -181,12 +147,12 @@ class Post extends React.Component<Props, State> {
 }
 
 const withPost = withFormik({
-  mapPropsToValues: (props) => ({
+  mapPropsToValues: props => ({
     title1: '',
     title2: '',
     file1: undefined,
     file2: undefined,
-    detail: '',
+    detail: ''
   }),
   validate: (values: Values, props) => {
     const errors: FormikErrors<Values> = {};
@@ -263,16 +229,16 @@ const withPost = withFormik({
       first: {
         title: title1,
         file: url1,
-        count: 1,
+        count: 1
       },
       second: {
         title: title2,
         file: url2,
-        count: 1,
+        count: 1
       },
       detail,
       voters: {},
-      date: new Date().getTime() * -1,
+      date: new Date().getTime() * -1
     };
 
     database.ref(`list/${key}`).set(params);
@@ -286,7 +252,7 @@ const withPost = withFormik({
     });
   },
 
-  displayName: 'Post',
+  displayName: 'Post'
 })(withAuth(Post));
 
 export default withPost;

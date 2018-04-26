@@ -1,11 +1,6 @@
 import * as React from 'react';
 import firebase from '../../firebase';
-
-interface Props {
-  history: {
-    push: Function;
-  };
-}
+import { Props } from '../../interface/pages/Logout';
 
 class Logout extends React.Component<Props> {
   constructor(props: Props) {
@@ -13,19 +8,23 @@ class Logout extends React.Component<Props> {
   }
 
   componentWillMount() {
-    firebase.auth().signOut().then(() => {
-      const { history } = this.props;
-      const location = {
-        pathname: '/',
-      };
-      history.push(location);
-    }).catch((error) => {
-      console.log(error);
-    });
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        const { history } = this.props;
+        const location = {
+          pathname: '/'
+        };
+        history.push(location);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   render() {
-    return null;
+    return <></>;
   }
 }
 
