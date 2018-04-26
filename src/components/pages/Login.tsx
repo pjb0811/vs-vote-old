@@ -1,4 +1,4 @@
-import  * as React from 'react';
+import * as React from 'react';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 import firebase from '../../firebase';
@@ -55,14 +55,15 @@ class Login extends React.Component<Props> {
     return (
       <div>
         <h2 className="ui teal center aligned header">Login</h2>
-        <form
-          className="ui large form error segments"
-          onSubmit={handleSubmit}
-        >
+        <form className="ui large form error segments" onSubmit={handleSubmit}>
           <div className="ui segment">
-            <div className={errors.email && touched.email ? 'field error' : 'field'}>
+            <div
+              className={
+                errors.email && touched.email ? 'field error' : 'field'
+              }
+            >
               <div className="ui left icon input">
-                <i className="mail icon"/>
+                <i className="mail icon" />
                 <input
                   type="text"
                   name="email"
@@ -73,10 +74,14 @@ class Login extends React.Component<Props> {
                 />
               </div>
             </div>
-            <Error errors={errors} touched={touched} field="email"/>
-            <div className={errors.password && touched.password ? 'field error' : 'field'}>
+            <Error errors={errors} touched={touched} field="email" />
+            <div
+              className={
+                errors.password && touched.password ? 'field error' : 'field'
+              }
+            >
               <div className="ui left icon input">
-                <i className="lock icon"/>
+                <i className="lock icon" />
                 <input
                   type="password"
                   name="password"
@@ -87,7 +92,7 @@ class Login extends React.Component<Props> {
                 />
               </div>
             </div>
-            <Error errors={errors} touched={touched} field="password"/>
+            <Error errors={errors} touched={touched} field="password" />
             <div className="ui field">
               <button
                 type="submit"
@@ -98,16 +103,17 @@ class Login extends React.Component<Props> {
               </button>
             </div>
             <div className="ui field">
-              <AuthLoginGroup history={...history} className="three ui buttons">
-                <AuthLogin type="google"/>
+              <AuthLoginGroup history={history} className="three ui buttons">
+                <AuthLogin type="google" />
                 <AuthLogin type="facebook" />
-                <AuthLogin type="github"/>
+                <AuthLogin type="github" />
               </AuthLoginGroup>
             </div>
           </div>
         </form>
         <div className="ui clearing message">
-          If you forget your password, please <NavLink to="/resetPassword">reset your password.</NavLink>
+          If you forget your password, please{' '}
+          <NavLink to="/resetPassword">reset your password.</NavLink>
         </div>
       </div>
     );
@@ -115,9 +121,9 @@ class Login extends React.Component<Props> {
 }
 
 const withLogin = withFormik({
-  mapPropsToValues: (props) => ({
+  mapPropsToValues: props => ({
     email: '',
-    password: '',
+    password: ''
   }),
 
   validationSchema: Yup.object().shape({
@@ -126,29 +132,32 @@ const withLogin = withFormik({
       .required('Please enter your email address.'),
     password: Yup.string()
       .min(6, 'Please enter at least 6 digits.')
-      .required('Please enter a password.'),
+      .required('Please enter a password.')
   }),
 
   handleSubmit: (values: Values, actions: Actions) => {
     const { email, password } = values;
 
-    firebase.auth().signInWithEmailAndPassword(email, password)
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
       .then(
-        (user) => {
+        user => {
           actions.setSubmitting(false);
           const { history } = actions.props;
           const location = {
-            pathname: '/',
+            pathname: '/'
           };
           history.push(location);
         },
-        (error) => {
+        error => {
           actions.setSubmitting(false);
           actions.setErrors({ email: 'Error: ' + error.message });
-        });
+        }
+      );
   },
 
-  displayName: 'Login',
+  displayName: 'Login'
 })(Login);
 
 export default withLogin;

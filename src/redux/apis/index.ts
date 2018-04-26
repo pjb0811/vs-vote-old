@@ -1,3 +1,4 @@
 import getList from './getList';
+import checkSignWithAuth from './checkSignWithAuth';
 
-export default { getList };
+export default { getList, checkSignWithAuth };

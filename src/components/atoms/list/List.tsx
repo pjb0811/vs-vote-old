@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Item from './Item';
 import LazyLoad from 'react-lazyload';
+import withLoading from '../../hoc/loading';
 
 type Props = {
   data: Array<{
@@ -10,12 +11,12 @@ type Props = {
       file: string;
       title: string;
       count: number;
-    },
+    };
     second: {
       file: string;
       title: string;
       count: number;
-    },
+    };
     uid: string;
   }>;
 };
@@ -29,18 +30,16 @@ class List extends React.Component<Props> {
     const { data } = this.props;
     return (
       <div className="ui divided items">
-        {
-          data.map((item) => {
-            return (
-              <LazyLoad throttle={500} height={300} key={item.key}>
-                <Item item={item}/>
-              </LazyLoad>
-            );
-          })
-        }
+        {data.map(item => {
+          return (
+            <LazyLoad throttle={500} height={300} key={item.key}>
+              <Item item={item} />
+            </LazyLoad>
+          );
+        })}
       </div>
     );
   }
 }
 
-export default List;
+export default withLoading(List);

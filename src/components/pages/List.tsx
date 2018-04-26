@@ -1,9 +1,8 @@
 import * as React from 'react';
-import vsList from '../atoms/list';
+import VsList from '../atoms/list';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as listActions from '../../redux/actions/list';
-import loading from '../hoc/loading';
 
 interface Props {
   ListActions: {
@@ -17,12 +16,8 @@ interface Props {
   };
 }
 
-interface State {
-  list: ListData;
-}
-
 interface ListData {
-  pending: {};
+  pending: boolean;
   error: boolean;
   data: [
     {
@@ -52,27 +47,26 @@ class List extends React.Component<Props> {
     this.getList();
   }
 
-  getList() {
+  async getList() {
     const { ListActions, match } = this.props;
     const uid = match ? match.params.uid : '';
 
-    ListActions.requestList({ uid });
+    await ListActions.requestList({ uid });
   }
 
   render() {
     const list = this.props.list.toJS();
-    const Loading = loading(vsList);
 
     return (
       <div className="ui segment">
-        <Loading {...list} />
+        <VsList {...list} />
       </div>
     );
   }
 }
 
 export default connect(
-  (state: State) => ({
+  (state: Props) => ({
     list: state.list
   }),
   dispatch => ({
