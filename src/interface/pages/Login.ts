@@ -1,8 +1,8 @@
 export interface Props {
-  SignWithAuthActions: {
-    requestSignWithAuth: (params: { type: string }) => {};
+  LoginActions: {
+    requestLogin: (params: { type: string }) => {};
   };
-  signWithAuth: SignWithAuthData;
+  login: LoginData;
   values: Values;
   touched: {
     email: boolean;
@@ -30,11 +30,12 @@ export interface Actions {
   props: any;
 }
 
-interface SignWithAuthData {
+interface LoginData {
   pending: boolean;
   error: boolean;
   data: {
     success: boolean;
     message: string;
   };
+  toJS: Function;
 }

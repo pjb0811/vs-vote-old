@@ -1,9 +1,5 @@
 import * as React from 'react';
-
-interface Props {
-  type: string;
-  signInWithAuth?: Function;
-}
+import { Props } from '../../../interface/atoms/buttons/AuthLogin';
 
 class AuthLogin extends React.Component<Props> {
   constructor(props: Props) {
@@ -20,7 +16,7 @@ class AuthLogin extends React.Component<Props> {
       github: {
         text: 'Github',
         classes: 'github'
-      },
+      }
     };
   }
 
@@ -37,7 +33,7 @@ class AuthLogin extends React.Component<Props> {
           }
         }}
       >
-        <i className={`${classes} icon`}/>
+        <i className={`${classes} icon`} />
         {text}
       </button>
     );

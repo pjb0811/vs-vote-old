@@ -1,10 +1,10 @@
 import { call, put, takeEvery, fork } from 'redux-saga/effects';
 import * as list from '../actions/list';
-import API from '../apis';
+import * as api from '../../lib/apis';
 
-function* runRequestList(action: { payload: object}) {
+function* runRequestList(action: { payload: object }) {
   try {
-    const { data } = yield call(API.getList as any, action.payload);
+    const { data } = yield call(api.list.getList as any, action.payload);
     yield put({ type: list.SUCCESS_LIST, payload: { data } });
   } catch (error) {
     yield put({ type: list.FAILURE_LIST, payload: { error } });

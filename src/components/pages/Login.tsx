@@ -1,15 +1,12 @@
 import * as React from 'react';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
-import firebase from '../../firebase';
 import AuthLoginGroup from '../atoms/buttons/AuthLoginGroup';
 import AuthLogin from '../atoms/buttons/AuthLogin';
 import Error from '../atoms/form/Error';
 import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as signWithAuthActions from '../../redux/actions/signWithAuth';
 import { Props, Values, Actions } from '../../interface/pages/Login';
+import * as api from '../../lib/apis';
 
 class Login extends React.Component<Props> {
   constructor(props: Props) {
@@ -111,36 +108,22 @@ const withLogin = withFormik({
   }),
   handleSubmit: (values: Values, actions: Actions) => {
     const { email, password } = values;
-
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(
-        user => {
-          actions.setSubmitting(false);
-          const { history } = actions.props;
-          const location = {
-            pathname: '/'
-          };
-          history.push(location);
-        },
-        error => {
-          actions.setSubmitting(false);
-          actions.setErrors({ email: 'Error: ' + error.message });
-        }
-      );
+    api.login.checkLogin({ email, password }).then(
+      (user: any) => {
+        actions.setSubmitting(false);
+        const { history } = actions.props;
+        const location = {
+          pathname: '/'
+        };
+        history.push(location);
+      },
+      (error: any) => {
+        actions.setSubmitting(false);
+        actions.setErrors({ email: 'Error: ' + error.message });
+      }
+    );
   },
   displayName: 'Login'
 })(Login);
 
-export default connect(
-  (state: Props) => ({
-    signWithAuth: state.signWithAuth
-  }),
-  dispatch => ({
-    SignWithAuthActions: bindActionCreators(
-      signWithAuthActions as Props['SignWithAuthActions'],
-      dispatch
-    )
-  })
-)(withLogin);
+export default withLogin;

@@ -1,7 +1,12 @@
 import firebase from '../../firebase';
 import * as Firebase from 'firebase';
 
-function checkSignWithAuth(params: { type: string }) {
+function checkLogin(params: { email: string; password: string }) {
+  const { email, password } = params;
+  return firebase.auth().signInWithEmailAndPassword(email, password);
+}
+
+function checkSignInWithAuth(params: { type: string }) {
   const { type } = params;
   let provider: Firebase.auth.GoogleAuthProvider | undefined;
   let data = {
@@ -49,4 +54,4 @@ function checkSignWithAuth(params: { type: string }) {
   };
 }
 
-export default checkSignWithAuth;
+export default { checkLogin, checkSignInWithAuth };

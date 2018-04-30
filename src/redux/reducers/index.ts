@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import list from './list';
-import signWithAuth from './signWithAuth';
+import login from './login';
 
 export default combineReducers({
   list,
-  signWithAuth
+  login
 });

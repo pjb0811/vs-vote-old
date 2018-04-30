@@ -27,4 +27,4 @@ async function getList(params: { uid: string }) {
   };
 }
 
-export default getList;
+export default { getList };
