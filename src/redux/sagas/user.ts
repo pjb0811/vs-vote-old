@@ -1,21 +1,21 @@
 import { call, put, takeEvery, fork } from 'redux-saga/effects';
-import * as login from '../actions/login';
+import * as user from '../actions/user';
 import * as api from '../../lib/apis';
 
 function* runRequestLogin(action: { payload: object }) {
   try {
-    const { data } = yield call(api.login.checkLogin as any, action.payload);
-    yield put({ type: login.SUCCESS_LOGIN, payload: { data } });
+    const { data } = yield call(api.user.checkLogin as any, action.payload);
+    yield put({ type: user.SUCCESS_LOGIN, payload: { data } });
   } catch (error) {
     yield put({
-      type: login.FAILURE_LOGIN,
+      type: user.FAILURE_LOGIN,
       payload: { error }
     });
   }
 }
 
 function* handleRequestLogin() {
-  yield takeEvery(login.REQUEST_LOGIN as any, runRequestLogin);
+  yield takeEvery(user.REQUEST_LOGIN as any, runRequestLogin);
 }
 
 export function* watchHandleRequestLogin() {
@@ -25,13 +25,13 @@ export function* watchHandleRequestLogin() {
 function* runRequestSignInWithAuth(action: { payload: object }) {
   try {
     const { data } = yield call(
-      api.login.checkSignInWithAuth as any,
+      api.user.checkSignInWithAuth as any,
       action.payload
     );
-    yield put({ type: login.SUCCESS_SIGN_IN_WITH_AUTH, payload: { data } });
+    yield put({ type: user.SUCCESS_SIGN_IN_WITH_AUTH, payload: { data } });
   } catch (error) {
     yield put({
-      type: login.FAILURE_SIGN_IN_WITH_AUTH,
+      type: user.FAILURE_SIGN_IN_WITH_AUTH,
       payload: { error }
     });
   }
@@ -39,7 +39,7 @@ function* runRequestSignInWithAuth(action: { payload: object }) {
 
 function* handleRequestSignInWithAuth() {
   yield takeEvery(
-    login.REQUEST_SIGN_IN_WITH_AUTH as any,
+    user.REQUEST_SIGN_IN_WITH_AUTH as any,
     runRequestSignInWithAuth
   );
 }

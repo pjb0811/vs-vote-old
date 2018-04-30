@@ -15,8 +15,8 @@ export default (WrappedComponent: any) => {
       };
     }
 
-    componentWillMount() {
-      firebase.auth().onAuthStateChanged((user) => {
+    componentDidMount() {
+      firebase.auth().onAuthStateChanged(user => {
         this.setState((prevState, props) => {
           return {
             user
@@ -28,9 +28,9 @@ export default (WrappedComponent: any) => {
     render() {
       const { user } = this.state;
       if (!user) {
-        return <Login {...this.props}/>;
+        return <Login {...this.props} />;
       }
-      return <WrappedComponent {...this.props}/>;
+      return <WrappedComponent {...this.props} />;
     }
   };
 };

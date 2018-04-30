@@ -7,7 +7,7 @@ class Logout extends React.Component<Props> {
     super(props);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     firebase
       .auth()
       .signOut()

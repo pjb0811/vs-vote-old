@@ -1,5 +1,5 @@
 export interface Props {
-  LoginActions: {
+  UserActions: {
     requestLogin: (params: { type: string }) => {};
   };
   login: LoginData;

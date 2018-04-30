@@ -7,7 +7,7 @@ import {
   REQUEST_SIGN_IN_WITH_AUTH,
   SUCCESS_SIGN_IN_WITH_AUTH,
   FAILURE_SIGN_IN_WITH_AUTH
-} from '../actions/login';
+} from '../actions/user';
 
 const initialState = Map({
   pending: false,

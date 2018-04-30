@@ -6,12 +6,19 @@ import AuthLogin from '../atoms/buttons/AuthLogin';
 import Error from '../atoms/form/Error';
 import { NavLink } from 'react-router-dom';
 import { Props, Values, Actions } from '../../interface/pages/Login';
-import * as api from '../../lib/apis';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as userActions from '../../redux/actions/user';
 
 class Login extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
   }
+
+  /* static getDerivedStateFromProps(nextProps) {
+    console.log(nextProps);
+    return null;
+  } */
 
   render() {
     const {
@@ -108,7 +115,9 @@ const withLogin = withFormik({
   }),
   handleSubmit: (values: Values, actions: Actions) => {
     const { email, password } = values;
-    api.login.checkLogin({ email, password }).then(
+    const { UserActions } = actions.props;
+    UserActions.requestLogin({ email, password });
+    /* api.login.checkLogin({ email, password }).then(
       (user: any) => {
         actions.setSubmitting(false);
         const { history } = actions.props;
@@ -121,9 +130,19 @@ const withLogin = withFormik({
         actions.setSubmitting(false);
         actions.setErrors({ email: 'Error: ' + error.message });
       }
-    );
+    ); */
   },
   displayName: 'Login'
 })(Login);
 
-export default withLogin;
+export default connect(
+  (state: Props) => ({
+    list: state.login
+  }),
+  dispatch => ({
+    UserActions: bindActionCreators(
+      userActions as Props['UserActions'],
+      dispatch
+    )
+  })
+)(withLogin);

@@ -10,15 +10,14 @@ class List extends React.Component<Props> {
     super(props);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.getList();
   }
 
-  async getList() {
+  getList() {
     const { ListActions, match } = this.props;
     const uid = match ? match.params.uid : '';
-
-    await ListActions.requestList({ uid });
+    ListActions.requestList({ uid });
   }
 
   render() {
