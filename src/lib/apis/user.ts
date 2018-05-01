@@ -3,7 +3,34 @@ import * as Firebase from 'firebase';
 
 function checkLogin(params: { email: string; password: string }) {
   const { email, password } = params;
-  return firebase.auth().signInWithEmailAndPassword(email, password);
+  let data = {
+    success: false,
+    message: ''
+  };
+  firebase
+    .auth()
+    .signInWithEmailAndPassword(email, password)
+    .then(
+      user => {
+        /* actions.setSubmitting(false);
+          const { history } = actions.props;
+          const location = {
+            pathname: '/'
+          };
+          history.push(location); */
+        data.success = true;
+      },
+      error => {
+        /* actions.setSubmitting(false);
+            actions.setErrors({ email: 'Error: ' + error.message }); */
+        data.success = false;
+        data.message = error.message;
+      }
+    );
+
+  return {
+    data
+  };
 }
 
 function checkSignInWithAuth(params: { type: string }) {

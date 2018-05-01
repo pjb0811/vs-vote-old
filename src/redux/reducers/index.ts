@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import list from './list';
-import login from './login';
+import user from './user';
 
 export default combineReducers({
   list,
-  login
+  user
 });

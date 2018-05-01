@@ -2,7 +2,7 @@ export interface Props {
   UserActions: {
     requestLogin: (params: { type: string }) => {};
   };
-  login: LoginData;
+  user: UserData;
   values: Values;
   touched: {
     email: boolean;
@@ -30,7 +30,7 @@ export interface Actions {
   props: any;
 }
 
-interface LoginData {
+interface UserData {
   pending: boolean;
   error: boolean;
   data: {
