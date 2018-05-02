@@ -20,7 +20,7 @@ export default class extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    firebase.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged((user: any) => {
       this.setState((prevState, props) => {
         return {
           user

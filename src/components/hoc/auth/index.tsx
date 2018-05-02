@@ -16,7 +16,7 @@ export default (WrappedComponent: any) => {
     }
 
     componentDidMount() {
-      firebase.auth().onAuthStateChanged(user => {
+      firebase.auth().onAuthStateChanged((user: any) => {
         this.setState((prevState, props) => {
           return {
             user

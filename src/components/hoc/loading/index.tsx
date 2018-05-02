@@ -10,7 +10,7 @@ export default (WrappedComponent: any) => {
       }
 
       if (this.props.error) {
-        return <Error />;
+        return <Error {...this.props} />;
       }
       return <WrappedComponent {...this.props} />;
     }

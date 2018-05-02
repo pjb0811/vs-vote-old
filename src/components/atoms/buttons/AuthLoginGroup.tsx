@@ -61,7 +61,7 @@ class AuthLoginGroup extends React.Component<Props, State> {
         .auth()
         .signInWithPopup(provider)
         .then(
-          result => {
+          (result: any) => {
             const { user } = result;
             const { history } = this.props;
             const location = {
@@ -76,7 +76,7 @@ class AuthLoginGroup extends React.Component<Props, State> {
               });
             history.push(location);
           },
-          error => {
+          (error: any) => {
             this.setState((prevState, props) => {
               return {
                 loader: false,

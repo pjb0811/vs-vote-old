@@ -11,7 +11,7 @@ function checkLogin(params: { email: string; password: string }) {
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then(
-      user => {
+      (user: any) => {
         /* actions.setSubmitting(false);
           const { history } = actions.props;
           const location = {
@@ -20,7 +20,7 @@ function checkLogin(params: { email: string; password: string }) {
           history.push(location); */
         data.success = true;
       },
-      error => {
+      (error: any) => {
         /* actions.setSubmitting(false);
             actions.setErrors({ email: 'Error: ' + error.message }); */
         data.success = false;
@@ -59,7 +59,7 @@ function checkSignInWithAuth(params: { type: string }) {
       .auth()
       .signInWithPopup(provider)
       .then(
-        result => {
+        (result: any) => {
           const { user } = result;
           firebase
             .database()
@@ -70,7 +70,7 @@ function checkSignInWithAuth(params: { type: string }) {
             });
           data.success = true;
         },
-        error => {
+        (error: any) => {
           data.success = false;
           data.message = error.message;
         }

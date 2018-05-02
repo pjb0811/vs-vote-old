@@ -7,7 +7,7 @@ function* runRequestList(action: { payload: object }) {
     const { data } = yield call(api.list.getList as any, action.payload);
     yield put({ type: list.SUCCESS_LIST, payload: { data } });
   } catch (error) {
-    yield put({ type: list.FAILURE_LIST, payload: { error } });
+    yield put({ type: list.FAILURE_LIST, payload: { message: error.message } });
   }
 }
 function* handleRequestList() {

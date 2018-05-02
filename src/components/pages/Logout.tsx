@@ -18,13 +18,13 @@ class Logout extends React.Component<Props> {
         };
         history.push(location);
       })
-      .catch(error => {
+      .catch((error: any) => {
         console.log(error);
       });
   }
 
   render() {
-    return <></>;
+    return null;
   }
 }
 

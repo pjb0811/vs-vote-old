@@ -120,7 +120,7 @@ const withSignUp = withFormik({
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(
-        user => {
+        (user: any) => {
           const { history } = actions.props;
           const location = {
             pathname: '/'
@@ -134,7 +134,7 @@ const withSignUp = withFormik({
             });
           history.push(location);
         },
-        error => {
+        (error: any) => {
           actions.setErrors({ email: 'Error: ' + error.message });
           actions.setSubmitting(false);
         }

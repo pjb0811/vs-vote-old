@@ -3,10 +3,10 @@ import { Progress } from 'semantic-ui-react';
 import LazyLoad from 'react-lazyload';
 import { Transition } from 'semantic-ui-react';
 import Vote from '../../atoms/buttons/Vote';
-import firebase from '../../../firebase';
-import { fromJS } from 'immutable';
+// import firebase from '../../../firebase';
+// import { fromJS } from 'immutable';
 
-const database = firebase.database();
+// const database = firebase.database();
 
 type Props = {
   item: {
@@ -16,12 +16,12 @@ type Props = {
       file: string;
       title: string;
       count: number;
-    },
+    };
     second: {
       file: string;
       title: string;
       count: number;
-    }
+    };
     uid: string;
   };
 };
@@ -43,50 +43,48 @@ class Item extends React.Component<Props, State> {
     this.state = {
       item: props.item,
       image1: {
-        loaded: false,
+        loaded: false
       },
       image2: {
-        loaded: false,
+        loaded: false
       },
       duration: 1000
     };
   }
 
-  setImage(params: { name: string, loaded: boolean }) {
+  setImage(params: { name: string; loaded: boolean }) {
     const { name, loaded } = params;
-    this.setState(
-      (prevState, props) => {
-        return {
-          ...prevState,
-          [name]: {
-            loaded
-          },
-        };
-      }
-    );
+    this.setState((prevState, props) => {
+      return {
+        ...prevState,
+        [name]: {
+          loaded
+        }
+      };
+    });
   }
 
   async onVote(target: string) {
-    const { item } = this.state;
+    /* const { item } = this.state;
     const itemRef = database.ref(`list/${item.key}`);
     const userItemRef = database.ref(`users/${item.uid}/list/${item.key}`);
 
-    await itemRef.once(
-      'value',
-      async (data: any) => {
-        const value = data.val();
-        const params = fromJS(value).updateIn([target, 'count'], (count: number) => count + 1);
+    await itemRef.once('value', async (data: any) => {
+      const value = data.val();
+      const params = fromJS(value).updateIn(
+        [target, 'count'],
+        (count: number) => count + 1
+      );
 
-        await itemRef.update(params.toJS());
-        await userItemRef.update(params.toJS());
-        this.setState((prevState) => {
-          return {
-            ...prevState,
-            item: params.toJS()
-          };
-        });
-      }
-    );
+      await itemRef.update(params.toJS());
+      await userItemRef.update(params.toJS());
+      this.setState(prevState => {
+        return {
+          ...prevState,
+          item: params.toJS()
+        };
+      });
+    }); */
   }
 
   render() {
@@ -111,7 +109,7 @@ class Item extends React.Component<Props, State> {
                     onLoad={() => {
                       this.setImage({
                         name: 'image1',
-                        loaded: true,
+                        loaded: true
                       });
                     }}
                   />
@@ -140,7 +138,7 @@ class Item extends React.Component<Props, State> {
                     onLoad={() => {
                       this.setImage({
                         name: 'image2',
-                        loaded: true,
+                        loaded: true
                       });
                     }}
                   />
@@ -159,37 +157,46 @@ class Item extends React.Component<Props, State> {
                   </LazyLoad>
                 </div>
               </div>
-              {
-                item.detail &&
+              {item.detail && (
                 <div className="row">
-                  <div className="sixteen wide column">
-                    {item.detail}
-                  </div>
+                  <div className="sixteen wide column">{item.detail}</div>
                 </div>
-              }
+              )}
               <div className="row">
                 <div className="seven wide column">
                   <Progress
-                    percent={(item.first.count / (item.first.count + item.second.count) * 100).toFixed(1)}
+                    percent={(
+                      item.first.count /
+                      (item.first.count + item.second.count) *
+                      100
+                    ).toFixed(1)}
                     progress="percent"
                     color="teal"
                   />
                   <Vote
                     item={item}
-                    onVote={() => { this.onVote('first'); }}
+                    onVote={() => {
+                      this.onVote('first');
+                    }}
                     target="first"
                   />
                 </div>
                 <div className="two wide column">{''}</div>
                 <div className="seven wide column">
                   <Progress
-                    percent={(item.second.count / (item.first.count + item.second.count) * 100).toFixed(1)}
+                    percent={(
+                      item.second.count /
+                      (item.first.count + item.second.count) *
+                      100
+                    ).toFixed(1)}
                     progress="percent"
                     color="teal"
                   />
                   <Vote
                     item={item}
-                    onVote={() => { this.onVote('second'); }}
+                    onVote={() => {
+                      this.onVote('second');
+                    }}
                     target="second"
                   />
                 </div>

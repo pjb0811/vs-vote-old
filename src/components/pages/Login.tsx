@@ -11,10 +11,10 @@ import { Props, Values, Actions } from '../../interface/pages/Login';
 // import * as userActions from '../../redux/actions/user';
 
 class Login extends React.Component<Props> {
-  static getDerivedStateFromProps(nextProps: Props) {
+  /* static getDerivedStateFromProps(nextProps: Props) {
     console.log(nextProps.user.toJS().data);
     return {};
-  }
+  } */
 
   constructor(props: Props) {
     super(props);

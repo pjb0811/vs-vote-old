@@ -96,7 +96,7 @@ const withResetPassword = withFormik({
           success: true
         });
       })
-      .catch(error => {
+      .catch((error: any) => {
         actions.setErrors({ email: 'Error: ' + error.message });
         actions.setSubmitting(false);
       });
