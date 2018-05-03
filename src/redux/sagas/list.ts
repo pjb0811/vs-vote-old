@@ -5,6 +5,7 @@ import * as api from '../../lib/apis';
 function* runRequestList(action: { payload: object }) {
   try {
     const { data } = yield call(api.list.getList as any, action.payload);
+    // yield console.log(data);
     yield put({ type: list.SUCCESS_LIST, payload: { data } });
   } catch (error) {
     yield put({ type: list.FAILURE_LIST, payload: { message: error.message } });

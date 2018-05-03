@@ -1,5 +1,5 @@
 import * as React from 'react';
-import firebase from 'firebaseApp';
+import firebaseApp from 'firebaseApp';
 import * as Firebase from 'firebase';
 import Alert from '../modals/Alert';
 import Loader from '../loader';
@@ -57,7 +57,7 @@ class AuthLoginGroup extends React.Component<Props, State> {
     }
 
     if (provider) {
-      firebase
+      firebaseApp
         .auth()
         .signInWithPopup(provider)
         .then(
@@ -67,7 +67,7 @@ class AuthLoginGroup extends React.Component<Props, State> {
             const location = {
               pathname: '/'
             };
-            firebase
+            firebaseApp
               .database()
               .ref('users/' + user.uid)
               .update({

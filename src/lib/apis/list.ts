@@ -1,26 +1,20 @@
-import firebase from 'firebaseApp';
+import firebaseApp from 'firebaseApp';
 
 async function getList(params: { uid: string }) {
-  let database: any = firebase.database();
-  let listRef: any;
-  let list: object[] = [];
-  const { uid } = params;
-
-  if (uid) {
-    listRef = database
-      .ref('users')
-      .child(`${uid}/list`)
-      .orderByChild('date');
-  } else {
-    listRef = database.ref('list').orderByChild('date');
-  }
-
-  await listRef.once('value', (data: any) => {
-    data.forEach((item: any) => {
-      const val = item.val();
-      list.push(val);
-    });
+  let database: any = firebaseApp.firestore();
+  let list: Array<object> = [];
+  database.settings({
+    timestampsInSnapshots: true
   });
+
+  await database
+    .collection('list')
+    .get()
+    .then((querySnapshot: any) => {
+      querySnapshot.forEach((doc: any) => {
+        list.push(doc.data());
+      });
+    });
 
   return {
     data: list
