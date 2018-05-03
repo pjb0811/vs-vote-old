@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Login from '../../pages/Login';
-import firebase from '../../../firebase';
+import firebase from 'firebaseApp';
 
 interface State {
   user: object | null;

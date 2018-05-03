@@ -1,4 +1,4 @@
-import firebase from '../../firebase';
+import firebase from 'firebaseApp';
 
 async function getList(params: { uid: string }) {
   let database: any = firebase.database();

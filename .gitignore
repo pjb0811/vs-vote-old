@@ -13,7 +13,7 @@
 /functions/lib
 
 # firebase
-/src/firebase.ts
+/src/firebaseApp.ts
 
 # misc
 .DS_Store

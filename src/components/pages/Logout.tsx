@@ -1,5 +1,5 @@
 import * as React from 'react';
-import firebase from '../../firebase';
+import firebase from 'firebaseApp';
 import { Props } from '../../interface/pages/Logout';
 
 class Logout extends React.Component<Props> {

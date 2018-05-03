@@ -1,5 +1,5 @@
 import * as React from 'react';
-import firebase from '../../../firebase';
+import firebase from 'firebaseApp';
 import * as Firebase from 'firebase';
 import Alert from '../modals/Alert';
 import Loader from '../loader';

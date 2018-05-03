@@ -2,8 +2,8 @@ import * as React from 'react';
 import VsList from '../atoms/list';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as listActions from '../../redux/actions/list';
-import { Props } from '../../interface/pages/List';
+import * as listActions from 'redux/actions/list';
+import { Props } from 'interface/pages/List';
 
 class List extends React.Component<Props> {
   constructor(props: Props) {

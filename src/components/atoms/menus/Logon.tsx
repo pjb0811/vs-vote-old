@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
-import firebase from '../../../firebase';
+import firebase from 'firebaseApp';
 // import { Dropdown } from 'semantic-ui-react';
 
 interface Props {
@@ -26,9 +26,19 @@ const Logon = (props: Props) => {
         </Dropdown.Menu>
       </Dropdown>
       */}
-      <NavLink to={`/list/${uid}`} className={className} activeClassName="active">My List</NavLink>
-      <NavLink to="/post" className={className} activeClassName="active">Post</NavLink>
-      <NavLink to="/logout" className={className} activeClassName="active">Logout</NavLink>
+      <NavLink
+        to={`/list/${uid}`}
+        className={className}
+        activeClassName="active"
+      >
+        My List
+      </NavLink>
+      <NavLink to="/post" className={className} activeClassName="active">
+        Post
+      </NavLink>
+      <NavLink to="/logout" className={className} activeClassName="active">
+        Logout
+      </NavLink>
     </div>
   );
 };

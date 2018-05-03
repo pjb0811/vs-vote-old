@@ -1,4 +1,4 @@
-import firebase from '../../firebase';
+import firebase from 'firebaseApp';
 import * as Firebase from 'firebase';
 
 function checkLogin(params: { email: string; password: string }) {

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 import Error from '../atoms/form/Error';
-import firebase from '../../firebase';
+import firebase from 'firebaseApp';
 import Confirm from '../atoms/modals/Confirm';
 import { Props, Values, Actions } from '../../interface/pages/ResetPassword';
 

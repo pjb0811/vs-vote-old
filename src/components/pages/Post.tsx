@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { withFormik, FormikErrors } from 'formik';
-import firebase from '../../firebase';
+import firebase from 'firebaseApp';
 import Error from '../atoms/form/Error';
 import Alert from '../atoms/modals/Alert';
 import withAuth from '../hoc/auth';
-import { Props, State, Values, Actions } from '../../interface/pages/Post';
+import { Props, State, Values, Actions } from 'interface/pages/Post';
 
 class Post extends React.Component<Props, State> {
   constructor(props: Props) {

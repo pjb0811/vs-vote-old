@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
-import firebase from '../../firebase';
+import firebase from 'firebaseApp';
 import Error from '../atoms/form/Error';
-import { Props, Values, Actions } from '../../interface/pages/SignUp';
+import { Props, Values, Actions } from 'interface/pages/SignUp';
 
 class SignUp extends React.Component<Props> {
   constructor(props: Props) {
