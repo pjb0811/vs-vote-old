@@ -5,26 +5,29 @@ import AuthLoginGroup from '../atoms/buttons/AuthLoginGroup';
 import AuthLogin from '../atoms/buttons/AuthLogin';
 import Error from '../atoms/form/Error';
 import { NavLink } from 'react-router-dom';
-import { Props, Values, Actions } from '../../interface/pages/Login';
-// import { connect } from 'react-redux';
-// import { bindActionCreators } from 'redux';
-// import * as userActions from '../../redux/actions/user';
+import { Props, Values, Actions } from 'interface/pages/Login';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as userActions from 'redux/actions/user';
 
 class Login extends React.Component<Props> {
-  /* static getDerivedStateFromProps(nextProps: Props) {
-    console.log(nextProps.user.toJS().data);
-    return {};
-  } */
-
-  constructor(props: Props) {
-    super(props);
-    this.state = {};
+  componentDidUpdate(prevProps: Props) {
+    const { history, user, UserActions, setErrors, setSubmitting } = this.props;
+    const { isVerifing, success, message } = user.toJS().data;
+    if (success) {
+      const location = {
+        pathname: '/'
+      };
+      UserActions.resetLogin();
+      history.push(location);
+    } else {
+      if (isVerifing) {
+        setErrors({ email: message });
+        setSubmitting(false);
+        UserActions.resetLogin();
+      }
+    }
   }
-
-  /* shouldComponentUpdate(nextProps: Props) {
-    console.log(nextProps.user.toJS().data);
-    return true;
-  } */
 
   render() {
     const {
@@ -123,6 +126,7 @@ const withLogin = withFormik({
     const { email, password } = values;
     const { UserActions } = actions.props;
     UserActions.requestLogin({ email, password });
+
     /*
     api.login.checkLogin({ email, password }).then(
       (user: any) => {
@@ -143,8 +147,8 @@ const withLogin = withFormik({
   displayName: 'Login'
 })(Login);
 
-export default withLogin;
-/* export default connect(
+// export default withLogin;
+export default connect(
   (state: Props) => ({
     user: state.user
   }),
@@ -154,4 +158,4 @@ export default withLogin;
       dispatch
     )
   })
-)(withLogin); */
+)(withLogin);

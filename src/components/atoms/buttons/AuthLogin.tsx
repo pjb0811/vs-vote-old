@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Props } from '../../../interface/atoms/buttons/AuthLogin';
+import { Props } from 'interface/atoms/buttons/AuthLogin';
 
 class AuthLogin extends React.Component<Props> {
   constructor(props: Props) {

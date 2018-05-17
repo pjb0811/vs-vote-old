@@ -4,6 +4,7 @@ import {
   REQUEST_LOGIN,
   SUCCESS_LOGIN,
   FAILURE_LOGIN,
+  RESET_LOGIN,
   REQUEST_SIGN_IN_WITH_AUTH,
   SUCCESS_SIGN_IN_WITH_AUTH,
   FAILURE_SIGN_IN_WITH_AUTH
@@ -13,7 +14,8 @@ const initialState = Map({
   pending: false,
   error: false,
   data: Map({
-    success: true,
+    success: false,
+    isVerifing: false,
     message: ''
   })
 });
@@ -33,13 +35,20 @@ export default handleActions(
     [FAILURE_LOGIN]: (state, action) => {
       return state.set('pending', false).set('error', true);
     },
+    [RESET_LOGIN]: (state, action) => {
+      return state.mergeIn(['data'], {
+        success: false,
+        isVerifing: false
+      });
+    },
+
     [REQUEST_SIGN_IN_WITH_AUTH]: (state, action) => {
       return state.set('pending', true).set('error', false);
     },
     [SUCCESS_SIGN_IN_WITH_AUTH]: (state, action: any) => {
       const { data } = action.payload;
       return state
-        .set('pending', true)
+        .set('pending', false)
         .set('error', false)
         .set('data', Map(data));
     },

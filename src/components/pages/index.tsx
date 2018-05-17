@@ -8,7 +8,7 @@ const loadableComponent = (component: string) => {
     modules: [component],
     webpack: () => [(require as any).resolveWeak(`${component}`)],
     loading() {
-      return <Loading/>;
+      return <Loading />;
     }
   });
 };

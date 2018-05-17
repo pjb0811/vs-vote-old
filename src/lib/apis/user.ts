@@ -1,30 +1,24 @@
 import firebase from 'firebaseApp';
 import * as Firebase from 'firebase';
 
-function checkLogin(params: { email: string; password: string }) {
+async function checkLogin(params: { email: string; password: string }) {
   const { email, password } = params;
   let data = {
     success: false,
+    isVerifing: false,
     message: ''
   };
-  firebase
+  await firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then(
       (user: any) => {
-        /* actions.setSubmitting(false);
-          const { history } = actions.props;
-          const location = {
-            pathname: '/'
-          };
-          history.push(location); */
         data.success = true;
       },
       (error: any) => {
-        /* actions.setSubmitting(false);
-            actions.setErrors({ email: 'Error: ' + error.message }); */
         data.success = false;
         data.message = error.message;
+        data.isVerifing = true;
       }
     );
 
@@ -33,7 +27,7 @@ function checkLogin(params: { email: string; password: string }) {
   };
 }
 
-function checkSignInWithAuth(params: { type: string }) {
+async function checkSignInWithAuth(params: { type: string }) {
   const { type } = params;
   let provider: Firebase.auth.GoogleAuthProvider | undefined;
   let data = {
@@ -55,7 +49,7 @@ function checkSignInWithAuth(params: { type: string }) {
   }
 
   if (provider) {
-    firebase
+    await firebase
       .auth()
       .signInWithPopup(provider)
       .then(

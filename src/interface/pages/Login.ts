@@ -1,6 +1,7 @@
 export interface Props {
   UserActions: {
     requestLogin: (params: { type: string }) => {};
+    resetLogin: () => {};
   };
   user: UserData;
   values: Values;
@@ -16,6 +17,8 @@ export interface Props {
   handleChange: (e: React.ChangeEvent<any>) => void;
   handleBlur: (e: any) => void;
   handleSubmit: (e: React.FormEvent<any>) => void;
+  setErrors: (fields: { [field: string]: string }) => void;
+  setSubmitting: (isSubmitting: boolean) => void;
   history: any;
 }
 
