@@ -1,6 +1,6 @@
 import { call, put, takeEvery, fork } from 'redux-saga/effects';
 import * as user from '../actions/user';
-import * as api from '../../lib/apis';
+import * as api from 'lib/apis';
 
 function* runRequestLogin(action: { payload: object }) {
   try {

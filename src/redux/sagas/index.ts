@@ -1,7 +1,14 @@
 import { all } from 'redux-saga/effects';
 import { watchHandleRequestList } from './list';
-import { watchHandleRequestLogin } from './user';
+import {
+  watchHandleRequestLogin,
+  watchHandleRequestSignInWithAuth
+} from './user';
 
 export default function* rootSaga() {
-  yield all([watchHandleRequestList(), watchHandleRequestLogin()]);
+  yield all([
+    watchHandleRequestList(),
+    watchHandleRequestLogin(),
+    watchHandleRequestSignInWithAuth()
+  ]);
 }

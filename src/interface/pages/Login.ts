@@ -1,7 +1,7 @@
 export interface Props {
   UserActions: {
     requestLogin: (params: { type: string }) => {};
-    resetLogin: () => {};
+    resetUserVerify: () => {};
   };
   user: UserData;
   values: Values;

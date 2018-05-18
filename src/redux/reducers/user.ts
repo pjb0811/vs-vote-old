@@ -1,10 +1,10 @@
 import { handleActions } from 'redux-actions';
 import { Map } from 'immutable';
 import {
+  RESET_USER_VERIFY,
   REQUEST_LOGIN,
   SUCCESS_LOGIN,
   FAILURE_LOGIN,
-  RESET_LOGIN,
   REQUEST_SIGN_IN_WITH_AUTH,
   SUCCESS_SIGN_IN_WITH_AUTH,
   FAILURE_SIGN_IN_WITH_AUTH
@@ -22,6 +22,12 @@ const initialState = Map({
 
 export default handleActions(
   {
+    [RESET_USER_VERIFY]: (state, action) => {
+      return state.mergeIn(['data'], {
+        success: false,
+        isVerifing: false
+      });
+    },
     [REQUEST_LOGIN]: (state, action) => {
       return state.set('pending', true).set('error', false);
     },
@@ -34,12 +40,6 @@ export default handleActions(
     },
     [FAILURE_LOGIN]: (state, action) => {
       return state.set('pending', false).set('error', true);
-    },
-    [RESET_LOGIN]: (state, action) => {
-      return state.mergeIn(['data'], {
-        success: false,
-        isVerifing: false
-      });
     },
 
     [REQUEST_SIGN_IN_WITH_AUTH]: (state, action) => {

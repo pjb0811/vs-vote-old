@@ -1,5 +1,5 @@
-import firebase from 'firebaseApp';
-import * as Firebase from 'firebase';
+import firebaseApp from 'firebaseApp';
+import * as firebase from 'firebase';
 
 async function checkLogin(params: { email: string; password: string }) {
   const { email, password } = params;
@@ -8,7 +8,7 @@ async function checkLogin(params: { email: string; password: string }) {
     isVerifing: false,
     message: ''
   };
-  await firebase
+  await firebaseApp
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then(
@@ -29,47 +29,50 @@ async function checkLogin(params: { email: string; password: string }) {
 
 async function checkSignInWithAuth(params: { type: string }) {
   const { type } = params;
-  let provider: Firebase.auth.GoogleAuthProvider | undefined;
+  let provider: any;
+  let database: any = firebaseApp.firestore();
+
   let data = {
-    success: true,
+    success: false,
+    isVerifing: false,
     message: ''
   };
 
   if (type === 'google') {
-    provider = new Firebase.auth.GoogleAuthProvider();
+    provider = new firebase.auth.GoogleAuthProvider();
     provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
   }
   if (type === 'facebook') {
-    provider = new Firebase.auth.FacebookAuthProvider();
+    provider = new firebase.auth.FacebookAuthProvider();
     provider.addScope('user_birthday');
   }
   if (type === 'github') {
-    provider = new Firebase.auth.GithubAuthProvider();
+    provider = new firebase.auth.GithubAuthProvider();
     provider.addScope('repo');
   }
 
-  if (provider) {
-    await firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then(
-        (result: any) => {
-          const { user } = result;
-          firebase
-            .database()
-            .ref('users/' + user.uid)
-            .update({
-              email: user.email,
-              displayName: user.displayName
-            });
-          data.success = true;
-        },
-        (error: any) => {
-          data.success = false;
-          data.message = error.message;
-        }
-      );
-  }
+  await firebaseApp
+    .auth()
+    .signInWithPopup(provider)
+    .then(
+      async (result: any) => {
+        const { user } = result;
+        await database
+          .collection('users')
+          .doc(user.uid)
+          .set({
+            email: user.email,
+            displayName: user.displayName
+          });
+        data.success = true;
+      },
+      (error: any) => {
+        data.success = false;
+        data.message = error.message;
+        data.isVerifing = true;
+      }
+    );
+
   return {
     data
   };

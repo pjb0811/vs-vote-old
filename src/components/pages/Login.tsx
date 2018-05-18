@@ -18,13 +18,13 @@ class Login extends React.Component<Props> {
       const location = {
         pathname: '/'
       };
-      UserActions.resetLogin();
+      UserActions.resetUserVerify();
       history.push(location);
     } else {
       if (isVerifing) {
         setErrors({ email: message });
         setSubmitting(false);
-        UserActions.resetLogin();
+        UserActions.resetUserVerify();
       }
     }
   }
@@ -126,28 +126,10 @@ const withLogin = withFormik({
     const { email, password } = values;
     const { UserActions } = actions.props;
     UserActions.requestLogin({ email, password });
-
-    /*
-    api.login.checkLogin({ email, password }).then(
-      (user: any) => {
-        actions.setSubmitting(false);
-        const { history } = actions.props;
-        const location = {
-          pathname: '/'
-        };
-        history.push(location);
-      },
-      (error: any) => {
-        actions.setSubmitting(false);
-        actions.setErrors({ email: 'Error: ' + error.message });
-      }
-    );
-    */
   },
   displayName: 'Login'
 })(Login);
 
-// export default withLogin;
 export default connect(
   (state: Props) => ({
     user: state.user

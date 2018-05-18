@@ -29,7 +29,7 @@ class AuthLogin extends React.Component<Props> {
         className={`ui ${classes} button`}
         onClick={() => {
           if (typeof signInWithAuth === 'function') {
-            signInWithAuth(type);
+            signInWithAuth({ type });
           }
         }}
       >
