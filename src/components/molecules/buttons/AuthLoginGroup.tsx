@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Alert from '../modals/Alert';
+import Alert from 'components/organisms/modals/Alert';
 import { Props, State } from 'interface/atoms/buttons/AuthLoginGroup';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -58,18 +58,16 @@ class AuthLoginGroup extends React.Component<Props, State> {
     );
 
     return (
-      <div>
-        <div className={className}>
-          {childrenWithProps}
-          <Alert
-            message={alert.message}
-            open={alert.open}
-            type={alert.type}
-            onClose={() => {
-              this.closeAlert();
-            }}
-          />
-        </div>
+      <div className={className}>
+        {childrenWithProps}
+        <Alert
+          message={alert.message}
+          open={alert.open}
+          type={alert.type}
+          onClose={() => {
+            this.closeAlert();
+          }}
+        />
       </div>
     );
   }

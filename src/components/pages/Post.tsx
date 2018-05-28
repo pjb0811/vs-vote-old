@@ -2,7 +2,7 @@ import * as React from 'react';
 import { withFormik, FormikErrors } from 'formik';
 import firebase from 'firebaseApp';
 import Error from '../atoms/form/Error';
-import Alert from '../atoms/modals/Alert';
+import Alert from '../organisms/modals/Alert';
 import withAuth from '../hoc/auth';
 import { Props, State, Values, Actions } from 'interface/pages/Post';
 

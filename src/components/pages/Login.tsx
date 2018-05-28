@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
-import AuthLoginGroup from '../atoms/buttons/AuthLoginGroup';
+import AuthLoginGroup from '../molecules/buttons/AuthLoginGroup';
 import AuthLogin from '../atoms/buttons/AuthLogin';
 import Error from '../atoms/form/Error';
 import { NavLink } from 'react-router-dom';
