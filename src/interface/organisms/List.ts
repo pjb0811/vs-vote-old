@@ -29,5 +29,5 @@ interface ListData {
       };
     }
   ];
-  toJS: Function;
+  toJS: () => ListData;
 }

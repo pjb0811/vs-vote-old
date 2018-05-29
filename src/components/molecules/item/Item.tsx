@@ -1,14 +1,16 @@
 import * as React from 'react';
-import { Progress } from 'semantic-ui-react';
-import LazyLoad from 'react-lazyload';
-import { Transition } from 'semantic-ui-react';
-import Vote from '../../atoms/buttons/Vote';
+import { Props } from 'interface/molecules/item';
+import Title from 'components/atoms/header/Title';
+// import { Progress } from 'semantic-ui-react';
+// import LazyLoad from 'react-lazyload';
+// import { Transition } from 'semantic-ui-react';
+// import Vote from '../../atoms/buttons/Vote';
 // import firebase from '../../../firebase';
 // import { fromJS } from 'immutable';
 
 // const database = firebase.database();
 
-type Props = {
+/* type Props = {
   item: {
     key: string;
     detail: string;
@@ -35,9 +37,13 @@ interface State {
     loaded: boolean;
   };
   duration: number;
-}
+} */
 
-class Item extends React.Component<Props, State> {
+class Item extends React.Component<Props> {
+  constructor(props: Props) {
+    super(props);
+  }
+  /*
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -51,7 +57,9 @@ class Item extends React.Component<Props, State> {
       duration: 1000
     };
   }
+  */
 
+  /*
   setImage(params: { name: string; loaded: boolean }) {
     const { name, loaded } = params;
     this.setState((prevState, props) => {
@@ -63,9 +71,11 @@ class Item extends React.Component<Props, State> {
       };
     });
   }
+  */
 
+  /*
   async onVote(target: string) {
-    /* const { item } = this.state;
+    const { item } = this.state;
     const itemRef = database.ref(`list/${item.key}`);
     const userItemRef = database.ref(`users/${item.uid}/list/${item.key}`);
 
@@ -84,19 +94,133 @@ class Item extends React.Component<Props, State> {
           item: params.toJS()
         };
       });
-    }); */
+    });
   }
+  */
 
   render() {
+    const { item } = this.props;
+    /*
     const { item, image1, image2, duration } = this.state;
     const loader = (
       <div>
         <div className="ui active loader">{''}</div>
       </div>
     );
+    */
 
     return (
       <div className="ui item">
+        <div className="ui container">
+          <div className="ui center aligned segment">
+            <div className="ui grid">
+              <div className="row">
+                <div className="seven wide column">
+                  <Title title={item.first.title} />
+                  {/*
+                  <h3>{item.first.title}</h3>
+                  <img
+                    className="ui image hidden"
+                    src={item.first.file}
+                    onLoad={() => {
+                      this.setImage({
+                        name: 'image1',
+                        loaded: true
+                      });
+                    }}
+                  />
+                  <LazyLoad height={'100%'} placeholder={loader}>
+                    <Transition
+                      visible={image1.loaded}
+                      transitionOnMount={true}
+                      animation="scale"
+                      duration={duration}
+                    >
+                      <img
+                        className="ui fluid image middle aligned"
+                        src={item.first.file}
+                      />
+                    </Transition>
+                  </LazyLoad> */}
+                </div>
+                <div className="two wide column">
+                  <strong>VS</strong>
+                </div>
+                <div className="seven wide column">
+                  {/* <h3>{item.second.title}</h3>
+                  <img
+                    className="ui image hidden"
+                    src={item.second.file}
+                    onLoad={() => {
+                      this.setImage({
+                        name: 'image2',
+                        loaded: true
+                      });
+                    }}
+                  />
+                  <LazyLoad height={'100%'} placeholder={loader}>
+                    <Transition
+                      visible={image2.loaded}
+                      transitionOnMount={true}
+                      animation="scale"
+                      duration={duration}
+                    >
+                      <img
+                        className="ui fluid image middle aligned"
+                        src={item.second.file}
+                      />
+                    </Transition>
+                  </LazyLoad> */}
+                </div>
+              </div>
+              {/* {item.detail && (
+                <div className="row">
+                  <div className="sixteen wide column">{item.detail}</div>
+                </div>
+              )} */}
+              <div className="row">
+                <div className="seven wide column">
+                  {/* <Progress
+                    percent={(
+                      item.first.count /
+                      (item.first.count + item.second.count) *
+                      100
+                    ).toFixed(1)}
+                    progress="percent"
+                    color="teal"
+                  />
+                  <Vote
+                    item={item}
+                    onVote={() => {
+                      this.onVote('first');
+                    }}
+                    target="first"
+                  /> */}
+                </div>
+                <div className="two wide column">{''}</div>
+                <div className="seven wide column">
+                  {/* <Progress
+                    percent={(
+                      item.second.count /
+                      (item.first.count + item.second.count) *
+                      100
+                    ).toFixed(1)}
+                    progress="percent"
+                    color="teal"
+                  />
+                  <Vote
+                    item={item}
+                    onVote={() => {
+                      this.onVote('second');
+                    }}
+                    target="second"
+                  /> */}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/*
         <div className="ui container">
           <div className="ui center aligned segment">
             <div className="ui grid">
@@ -204,6 +328,7 @@ class Item extends React.Component<Props, State> {
             </div>
           </div>
         </div>
+        */}
       </div>
     );
   }

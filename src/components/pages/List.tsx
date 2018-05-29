@@ -1,37 +1,38 @@
 import * as React from 'react';
-import VsList from '../organisms/list';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as listActions from 'redux/actions/list';
-import { Props } from 'interface/pages/List';
+// import VsList from '../organisms/list';
+// import { connect } from 'react-redux';
+// import { bindActionCreators } from 'redux';
+// import * as listActions from 'redux/actions/list';
+// import { Props } from 'interface/organisms/List';
 
-class List extends React.Component<Props> {
-  constructor(props: Props) {
-    super(props);
-  }
+class List extends React.Component {
+  // constructor(props: Props) {
+  //   super(props);
+  // }
 
-  componentDidMount() {
-    this.getList();
-  }
+  // componentDidMount() {
+  //   this.getList();
+  // }
 
-  getList() {
-    const { ListActions, match } = this.props;
-    const uid = match ? match.params.uid : '';
-    ListActions.requestList({ uid });
-  }
+  // getList() {
+  //   const { ListActions, match } = this.props;
+  //   const uid = match ? match.params.uid : '';
+  //   ListActions.requestList({ uid });
+  // }
 
   render() {
-    const list = this.props.list.toJS();
+    // const list = this.props.list.toJS();
 
     return (
       <div className="ui segment">
-        <VsList {...list} />
+        list
+        {/* <VsList {...list} /> */}
       </div>
     );
   }
 }
-
-export default connect(
+export default List;
+/* export default connect(
   (state: Props) => ({
     list: state.list
   }),
@@ -41,4 +42,4 @@ export default connect(
       dispatch
     )
   })
-)(List);
+)(List); */

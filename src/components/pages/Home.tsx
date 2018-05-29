@@ -6,15 +6,19 @@ import List from '../organisms/list';
 class Home extends React.Component {
   render() {
     return (
-      <div>
-        <Header />
-        <List />
-      </div>
+      <Template
+        title={'Home'}
+        render={() => {
+          return (
+            <div>
+              <Header />
+              <List />
+            </div>
+          );
+        }}
+      />
     );
   }
 }
 
-export default Template({
-  title: 'Home',
-  WrappedComponent: Home
-});
+export default Home;
