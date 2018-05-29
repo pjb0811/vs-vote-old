@@ -6,7 +6,7 @@ interface State {
   user: object | null;
 }
 
-export default (options: { type: string }) => (WrappedComponent: any) => {
+export default (WrappedComponent: any) => {
   return class extends React.Component<any, State> {
     constructor(props: any) {
       super(props);

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
-import LinkGroup from '../atoms/menus/LinkGroup';
+import LinkGroup from 'components/molecules/menus/LinkGroup';
 
 class TopMenu extends React.Component {
   render() {

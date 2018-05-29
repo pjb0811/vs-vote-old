@@ -1,5 +1,5 @@
 import * as React from 'react';
-import VsList from '../atoms/list';
+import VsList from '../organisms/list';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as listActions from 'redux/actions/list';

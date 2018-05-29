@@ -1,21 +1,20 @@
 import * as React from 'react';
-import List from './List';
+import Template from '../templates';
+import Header from '../organisms/header';
+import List from '../organisms/list';
 
 class Home extends React.Component {
   render() {
     return (
       <div>
-        <h2 className="ui center aligned icon header">
-          <i className="hand point down outline icon" />
-          <div className="content">
-            VS Vote
-            <div className="sub header">Vote for one of two.</div>
-          </div>
-        </h2>
+        <Header />
         <List />
       </div>
     );
   }
 }
 
-export default Home;
+export default Template({
+  title: 'Home',
+  WrappedComponent: Home
+});
