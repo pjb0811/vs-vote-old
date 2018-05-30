@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Props } from 'interface/molecules/item';
-import Title from 'components/atoms/header/Title';
+// import Title from 'components/atoms/header/Title';
 // import { Progress } from 'semantic-ui-react';
 // import LazyLoad from 'react-lazyload';
 // import { Transition } from 'semantic-ui-react';
@@ -116,7 +116,7 @@ class Item extends React.Component<Props> {
             <div className="ui grid">
               <div className="row">
                 <div className="seven wide column">
-                  <Title title={item.first.title} />
+                  <h3>{item.first.title}</h3>
                   {/*
                   <h3>{item.first.title}</h3>
                   <img
