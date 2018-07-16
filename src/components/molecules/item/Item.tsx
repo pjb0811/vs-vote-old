@@ -147,8 +147,8 @@ class Item extends React.Component<Props> {
                   <strong>VS</strong>
                 </div>
                 <div className="seven wide column">
-                  {/* <h3>{item.second.title}</h3>
-                  <img
+                  <h3>{item.second.title}</h3>
+                  {/* <img
                     className="ui image hidden"
                     src={item.second.file}
                     onLoad={() => {

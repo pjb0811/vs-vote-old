@@ -3,7 +3,7 @@ import { withFormik, FormikErrors } from 'formik';
 import firebase from 'firebaseApp';
 import Error from '../atoms/form/Error';
 import Alert from '../organisms/modals/Alert';
-import withAuth from '../hoc/auth';
+import withAuth from '../wrappers/auth';
 import { Props, State, Values, Actions } from 'interface/pages/Post';
 
 class Post extends React.Component<Props, State> {
