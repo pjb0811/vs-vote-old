@@ -2,7 +2,7 @@
 
 # dependencies
 /node_modules
-/functions/node_modules
+/functions
 
 # testing
 /coverage
@@ -11,9 +11,6 @@
 /build
 /build-server
 /functions/lib
-
-# firebase
-/src/firebaseApp.ts
 
 # misc
 .DS_Store

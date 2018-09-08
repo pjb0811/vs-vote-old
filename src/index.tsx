@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import Root from './client/Root';
 import { AppContainer } from 'react-hot-loader';
+import { Provider } from 'mobx-react';
 import registerServiceWorker from './registerServiceWorker';
 import 'semantic-ui-css/semantic.min.css';
 import 'index.css';
@@ -9,7 +10,9 @@ import 'index.css';
 const render = (Component: any) => {
   ReactDOM.render(
     <AppContainer>
-      <Component />
+      <Provider>
+        <Component />
+      </Provider>
     </AppContainer>,
     document.getElementById('root')
   );

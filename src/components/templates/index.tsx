@@ -1,3 +1,3 @@
-import Template from './Template';
+import Main from './Main';
 
-export default Template;
+export { Main };

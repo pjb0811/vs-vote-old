@@ -1,12 +1,11 @@
 import * as React from 'react';
-import Template from '../templates';
-import Header from '../organisms/header';
-import List from '../organisms/list';
+import { Main as MainTemplate } from '../templates';
+import { Header, List } from '../organisms';
 
 class Home extends React.Component {
   render() {
     return (
-      <Template
+      <MainTemplate
         title={'Home'}
         render={() => {
           return (
